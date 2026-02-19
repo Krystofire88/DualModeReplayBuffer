@@ -1,0 +1,16 @@
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Capture.deps.json
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Capture.dll
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Capture.pdb
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Core.dll
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Core.pdb
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.csproj.AssemblyReference.cache
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.AssemblyInfoInputs.cache
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.AssemblyInfo.cs
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.csproj.CoreCompileInputs.cache
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.sourcelink.json
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capt.2B2ABCE6.Up2Date
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.dll
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\refint\DRB.Capture.dll
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.pdb
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\ref\DRB.Capture.dll

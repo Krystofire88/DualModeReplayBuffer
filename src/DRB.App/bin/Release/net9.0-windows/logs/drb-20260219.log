@@ -1,0 +1,598 @@
+2026-02-19 20:01:03.254 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-19 20:01:03.254 +01:00 [INF] StorageManager thread starting.
+2026-02-19 20:01:03.254 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-19 20:01:03.254 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-19 20:01:03.254 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-19 20:01:03.254 +01:00 [INF] FrameProcessor thread starting.
+2026-02-19 20:01:03.255 +01:00 [INF] Initializing tray icon.
+2026-02-19 20:01:03.285 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-19 20:01:03.312 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-19 20:01:03.344 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-19 20:01:03.366 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-19 20:01:03.367 +01:00 [INF] Hosting environment: Production
+2026-02-19 20:01:03.367 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-19 20:01:03.385 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-19 20:01:03.453 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190103_449.mp4
+2026-02-19 20:01:03.455 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:01:03.458 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:01:03.842 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190103_449.mp4
+2026-02-19 20:02:41.148 +01:00 [INF] Initializing tray icon.
+2026-02-19 20:02:41.148 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-19 20:02:41.147 +01:00 [INF] StorageManager thread starting.
+2026-02-19 20:02:41.147 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-19 20:02:41.147 +01:00 [INF] FrameProcessor thread starting.
+2026-02-19 20:02:41.147 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-19 20:02:41.147 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-19 20:02:41.174 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-19 20:02:41.200 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-19 20:02:41.225 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-19 20:02:41.241 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-19 20:02:41.241 +01:00 [INF] Hosting environment: Production
+2026-02-19 20:02:41.241 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-19 20:02:41.250 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-19 20:02:41.316 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190241_313.mp4
+2026-02-19 20:02:41.317 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:02:41.319 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:02:41.688 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190241_313.mp4
+2026-02-19 20:07:40.867 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-19 20:07:40.867 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-19 20:07:40.867 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-19 20:07:40.867 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-19 20:07:40.867 +01:00 [INF] StorageManager thread starting.
+2026-02-19 20:07:40.867 +01:00 [INF] FrameProcessor thread starting.
+2026-02-19 20:07:40.867 +01:00 [INF] Initializing tray icon.
+2026-02-19 20:07:40.900 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-19 20:07:40.927 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-19 20:07:40.963 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-19 20:07:40.983 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-19 20:07:40.984 +01:00 [INF] Hosting environment: Production
+2026-02-19 20:07:40.984 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-19 20:07:40.984 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-19 20:07:41.048 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190741_046.mp4
+2026-02-19 20:07:41.049 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:07:41.052 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:07:41.450 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190741_046.mp4
+2026-02-19 20:07:41.465 +01:00 [DBG] WriteSample called, frameCount=0
+2026-02-19 20:07:41.482 +01:00 [DBG] WriteSample called, frameCount=1
+2026-02-19 20:07:41.494 +01:00 [DBG] WriteSample called, frameCount=2
+2026-02-19 20:07:41.505 +01:00 [DBG] WriteSample called, frameCount=3
+2026-02-19 20:07:41.518 +01:00 [DBG] WriteSample called, frameCount=4
+2026-02-19 20:07:41.530 +01:00 [DBG] WriteSample called, frameCount=5
+2026-02-19 20:07:41.544 +01:00 [DBG] WriteSample called, frameCount=6
+2026-02-19 20:07:41.556 +01:00 [DBG] WriteSample called, frameCount=7
+2026-02-19 20:07:41.567 +01:00 [DBG] WriteSample called, frameCount=8
+2026-02-19 20:07:41.579 +01:00 [DBG] WriteSample called, frameCount=9
+2026-02-19 20:07:41.590 +01:00 [DBG] WriteSample called, frameCount=10
+2026-02-19 20:07:41.601 +01:00 [DBG] WriteSample called, frameCount=11
+2026-02-19 20:07:41.612 +01:00 [DBG] WriteSample called, frameCount=12
+2026-02-19 20:07:41.623 +01:00 [DBG] WriteSample called, frameCount=13
+2026-02-19 20:07:41.635 +01:00 [DBG] WriteSample called, frameCount=14
+2026-02-19 20:07:41.645 +01:00 [DBG] WriteSample called, frameCount=15
+2026-02-19 20:07:41.656 +01:00 [DBG] WriteSample called, frameCount=16
+2026-02-19 20:07:41.667 +01:00 [DBG] WriteSample called, frameCount=17
+2026-02-19 20:07:41.679 +01:00 [DBG] WriteSample called, frameCount=18
+2026-02-19 20:07:41.689 +01:00 [DBG] WriteSample called, frameCount=19
+2026-02-19 20:07:41.700 +01:00 [DBG] WriteSample called, frameCount=20
+2026-02-19 20:07:41.711 +01:00 [DBG] WriteSample called, frameCount=21
+2026-02-19 20:07:44.004 +01:00 [DBG] WriteSample called, frameCount=22
+2026-02-19 20:07:44.014 +01:00 [DBG] WriteSample called, frameCount=23
+2026-02-19 20:07:44.045 +01:00 [DBG] WriteSample called, frameCount=24
+2026-02-19 20:07:44.056 +01:00 [DBG] WriteSample called, frameCount=25
+2026-02-19 20:07:44.087 +01:00 [DBG] WriteSample called, frameCount=26
+2026-02-19 20:07:44.098 +01:00 [DBG] WriteSample called, frameCount=27
+2026-02-19 20:07:44.128 +01:00 [DBG] WriteSample called, frameCount=28
+2026-02-19 20:07:44.139 +01:00 [DBG] WriteSample called, frameCount=29
+2026-02-19 20:07:44.170 +01:00 [DBG] WriteSample called, frameCount=30
+2026-02-19 20:07:44.181 +01:00 [DBG] WriteSample called, frameCount=31
+2026-02-19 20:07:44.211 +01:00 [DBG] WriteSample called, frameCount=32
+2026-02-19 20:07:44.222 +01:00 [DBG] WriteSample called, frameCount=33
+2026-02-19 20:07:44.255 +01:00 [DBG] WriteSample called, frameCount=34
+2026-02-19 20:07:44.266 +01:00 [DBG] WriteSample called, frameCount=35
+2026-02-19 20:07:44.298 +01:00 [DBG] WriteSample called, frameCount=36
+2026-02-19 20:07:44.310 +01:00 [DBG] WriteSample called, frameCount=37
+2026-02-19 20:07:44.342 +01:00 [DBG] WriteSample called, frameCount=38
+2026-02-19 20:07:44.354 +01:00 [DBG] WriteSample called, frameCount=39
+2026-02-19 20:07:44.383 +01:00 [DBG] WriteSample called, frameCount=40
+2026-02-19 20:07:44.394 +01:00 [DBG] WriteSample called, frameCount=41
+2026-02-19 20:07:44.520 +01:00 [DBG] WriteSample called, frameCount=42
+2026-02-19 20:07:44.531 +01:00 [DBG] WriteSample called, frameCount=43
+2026-02-19 20:07:44.563 +01:00 [DBG] WriteSample called, frameCount=44
+2026-02-19 20:07:44.575 +01:00 [DBG] WriteSample called, frameCount=45
+2026-02-19 20:07:44.606 +01:00 [DBG] WriteSample called, frameCount=46
+2026-02-19 20:07:44.617 +01:00 [DBG] WriteSample called, frameCount=47
+2026-02-19 20:07:44.648 +01:00 [DBG] WriteSample called, frameCount=48
+2026-02-19 20:07:44.660 +01:00 [DBG] WriteSample called, frameCount=49
+2026-02-19 20:07:44.690 +01:00 [DBG] WriteSample called, frameCount=50
+2026-02-19 20:07:44.701 +01:00 [DBG] WriteSample called, frameCount=51
+2026-02-19 20:07:44.735 +01:00 [DBG] WriteSample called, frameCount=52
+2026-02-19 20:07:44.746 +01:00 [DBG] WriteSample called, frameCount=53
+2026-02-19 20:07:44.775 +01:00 [DBG] WriteSample called, frameCount=54
+2026-02-19 20:07:44.786 +01:00 [DBG] WriteSample called, frameCount=55
+2026-02-19 20:07:44.938 +01:00 [DBG] WriteSample called, frameCount=56
+2026-02-19 20:07:44.949 +01:00 [DBG] WriteSample called, frameCount=57
+2026-02-19 20:07:44.980 +01:00 [DBG] WriteSample called, frameCount=58
+2026-02-19 20:07:44.991 +01:00 [DBG] WriteSample called, frameCount=59
+2026-02-19 20:07:45.021 +01:00 [DBG] WriteSample called, frameCount=60
+2026-02-19 20:07:45.032 +01:00 [DBG] WriteSample called, frameCount=61
+2026-02-19 20:07:45.063 +01:00 [DBG] WriteSample called, frameCount=62
+2026-02-19 20:07:45.075 +01:00 [DBG] WriteSample called, frameCount=63
+2026-02-19 20:07:45.107 +01:00 [DBG] WriteSample called, frameCount=64
+2026-02-19 20:07:45.118 +01:00 [DBG] WriteSample called, frameCount=65
+2026-02-19 20:07:45.149 +01:00 [DBG] WriteSample called, frameCount=66
+2026-02-19 20:07:45.160 +01:00 [DBG] WriteSample called, frameCount=67
+2026-02-19 20:07:45.294 +01:00 [DBG] WriteSample called, frameCount=68
+2026-02-19 20:07:45.305 +01:00 [DBG] WriteSample called, frameCount=69
+2026-02-19 20:07:45.449 +01:00 [DBG] WriteSample called, frameCount=70
+2026-02-19 20:07:45.460 +01:00 [DBG] WriteSample called, frameCount=71
+2026-02-19 20:07:45.493 +01:00 [DBG] WriteSample called, frameCount=72
+2026-02-19 20:07:45.505 +01:00 [DBG] WriteSample called, frameCount=73
+2026-02-19 20:07:45.538 +01:00 [DBG] WriteSample called, frameCount=74
+2026-02-19 20:07:45.549 +01:00 [DBG] WriteSample called, frameCount=75
+2026-02-19 20:07:45.582 +01:00 [DBG] WriteSample called, frameCount=76
+2026-02-19 20:07:45.593 +01:00 [DBG] WriteSample called, frameCount=77
+2026-02-19 20:07:45.627 +01:00 [DBG] WriteSample called, frameCount=78
+2026-02-19 20:07:45.639 +01:00 [DBG] WriteSample called, frameCount=79
+2026-02-19 20:07:45.669 +01:00 [DBG] WriteSample called, frameCount=80
+2026-02-19 20:07:45.680 +01:00 [DBG] WriteSample called, frameCount=81
+2026-02-19 20:07:45.712 +01:00 [DBG] WriteSample called, frameCount=82
+2026-02-19 20:07:45.722 +01:00 [DBG] WriteSample called, frameCount=83
+2026-02-19 20:07:45.751 +01:00 [DBG] WriteSample called, frameCount=84
+2026-02-19 20:07:45.762 +01:00 [DBG] WriteSample called, frameCount=85
+2026-02-19 20:07:45.795 +01:00 [DBG] WriteSample called, frameCount=86
+2026-02-19 20:07:45.805 +01:00 [DBG] WriteSample called, frameCount=87
+2026-02-19 20:07:45.840 +01:00 [DBG] WriteSample called, frameCount=88
+2026-02-19 20:07:45.850 +01:00 [DBG] WriteSample called, frameCount=89
+2026-02-19 20:07:45.881 +01:00 [DBG] WriteSample called, frameCount=90
+2026-02-19 20:07:45.892 +01:00 [DBG] WriteSample called, frameCount=91
+2026-02-19 20:07:45.923 +01:00 [DBG] WriteSample called, frameCount=92
+2026-02-19 20:07:45.934 +01:00 [DBG] WriteSample called, frameCount=93
+2026-02-19 20:07:45.965 +01:00 [DBG] WriteSample called, frameCount=94
+2026-02-19 20:07:45.976 +01:00 [DBG] WriteSample called, frameCount=95
+2026-02-19 20:07:46.008 +01:00 [DBG] WriteSample called, frameCount=96
+2026-02-19 20:07:46.018 +01:00 [DBG] WriteSample called, frameCount=97
+2026-02-19 20:07:46.052 +01:00 [DBG] WriteSample called, frameCount=98
+2026-02-19 20:07:46.062 +01:00 [DBG] WriteSample called, frameCount=99
+2026-02-19 20:07:46.096 +01:00 [DBG] WriteSample called, frameCount=100
+2026-02-19 20:07:46.107 +01:00 [DBG] WriteSample called, frameCount=101
+2026-02-19 20:07:46.139 +01:00 [DBG] WriteSample called, frameCount=102
+2026-02-19 20:07:46.149 +01:00 [DBG] WriteSample called, frameCount=103
+2026-02-19 20:07:46.183 +01:00 [DBG] WriteSample called, frameCount=104
+2026-02-19 20:07:46.194 +01:00 [DBG] WriteSample called, frameCount=105
+2026-02-19 20:07:46.225 +01:00 [DBG] WriteSample called, frameCount=106
+2026-02-19 20:07:46.236 +01:00 [DBG] WriteSample called, frameCount=107
+2026-02-19 20:07:46.265 +01:00 [DBG] WriteSample called, frameCount=108
+2026-02-19 20:07:46.276 +01:00 [DBG] WriteSample called, frameCount=109
+2026-02-19 20:07:46.310 +01:00 [DBG] WriteSample called, frameCount=110
+2026-02-19 20:07:46.320 +01:00 [DBG] WriteSample called, frameCount=111
+2026-02-19 20:07:46.353 +01:00 [DBG] WriteSample called, frameCount=112
+2026-02-19 20:07:46.363 +01:00 [DBG] WriteSample called, frameCount=113
+2026-02-19 20:07:46.394 +01:00 [DBG] WriteSample called, frameCount=114
+2026-02-19 20:07:46.404 +01:00 [DBG] WriteSample called, frameCount=115
+2026-02-19 20:07:46.439 +01:00 [DBG] WriteSample called, frameCount=116
+2026-02-19 20:07:46.449 +01:00 [DBG] WriteSample called, frameCount=117
+2026-02-19 20:07:46.484 +01:00 [DBG] WriteSample called, frameCount=118
+2026-02-19 20:07:46.494 +01:00 [DBG] WriteSample called, frameCount=119
+2026-02-19 20:07:46.525 +01:00 [DBG] WriteSample called, frameCount=120
+2026-02-19 20:07:46.536 +01:00 [DBG] WriteSample called, frameCount=121
+2026-02-19 20:07:46.568 +01:00 [DBG] WriteSample called, frameCount=122
+2026-02-19 20:07:46.579 +01:00 [DBG] WriteSample called, frameCount=123
+2026-02-19 20:07:46.615 +01:00 [DBG] WriteSample called, frameCount=124
+2026-02-19 20:07:46.625 +01:00 [DBG] WriteSample called, frameCount=125
+2026-02-19 20:07:46.661 +01:00 [DBG] WriteSample called, frameCount=126
+2026-02-19 20:07:46.672 +01:00 [DBG] WriteSample called, frameCount=127
+2026-02-19 20:07:46.705 +01:00 [DBG] WriteSample called, frameCount=128
+2026-02-19 20:07:46.716 +01:00 [DBG] WriteSample called, frameCount=129
+2026-02-19 20:07:46.749 +01:00 [DBG] WriteSample called, frameCount=130
+2026-02-19 20:07:46.760 +01:00 [DBG] WriteSample called, frameCount=131
+2026-02-19 20:07:46.794 +01:00 [DBG] WriteSample called, frameCount=132
+2026-02-19 20:07:46.804 +01:00 [DBG] WriteSample called, frameCount=133
+2026-02-19 20:07:46.837 +01:00 [DBG] WriteSample called, frameCount=134
+2026-02-19 20:07:46.847 +01:00 [DBG] WriteSample called, frameCount=135
+2026-02-19 20:07:46.879 +01:00 [DBG] WriteSample called, frameCount=136
+2026-02-19 20:07:46.889 +01:00 [DBG] WriteSample called, frameCount=137
+2026-02-19 20:07:46.924 +01:00 [DBG] WriteSample called, frameCount=138
+2026-02-19 20:07:46.934 +01:00 [DBG] WriteSample called, frameCount=139
+2026-02-19 20:07:46.968 +01:00 [DBG] WriteSample called, frameCount=140
+2026-02-19 20:07:46.978 +01:00 [DBG] WriteSample called, frameCount=141
+2026-02-19 20:07:47.012 +01:00 [DBG] WriteSample called, frameCount=142
+2026-02-19 20:07:47.023 +01:00 [DBG] WriteSample called, frameCount=143
+2026-02-19 20:07:47.055 +01:00 [DBG] WriteSample called, frameCount=144
+2026-02-19 20:07:47.065 +01:00 [DBG] WriteSample called, frameCount=145
+2026-02-19 20:07:47.098 +01:00 [DBG] WriteSample called, frameCount=146
+2026-02-19 20:07:47.109 +01:00 [DBG] WriteSample called, frameCount=147
+2026-02-19 20:07:47.143 +01:00 [DBG] WriteSample called, frameCount=148
+2026-02-19 20:07:47.153 +01:00 [DBG] WriteSample called, frameCount=149
+2026-02-19 20:07:47.170 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190741_046.mp4 ("00:00:05")
+2026-02-19 20:07:47.172 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190741_046.mp4
+2026-02-19 20:07:47.176 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190747_176.mp4
+2026-02-19 20:07:47.176 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:07:47.176 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:07:47.386 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190747_176.mp4
+2026-02-19 20:07:47.396 +01:00 [DBG] WriteSample called, frameCount=0
+2026-02-19 20:07:47.407 +01:00 [DBG] WriteSample called, frameCount=1
+2026-02-19 20:07:47.417 +01:00 [DBG] WriteSample called, frameCount=2
+2026-02-19 20:07:47.427 +01:00 [DBG] WriteSample called, frameCount=3
+2026-02-19 20:07:47.437 +01:00 [DBG] WriteSample called, frameCount=4
+2026-02-19 20:07:47.448 +01:00 [DBG] WriteSample called, frameCount=5
+2026-02-19 20:07:47.458 +01:00 [DBG] WriteSample called, frameCount=6
+2026-02-19 20:07:47.468 +01:00 [DBG] WriteSample called, frameCount=7
+2026-02-19 20:07:47.479 +01:00 [DBG] WriteSample called, frameCount=8
+2026-02-19 20:07:47.490 +01:00 [DBG] WriteSample called, frameCount=9
+2026-02-19 20:07:47.500 +01:00 [DBG] WriteSample called, frameCount=10
+2026-02-19 20:07:47.511 +01:00 [DBG] WriteSample called, frameCount=11
+2026-02-19 20:07:47.716 +01:00 [DBG] WriteSample called, frameCount=12
+2026-02-19 20:07:47.726 +01:00 [DBG] WriteSample called, frameCount=13
+2026-02-19 20:07:47.915 +01:00 [DBG] WriteSample called, frameCount=14
+2026-02-19 20:07:47.925 +01:00 [DBG] WriteSample called, frameCount=15
+2026-02-19 20:07:47.958 +01:00 [DBG] WriteSample called, frameCount=16
+2026-02-19 20:07:47.968 +01:00 [DBG] WriteSample called, frameCount=17
+2026-02-19 20:07:48.000 +01:00 [DBG] WriteSample called, frameCount=18
+2026-02-19 20:07:48.011 +01:00 [DBG] WriteSample called, frameCount=19
+2026-02-19 20:07:48.043 +01:00 [DBG] WriteSample called, frameCount=20
+2026-02-19 20:07:48.053 +01:00 [DBG] WriteSample called, frameCount=21
+2026-02-19 20:07:48.084 +01:00 [DBG] WriteSample called, frameCount=22
+2026-02-19 20:07:48.094 +01:00 [DBG] WriteSample called, frameCount=23
+2026-02-19 20:07:48.126 +01:00 [DBG] WriteSample called, frameCount=24
+2026-02-19 20:07:48.137 +01:00 [DBG] WriteSample called, frameCount=25
+2026-02-19 20:07:48.168 +01:00 [DBG] WriteSample called, frameCount=26
+2026-02-19 20:07:48.179 +01:00 [DBG] WriteSample called, frameCount=27
+2026-02-19 20:07:48.211 +01:00 [DBG] WriteSample called, frameCount=28
+2026-02-19 20:07:48.221 +01:00 [DBG] WriteSample called, frameCount=29
+2026-02-19 20:07:48.256 +01:00 [DBG] WriteSample called, frameCount=30
+2026-02-19 20:07:48.266 +01:00 [DBG] WriteSample called, frameCount=31
+2026-02-19 20:07:48.300 +01:00 [DBG] WriteSample called, frameCount=32
+2026-02-19 20:07:48.311 +01:00 [DBG] WriteSample called, frameCount=33
+2026-02-19 20:07:48.344 +01:00 [DBG] WriteSample called, frameCount=34
+2026-02-19 20:07:48.356 +01:00 [DBG] WriteSample called, frameCount=35
+2026-02-19 20:07:48.394 +01:00 [DBG] WriteSample called, frameCount=36
+2026-02-19 20:07:48.406 +01:00 [DBG] WriteSample called, frameCount=37
+2026-02-19 20:07:48.437 +01:00 [DBG] WriteSample called, frameCount=38
+2026-02-19 20:07:48.449 +01:00 [DBG] WriteSample called, frameCount=39
+2026-02-19 20:07:48.478 +01:00 [DBG] WriteSample called, frameCount=40
+2026-02-19 20:07:48.489 +01:00 [DBG] WriteSample called, frameCount=41
+2026-02-19 20:07:48.521 +01:00 [DBG] WriteSample called, frameCount=42
+2026-02-19 20:07:48.532 +01:00 [DBG] WriteSample called, frameCount=43
+2026-02-19 20:07:48.568 +01:00 [DBG] WriteSample called, frameCount=44
+2026-02-19 20:07:48.579 +01:00 [DBG] WriteSample called, frameCount=45
+2026-02-19 20:07:48.612 +01:00 [DBG] WriteSample called, frameCount=46
+2026-02-19 20:07:48.622 +01:00 [DBG] WriteSample called, frameCount=47
+2026-02-19 20:07:48.655 +01:00 [DBG] WriteSample called, frameCount=48
+2026-02-19 20:07:48.665 +01:00 [DBG] WriteSample called, frameCount=49
+2026-02-19 20:07:48.699 +01:00 [DBG] WriteSample called, frameCount=50
+2026-02-19 20:07:48.710 +01:00 [DBG] WriteSample called, frameCount=51
+2026-02-19 20:07:48.742 +01:00 [DBG] WriteSample called, frameCount=52
+2026-02-19 20:07:48.753 +01:00 [DBG] WriteSample called, frameCount=53
+2026-02-19 20:07:48.785 +01:00 [DBG] WriteSample called, frameCount=54
+2026-02-19 20:07:48.795 +01:00 [DBG] WriteSample called, frameCount=55
+2026-02-19 20:07:48.827 +01:00 [DBG] WriteSample called, frameCount=56
+2026-02-19 20:07:48.838 +01:00 [DBG] WriteSample called, frameCount=57
+2026-02-19 20:07:49.048 +01:00 [DBG] WriteSample called, frameCount=58
+2026-02-19 20:07:49.058 +01:00 [DBG] WriteSample called, frameCount=59
+2026-02-19 20:07:49.091 +01:00 [DBG] WriteSample called, frameCount=60
+2026-02-19 20:07:49.101 +01:00 [DBG] WriteSample called, frameCount=61
+2026-02-19 20:07:49.135 +01:00 [DBG] WriteSample called, frameCount=62
+2026-02-19 20:07:49.144 +01:00 [DBG] WriteSample called, frameCount=63
+2026-02-19 20:07:49.178 +01:00 [DBG] WriteSample called, frameCount=64
+2026-02-19 20:07:49.189 +01:00 [DBG] WriteSample called, frameCount=65
+2026-02-19 20:07:49.877 +01:00 [DBG] WriteSample called, frameCount=66
+2026-02-19 20:07:49.889 +01:00 [DBG] WriteSample called, frameCount=67
+2026-02-19 20:07:49.920 +01:00 [DBG] WriteSample called, frameCount=68
+2026-02-19 20:07:49.931 +01:00 [DBG] WriteSample called, frameCount=69
+2026-02-19 20:07:49.962 +01:00 [DBG] WriteSample called, frameCount=70
+2026-02-19 20:07:49.973 +01:00 [DBG] WriteSample called, frameCount=71
+2026-02-19 20:07:50.007 +01:00 [DBG] WriteSample called, frameCount=72
+2026-02-19 20:07:50.017 +01:00 [DBG] WriteSample called, frameCount=73
+2026-02-19 20:07:50.050 +01:00 [DBG] WriteSample called, frameCount=74
+2026-02-19 20:07:50.061 +01:00 [DBG] WriteSample called, frameCount=75
+2026-02-19 20:07:50.095 +01:00 [DBG] WriteSample called, frameCount=76
+2026-02-19 20:07:50.106 +01:00 [DBG] WriteSample called, frameCount=77
+2026-02-19 20:07:50.139 +01:00 [DBG] WriteSample called, frameCount=78
+2026-02-19 20:07:50.150 +01:00 [DBG] WriteSample called, frameCount=79
+2026-02-19 20:07:50.183 +01:00 [DBG] WriteSample called, frameCount=80
+2026-02-19 20:07:50.193 +01:00 [DBG] WriteSample called, frameCount=81
+2026-02-19 20:07:50.227 +01:00 [DBG] WriteSample called, frameCount=82
+2026-02-19 20:07:50.237 +01:00 [DBG] WriteSample called, frameCount=83
+2026-02-19 20:07:50.330 +01:00 [DBG] WriteSample called, frameCount=84
+2026-02-19 20:07:50.341 +01:00 [DBG] WriteSample called, frameCount=85
+2026-02-19 20:07:50.375 +01:00 [DBG] WriteSample called, frameCount=86
+2026-02-19 20:07:50.385 +01:00 [DBG] WriteSample called, frameCount=87
+2026-02-19 20:07:51.510 +01:00 [DBG] WriteSample called, frameCount=88
+2026-02-19 20:07:51.520 +01:00 [DBG] WriteSample called, frameCount=89
+2026-02-19 20:07:51.551 +01:00 [DBG] WriteSample called, frameCount=90
+2026-02-19 20:07:51.561 +01:00 [DBG] WriteSample called, frameCount=91
+2026-02-19 20:07:51.595 +01:00 [DBG] WriteSample called, frameCount=92
+2026-02-19 20:07:51.605 +01:00 [DBG] WriteSample called, frameCount=93
+2026-02-19 20:07:51.637 +01:00 [DBG] WriteSample called, frameCount=94
+2026-02-19 20:07:51.648 +01:00 [DBG] WriteSample called, frameCount=95
+2026-02-19 20:07:51.680 +01:00 [DBG] WriteSample called, frameCount=96
+2026-02-19 20:07:51.691 +01:00 [DBG] WriteSample called, frameCount=97
+2026-02-19 20:07:51.725 +01:00 [DBG] WriteSample called, frameCount=98
+2026-02-19 20:07:51.735 +01:00 [DBG] WriteSample called, frameCount=99
+2026-02-19 20:07:51.770 +01:00 [DBG] WriteSample called, frameCount=100
+2026-02-19 20:07:51.781 +01:00 [DBG] WriteSample called, frameCount=101
+2026-02-19 20:07:51.815 +01:00 [DBG] WriteSample called, frameCount=102
+2026-02-19 20:07:51.828 +01:00 [DBG] WriteSample called, frameCount=103
+2026-02-19 20:07:51.860 +01:00 [DBG] WriteSample called, frameCount=104
+2026-02-19 20:07:51.870 +01:00 [DBG] WriteSample called, frameCount=105
+2026-02-19 20:07:51.904 +01:00 [DBG] WriteSample called, frameCount=106
+2026-02-19 20:07:51.914 +01:00 [DBG] WriteSample called, frameCount=107
+2026-02-19 20:07:51.948 +01:00 [DBG] WriteSample called, frameCount=108
+2026-02-19 20:07:51.959 +01:00 [DBG] WriteSample called, frameCount=109
+2026-02-19 20:07:51.991 +01:00 [DBG] WriteSample called, frameCount=110
+2026-02-19 20:07:52.002 +01:00 [DBG] WriteSample called, frameCount=111
+2026-02-19 20:07:52.034 +01:00 [DBG] WriteSample called, frameCount=112
+2026-02-19 20:07:52.044 +01:00 [DBG] WriteSample called, frameCount=113
+2026-02-19 20:07:52.079 +01:00 [DBG] WriteSample called, frameCount=114
+2026-02-19 20:07:52.089 +01:00 [DBG] WriteSample called, frameCount=115
+2026-02-19 20:07:52.179 +01:00 [DBG] WriteSample called, frameCount=116
+2026-02-19 20:07:52.190 +01:00 [DBG] WriteSample called, frameCount=117
+2026-02-19 20:07:52.368 +01:00 [DBG] WriteSample called, frameCount=118
+2026-02-19 20:07:52.378 +01:00 [DBG] WriteSample called, frameCount=119
+2026-02-19 20:07:52.409 +01:00 [DBG] WriteSample called, frameCount=120
+2026-02-19 20:07:52.419 +01:00 [DBG] WriteSample called, frameCount=121
+2026-02-19 20:07:52.453 +01:00 [DBG] WriteSample called, frameCount=122
+2026-02-19 20:07:52.463 +01:00 [DBG] WriteSample called, frameCount=123
+2026-02-19 20:07:52.495 +01:00 [DBG] WriteSample called, frameCount=124
+2026-02-19 20:07:52.506 +01:00 [DBG] WriteSample called, frameCount=125
+2026-02-19 20:07:52.538 +01:00 [DBG] WriteSample called, frameCount=126
+2026-02-19 20:07:52.549 +01:00 [DBG] WriteSample called, frameCount=127
+2026-02-19 20:07:52.583 +01:00 [DBG] WriteSample called, frameCount=128
+2026-02-19 20:07:52.593 +01:00 [DBG] WriteSample called, frameCount=129
+2026-02-19 20:07:52.623 +01:00 [DBG] WriteSample called, frameCount=130
+2026-02-19 20:07:52.633 +01:00 [DBG] WriteSample called, frameCount=131
+2026-02-19 20:07:52.665 +01:00 [DBG] WriteSample called, frameCount=132
+2026-02-19 20:07:52.675 +01:00 [DBG] WriteSample called, frameCount=133
+2026-02-19 20:07:52.705 +01:00 [DBG] WriteSample called, frameCount=134
+2026-02-19 20:07:52.716 +01:00 [DBG] WriteSample called, frameCount=135
+2026-02-19 20:07:52.747 +01:00 [DBG] WriteSample called, frameCount=136
+2026-02-19 20:07:52.758 +01:00 [DBG] WriteSample called, frameCount=137
+2026-02-19 20:07:52.786 +01:00 [DBG] WriteSample called, frameCount=138
+2026-02-19 20:07:52.797 +01:00 [DBG] WriteSample called, frameCount=139
+2026-02-19 20:07:52.936 +01:00 [DBG] WriteSample called, frameCount=140
+2026-02-19 20:07:52.946 +01:00 [DBG] WriteSample called, frameCount=141
+2026-02-19 20:07:52.980 +01:00 [DBG] WriteSample called, frameCount=142
+2026-02-19 20:07:52.990 +01:00 [DBG] WriteSample called, frameCount=143
+2026-02-19 20:07:53.020 +01:00 [DBG] WriteSample called, frameCount=144
+2026-02-19 20:07:53.030 +01:00 [DBG] WriteSample called, frameCount=145
+2026-02-19 20:07:53.060 +01:00 [DBG] WriteSample called, frameCount=146
+2026-02-19 20:07:53.071 +01:00 [DBG] WriteSample called, frameCount=147
+2026-02-19 20:07:53.104 +01:00 [DBG] WriteSample called, frameCount=148
+2026-02-19 20:07:53.114 +01:00 [DBG] WriteSample called, frameCount=149
+2026-02-19 20:07:53.127 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190747_176.mp4 ("00:00:05")
+2026-02-19 20:07:53.127 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190747_176.mp4
+2026-02-19 20:07:53.140 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190753_140.mp4
+2026-02-19 20:07:53.140 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:07:53.140 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:07:53.338 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190753_140.mp4
+2026-02-19 20:07:53.347 +01:00 [DBG] WriteSample called, frameCount=0
+2026-02-19 20:07:53.358 +01:00 [DBG] WriteSample called, frameCount=1
+2026-02-19 20:07:53.368 +01:00 [DBG] WriteSample called, frameCount=2
+2026-02-19 20:07:53.379 +01:00 [DBG] WriteSample called, frameCount=3
+2026-02-19 20:07:53.390 +01:00 [DBG] WriteSample called, frameCount=4
+2026-02-19 20:07:53.400 +01:00 [DBG] WriteSample called, frameCount=5
+2026-02-19 20:07:53.412 +01:00 [DBG] WriteSample called, frameCount=6
+2026-02-19 20:07:53.422 +01:00 [DBG] WriteSample called, frameCount=7
+2026-02-19 20:07:53.433 +01:00 [DBG] WriteSample called, frameCount=8
+2026-02-19 20:07:53.443 +01:00 [DBG] WriteSample called, frameCount=9
+2026-02-19 20:07:53.453 +01:00 [DBG] WriteSample called, frameCount=10
+2026-02-19 20:07:53.463 +01:00 [DBG] WriteSample called, frameCount=11
+2026-02-19 20:07:53.474 +01:00 [DBG] WriteSample called, frameCount=12
+2026-02-19 20:07:53.484 +01:00 [DBG] WriteSample called, frameCount=13
+2026-02-19 20:07:53.505 +01:00 [DBG] WriteSample called, frameCount=14
+2026-02-19 20:07:53.516 +01:00 [DBG] WriteSample called, frameCount=15
+2026-02-19 20:07:53.622 +01:00 [DBG] WriteSample called, frameCount=16
+2026-02-19 20:07:53.632 +01:00 [DBG] WriteSample called, frameCount=17
+2026-02-19 20:07:53.662 +01:00 [DBG] WriteSample called, frameCount=18
+2026-02-19 20:07:53.673 +01:00 [DBG] WriteSample called, frameCount=19
+2026-02-19 20:07:53.702 +01:00 [DBG] WriteSample called, frameCount=20
+2026-02-19 20:07:53.712 +01:00 [DBG] WriteSample called, frameCount=21
+2026-02-19 20:07:53.741 +01:00 [DBG] WriteSample called, frameCount=22
+2026-02-19 20:07:53.752 +01:00 [DBG] WriteSample called, frameCount=23
+2026-02-19 20:07:53.784 +01:00 [DBG] WriteSample called, frameCount=24
+2026-02-19 20:07:53.795 +01:00 [DBG] WriteSample called, frameCount=25
+2026-02-19 20:07:53.826 +01:00 [DBG] WriteSample called, frameCount=26
+2026-02-19 20:07:53.836 +01:00 [DBG] WriteSample called, frameCount=27
+2026-02-19 20:07:53.870 +01:00 [DBG] WriteSample called, frameCount=28
+2026-02-19 20:07:53.880 +01:00 [DBG] WriteSample called, frameCount=29
+2026-02-19 20:07:53.914 +01:00 [DBG] WriteSample called, frameCount=30
+2026-02-19 20:07:53.925 +01:00 [DBG] WriteSample called, frameCount=31
+2026-02-19 20:07:53.958 +01:00 [DBG] WriteSample called, frameCount=32
+2026-02-19 20:07:53.968 +01:00 [DBG] WriteSample called, frameCount=33
+2026-02-19 20:07:53.998 +01:00 [DBG] WriteSample called, frameCount=34
+2026-02-19 20:07:54.008 +01:00 [DBG] WriteSample called, frameCount=35
+2026-02-19 20:07:54.037 +01:00 [DBG] WriteSample called, frameCount=36
+2026-02-19 20:07:54.048 +01:00 [DBG] WriteSample called, frameCount=37
+2026-02-19 20:07:54.080 +01:00 [DBG] WriteSample called, frameCount=38
+2026-02-19 20:07:54.091 +01:00 [DBG] WriteSample called, frameCount=39
+2026-02-19 20:07:54.122 +01:00 [DBG] WriteSample called, frameCount=40
+2026-02-19 20:07:54.132 +01:00 [DBG] WriteSample called, frameCount=41
+2026-02-19 20:07:54.167 +01:00 [DBG] WriteSample called, frameCount=42
+2026-02-19 20:07:54.178 +01:00 [DBG] WriteSample called, frameCount=43
+2026-02-19 20:07:54.211 +01:00 [DBG] WriteSample called, frameCount=44
+2026-02-19 20:07:54.222 +01:00 [DBG] WriteSample called, frameCount=45
+2026-02-19 20:07:54.258 +01:00 [DBG] WriteSample called, frameCount=46
+2026-02-19 20:07:54.269 +01:00 [DBG] WriteSample called, frameCount=47
+2026-02-19 20:07:54.302 +01:00 [DBG] WriteSample called, frameCount=48
+2026-02-19 20:07:54.313 +01:00 [DBG] WriteSample called, frameCount=49
+2026-02-19 20:07:54.346 +01:00 [DBG] WriteSample called, frameCount=50
+2026-02-19 20:07:54.359 +01:00 [DBG] WriteSample called, frameCount=51
+2026-02-19 20:07:54.389 +01:00 [DBG] WriteSample called, frameCount=52
+2026-02-19 20:07:54.400 +01:00 [DBG] WriteSample called, frameCount=53
+2026-02-19 20:07:54.433 +01:00 [DBG] WriteSample called, frameCount=54
+2026-02-19 20:07:54.444 +01:00 [DBG] WriteSample called, frameCount=55
+2026-02-19 20:07:54.480 +01:00 [DBG] WriteSample called, frameCount=56
+2026-02-19 20:07:54.491 +01:00 [DBG] WriteSample called, frameCount=57
+2026-02-19 20:07:54.521 +01:00 [DBG] WriteSample called, frameCount=58
+2026-02-19 20:07:54.532 +01:00 [DBG] WriteSample called, frameCount=59
+2026-02-19 20:07:54.566 +01:00 [DBG] WriteSample called, frameCount=60
+2026-02-19 20:07:54.577 +01:00 [DBG] WriteSample called, frameCount=61
+2026-02-19 20:07:54.609 +01:00 [DBG] WriteSample called, frameCount=62
+2026-02-19 20:07:54.620 +01:00 [DBG] WriteSample called, frameCount=63
+2026-02-19 20:07:54.652 +01:00 [DBG] WriteSample called, frameCount=64
+2026-02-19 20:07:54.663 +01:00 [DBG] WriteSample called, frameCount=65
+2026-02-19 20:07:54.697 +01:00 [DBG] WriteSample called, frameCount=66
+2026-02-19 20:07:54.710 +01:00 [DBG] WriteSample called, frameCount=67
+2026-02-19 20:07:54.741 +01:00 [DBG] WriteSample called, frameCount=68
+2026-02-19 20:07:54.752 +01:00 [DBG] WriteSample called, frameCount=69
+2026-02-19 20:07:54.788 +01:00 [DBG] WriteSample called, frameCount=70
+2026-02-19 20:07:54.799 +01:00 [DBG] WriteSample called, frameCount=71
+2026-02-19 20:07:54.831 +01:00 [DBG] WriteSample called, frameCount=72
+2026-02-19 20:07:54.841 +01:00 [DBG] WriteSample called, frameCount=73
+2026-02-19 20:07:54.875 +01:00 [DBG] WriteSample called, frameCount=74
+2026-02-19 20:07:54.887 +01:00 [DBG] WriteSample called, frameCount=75
+2026-02-19 20:07:54.915 +01:00 [DBG] WriteSample called, frameCount=76
+2026-02-19 20:07:54.925 +01:00 [DBG] WriteSample called, frameCount=77
+2026-02-19 20:07:54.958 +01:00 [DBG] WriteSample called, frameCount=78
+2026-02-19 20:07:54.971 +01:00 [DBG] WriteSample called, frameCount=79
+2026-02-19 20:07:54.995 +01:00 [DBG] WriteSample called, frameCount=80
+2026-02-19 20:07:55.005 +01:00 [DBG] WriteSample called, frameCount=81
+2026-02-19 20:07:55.037 +01:00 [DBG] WriteSample called, frameCount=82
+2026-02-19 20:07:55.048 +01:00 [DBG] WriteSample called, frameCount=83
+2026-02-19 20:07:55.082 +01:00 [DBG] WriteSample called, frameCount=84
+2026-02-19 20:07:55.092 +01:00 [DBG] WriteSample called, frameCount=85
+2026-02-19 20:07:55.125 +01:00 [DBG] WriteSample called, frameCount=86
+2026-02-19 20:07:55.136 +01:00 [DBG] WriteSample called, frameCount=87
+2026-02-19 20:07:55.169 +01:00 [DBG] WriteSample called, frameCount=88
+2026-02-19 20:07:55.179 +01:00 [DBG] WriteSample called, frameCount=89
+2026-02-19 20:07:55.234 +01:00 [DBG] WriteSample called, frameCount=90
+2026-02-19 20:07:55.244 +01:00 [DBG] WriteSample called, frameCount=91
+2026-02-19 20:07:55.278 +01:00 [DBG] WriteSample called, frameCount=92
+2026-02-19 20:07:55.288 +01:00 [DBG] WriteSample called, frameCount=93
+2026-02-19 20:07:55.320 +01:00 [DBG] WriteSample called, frameCount=94
+2026-02-19 20:07:55.330 +01:00 [DBG] WriteSample called, frameCount=95
+2026-02-19 20:07:55.362 +01:00 [DBG] WriteSample called, frameCount=96
+2026-02-19 20:07:55.373 +01:00 [DBG] WriteSample called, frameCount=97
+2026-02-19 20:07:55.407 +01:00 [DBG] WriteSample called, frameCount=98
+2026-02-19 20:07:55.417 +01:00 [DBG] WriteSample called, frameCount=99
+2026-02-19 20:07:55.549 +01:00 [DBG] WriteSample called, frameCount=100
+2026-02-19 20:07:55.561 +01:00 [DBG] WriteSample called, frameCount=101
+2026-02-19 20:07:55.590 +01:00 [DBG] WriteSample called, frameCount=102
+2026-02-19 20:07:55.600 +01:00 [DBG] WriteSample called, frameCount=103
+2026-02-19 20:07:55.633 +01:00 [DBG] WriteSample called, frameCount=104
+2026-02-19 20:07:55.643 +01:00 [DBG] WriteSample called, frameCount=105
+2026-02-19 20:07:55.674 +01:00 [DBG] WriteSample called, frameCount=106
+2026-02-19 20:07:55.685 +01:00 [DBG] WriteSample called, frameCount=107
+2026-02-19 20:07:55.715 +01:00 [DBG] WriteSample called, frameCount=108
+2026-02-19 20:07:55.725 +01:00 [DBG] WriteSample called, frameCount=109
+2026-02-19 20:07:55.757 +01:00 [DBG] WriteSample called, frameCount=110
+2026-02-19 20:07:55.767 +01:00 [DBG] WriteSample called, frameCount=111
+2026-02-19 20:07:55.801 +01:00 [DBG] WriteSample called, frameCount=112
+2026-02-19 20:07:55.811 +01:00 [DBG] WriteSample called, frameCount=113
+2026-02-19 20:07:55.841 +01:00 [DBG] WriteSample called, frameCount=114
+2026-02-19 20:07:55.852 +01:00 [DBG] WriteSample called, frameCount=115
+2026-02-19 20:07:55.999 +01:00 [DBG] WriteSample called, frameCount=116
+2026-02-19 20:07:56.010 +01:00 [DBG] WriteSample called, frameCount=117
+2026-02-19 20:07:56.043 +01:00 [DBG] WriteSample called, frameCount=118
+2026-02-19 20:07:56.053 +01:00 [DBG] WriteSample called, frameCount=119
+2026-02-19 20:07:56.087 +01:00 [DBG] WriteSample called, frameCount=120
+2026-02-19 20:07:56.098 +01:00 [DBG] WriteSample called, frameCount=121
+2026-02-19 20:07:56.129 +01:00 [DBG] WriteSample called, frameCount=122
+2026-02-19 20:07:56.139 +01:00 [DBG] WriteSample called, frameCount=123
+2026-02-19 20:07:56.170 +01:00 [DBG] WriteSample called, frameCount=124
+2026-02-19 20:07:56.181 +01:00 [DBG] WriteSample called, frameCount=125
+2026-02-19 20:07:56.218 +01:00 [DBG] WriteSample called, frameCount=126
+2026-02-19 20:07:56.229 +01:00 [DBG] WriteSample called, frameCount=127
+2026-02-19 20:07:56.262 +01:00 [DBG] WriteSample called, frameCount=128
+2026-02-19 20:07:56.272 +01:00 [DBG] WriteSample called, frameCount=129
+2026-02-19 20:07:56.305 +01:00 [DBG] WriteSample called, frameCount=130
+2026-02-19 20:07:56.315 +01:00 [DBG] WriteSample called, frameCount=131
+2026-02-19 20:07:56.349 +01:00 [DBG] WriteSample called, frameCount=132
+2026-02-19 20:07:56.359 +01:00 [DBG] WriteSample called, frameCount=133
+2026-02-19 20:07:56.393 +01:00 [DBG] WriteSample called, frameCount=134
+2026-02-19 20:07:56.403 +01:00 [DBG] WriteSample called, frameCount=135
+2026-02-19 20:07:56.539 +01:00 [DBG] WriteSample called, frameCount=136
+2026-02-19 20:07:56.549 +01:00 [DBG] WriteSample called, frameCount=137
+2026-02-19 20:07:56.636 +01:00 [DBG] WriteSample called, frameCount=138
+2026-02-19 20:07:56.647 +01:00 [DBG] WriteSample called, frameCount=139
+2026-02-19 20:07:56.680 +01:00 [DBG] WriteSample called, frameCount=140
+2026-02-19 20:07:56.690 +01:00 [DBG] WriteSample called, frameCount=141
+2026-02-19 20:07:56.721 +01:00 [DBG] WriteSample called, frameCount=142
+2026-02-19 20:07:56.731 +01:00 [DBG] WriteSample called, frameCount=143
+2026-02-19 20:07:56.764 +01:00 [DBG] WriteSample called, frameCount=144
+2026-02-19 20:07:56.775 +01:00 [DBG] WriteSample called, frameCount=145
+2026-02-19 20:07:56.809 +01:00 [DBG] WriteSample called, frameCount=146
+2026-02-19 20:07:56.819 +01:00 [DBG] WriteSample called, frameCount=147
+2026-02-19 20:07:56.852 +01:00 [DBG] WriteSample called, frameCount=148
+2026-02-19 20:07:56.863 +01:00 [DBG] WriteSample called, frameCount=149
+2026-02-19 20:07:56.876 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190753_140.mp4 ("00:00:05")
+2026-02-19 20:07:56.876 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190753_140.mp4
+2026-02-19 20:07:56.885 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190756_885.mp4
+2026-02-19 20:07:56.885 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-19 20:07:56.886 +01:00 [DBG] Sink writer created successfully.
+2026-02-19 20:07:57.099 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260219_190756_885.mp4
+2026-02-19 20:07:57.108 +01:00 [DBG] WriteSample called, frameCount=0
+2026-02-19 20:07:57.120 +01:00 [DBG] WriteSample called, frameCount=1
+2026-02-19 20:07:57.132 +01:00 [DBG] WriteSample called, frameCount=2
+2026-02-19 20:07:57.142 +01:00 [DBG] WriteSample called, frameCount=3
+2026-02-19 20:07:57.152 +01:00 [DBG] WriteSample called, frameCount=4
+2026-02-19 20:07:57.163 +01:00 [DBG] WriteSample called, frameCount=5
+2026-02-19 20:07:57.174 +01:00 [DBG] WriteSample called, frameCount=6
+2026-02-19 20:07:57.184 +01:00 [DBG] WriteSample called, frameCount=7
+2026-02-19 20:07:57.195 +01:00 [DBG] WriteSample called, frameCount=8
+2026-02-19 20:07:57.205 +01:00 [DBG] WriteSample called, frameCount=9
+2026-02-19 20:07:57.216 +01:00 [DBG] WriteSample called, frameCount=10
+2026-02-19 20:07:57.227 +01:00 [DBG] WriteSample called, frameCount=11
+2026-02-19 20:07:57.237 +01:00 [DBG] WriteSample called, frameCount=12
+2026-02-19 20:07:57.248 +01:00 [DBG] WriteSample called, frameCount=13
+2026-02-19 20:07:57.258 +01:00 [DBG] WriteSample called, frameCount=14
+2026-02-19 20:07:57.269 +01:00 [DBG] WriteSample called, frameCount=15
+2026-02-19 20:07:57.279 +01:00 [DBG] WriteSample called, frameCount=16
+2026-02-19 20:07:57.290 +01:00 [DBG] WriteSample called, frameCount=17
+2026-02-19 20:07:57.301 +01:00 [DBG] WriteSample called, frameCount=18
+2026-02-19 20:07:57.311 +01:00 [DBG] WriteSample called, frameCount=19
+2026-02-19 20:07:57.509 +01:00 [DBG] WriteSample called, frameCount=20
+2026-02-19 20:07:57.519 +01:00 [DBG] WriteSample called, frameCount=21
+2026-02-19 20:07:57.548 +01:00 [DBG] WriteSample called, frameCount=22
+2026-02-19 20:07:57.558 +01:00 [DBG] WriteSample called, frameCount=23
+2026-02-19 20:07:57.588 +01:00 [DBG] WriteSample called, frameCount=24
+2026-02-19 20:07:57.598 +01:00 [DBG] WriteSample called, frameCount=25
+2026-02-19 20:07:57.628 +01:00 [DBG] WriteSample called, frameCount=26
+2026-02-19 20:07:57.638 +01:00 [DBG] WriteSample called, frameCount=27
+2026-02-19 20:07:57.667 +01:00 [DBG] WriteSample called, frameCount=28
+2026-02-19 20:07:57.677 +01:00 [DBG] WriteSample called, frameCount=29
+2026-02-19 20:07:57.707 +01:00 [DBG] WriteSample called, frameCount=30
+2026-02-19 20:07:57.717 +01:00 [DBG] WriteSample called, frameCount=31
+2026-02-19 20:07:57.746 +01:00 [DBG] WriteSample called, frameCount=32
+2026-02-19 20:07:57.757 +01:00 [DBG] WriteSample called, frameCount=33
+2026-02-19 20:07:57.787 +01:00 [DBG] WriteSample called, frameCount=34
+2026-02-19 20:07:57.797 +01:00 [DBG] WriteSample called, frameCount=35
+2026-02-19 20:07:57.826 +01:00 [DBG] WriteSample called, frameCount=36
+2026-02-19 20:07:57.836 +01:00 [DBG] WriteSample called, frameCount=37
+2026-02-19 20:07:57.869 +01:00 [DBG] WriteSample called, frameCount=38
+2026-02-19 20:07:57.879 +01:00 [DBG] WriteSample called, frameCount=39
+2026-02-19 20:07:57.913 +01:00 [DBG] WriteSample called, frameCount=40
+2026-02-19 20:07:57.923 +01:00 [DBG] WriteSample called, frameCount=41
+2026-02-19 20:07:57.954 +01:00 [DBG] WriteSample called, frameCount=42
+2026-02-19 20:07:57.964 +01:00 [DBG] WriteSample called, frameCount=43
+2026-02-19 20:07:57.994 +01:00 [DBG] WriteSample called, frameCount=44
+2026-02-19 20:07:58.005 +01:00 [DBG] WriteSample called, frameCount=45
+2026-02-19 20:07:58.034 +01:00 [DBG] WriteSample called, frameCount=46
+2026-02-19 20:07:58.044 +01:00 [DBG] WriteSample called, frameCount=47
+2026-02-19 20:07:58.074 +01:00 [DBG] WriteSample called, frameCount=48
+2026-02-19 20:07:58.084 +01:00 [DBG] WriteSample called, frameCount=49
+2026-02-19 20:07:58.116 +01:00 [DBG] WriteSample called, frameCount=50
+2026-02-19 20:07:58.127 +01:00 [DBG] WriteSample called, frameCount=51
+2026-02-19 20:07:58.159 +01:00 [DBG] WriteSample called, frameCount=52
+2026-02-19 20:07:58.169 +01:00 [DBG] WriteSample called, frameCount=53
+2026-02-19 20:07:58.204 +01:00 [DBG] WriteSample called, frameCount=54
+2026-02-19 20:07:58.214 +01:00 [DBG] WriteSample called, frameCount=55
+2026-02-19 20:07:58.248 +01:00 [DBG] WriteSample called, frameCount=56
+2026-02-19 20:07:58.258 +01:00 [DBG] WriteSample called, frameCount=57
+2026-02-19 20:07:58.292 +01:00 [DBG] WriteSample called, frameCount=58
+2026-02-19 20:07:58.302 +01:00 [DBG] WriteSample called, frameCount=59
+2026-02-19 20:07:58.335 +01:00 [DBG] WriteSample called, frameCount=60
+2026-02-19 20:07:58.346 +01:00 [DBG] WriteSample called, frameCount=61
+2026-02-19 20:07:58.380 +01:00 [DBG] WriteSample called, frameCount=62
+2026-02-19 20:07:58.391 +01:00 [DBG] WriteSample called, frameCount=63
+2026-02-19 20:07:58.423 +01:00 [DBG] WriteSample called, frameCount=64
+2026-02-19 20:07:58.437 +01:00 [DBG] WriteSample called, frameCount=65
+2026-02-19 20:07:58.468 +01:00 [DBG] WriteSample called, frameCount=66
+2026-02-19 20:07:58.486 +01:00 [DBG] WriteSample called, frameCount=67
+2026-02-19 20:07:58.520 +01:00 [DBG] WriteSample called, frameCount=68
+2026-02-19 20:07:58.531 +01:00 [DBG] WriteSample called, frameCount=69
+2026-02-19 20:07:58.565 +01:00 [DBG] WriteSample called, frameCount=70
+2026-02-19 20:07:58.576 +01:00 [DBG] WriteSample called, frameCount=71
+2026-02-19 20:07:58.608 +01:00 [DBG] WriteSample called, frameCount=72
+2026-02-19 20:07:58.619 +01:00 [DBG] WriteSample called, frameCount=73
+2026-02-19 20:07:58.654 +01:00 [DBG] WriteSample called, frameCount=74
+2026-02-19 20:07:58.666 +01:00 [DBG] WriteSample called, frameCount=75

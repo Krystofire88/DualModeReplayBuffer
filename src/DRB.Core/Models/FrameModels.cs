@@ -25,3 +25,8 @@ public sealed record OcrResult(
     OcrJob Job,
     string Text);
 
+public sealed record VideoSegment(
+    string Path,
+    DateTime Start,
+    TimeSpan Duration);
+

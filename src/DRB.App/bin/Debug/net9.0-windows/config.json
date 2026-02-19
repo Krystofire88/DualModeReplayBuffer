@@ -1,0 +1,8 @@
+{
+  "hotkey": "F10",
+  "modifierKey": "Control, Shift",
+  "bufferDurationSeconds": 30,
+  "saveFolder": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.App\\bin\\Debug\\net9.0-windows\\clips",
+  "captureMode": "Focus",
+  "ocrEnabled": false
+}

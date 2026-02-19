@@ -26,6 +26,18 @@ public sealed class Config
     [JsonPropertyName("captureMode")]
     public CaptureMode CaptureMode { get; set; } = CaptureMode.Focus;
 
+    [JsonPropertyName("segmentDurationSeconds")]
+    public int SegmentDurationSeconds { get; set; } = 5;
+
+    [JsonPropertyName("encodeWidth")]
+    public int EncodeWidth { get; set; } = 1920;
+
+    [JsonPropertyName("encodeHeight")]
+    public int EncodeHeight { get; set; } = 1080;
+
+    [JsonPropertyName("encodeFps")]
+    public int EncodeFps { get; set; } = 30;
+
     [JsonPropertyName("ocrEnabled")]
     public bool OcrEnabled { get; set; } = false;
 
