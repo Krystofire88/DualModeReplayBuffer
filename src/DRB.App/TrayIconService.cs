@@ -15,7 +15,7 @@ public sealed class TrayIconService : IHostedService
     private readonly ILogger<TrayIconService> _logger;
     private readonly IHostApplicationLifetime _lifetime;
     private readonly IAppChannels _channels;
-    private readonly OverlayWindow _overlayWindow;
+    private readonly IOverlayWindowHolder _overlayHolder;
     private readonly Config _config;
 
     private NotifyIcon? _notifyIcon;
@@ -24,19 +24,37 @@ public sealed class TrayIconService : IHostedService
         ILogger<TrayIconService> logger,
         IHostApplicationLifetime lifetime,
         IAppChannels channels,
-        OverlayWindow overlayWindow,
+        IOverlayWindowHolder overlayHolder,
         Config config)
     {
         _logger = logger;
         _lifetime = lifetime;
         _channels = channels;
-        _overlayWindow = overlayWindow;
+        _overlayHolder = overlayHolder;
         _config = config;
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
         _logger.LogInformation("Initializing tray icon.");
+
+        _overlayHolder.WhenReady(overlay =>
+        {
+            overlay.OnCaptureRequested += async () =>
+            {
+                _logger.LogInformation("Clip capture requested.");
+                var request = new ClipRequest(DateTimeOffset.UtcNow, TimeSpan.FromSeconds(_config.BufferDurationSeconds));
+                await _channels.OverlayToStorage.Writer.WriteAsync(request).ConfigureAwait(false);
+                _logger.LogInformation("Save clip request enqueued from overlay.");
+            };
+            overlay.OnModeToggled += async _ =>
+            {
+                await _config.SaveAsync().ConfigureAwait(false);
+                _logger.LogInformation("Capture mode toggled to {Mode}.", _config.CaptureMode);
+                if (_notifyIcon is not null)
+                    _notifyIcon.Text = $"DualModeReplayBuffer ({_config.CaptureMode})";
+            };
+        });
 
         _notifyIcon = new NotifyIcon
         {
@@ -72,17 +90,7 @@ public sealed class TrayIconService : IHostedService
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
-            if (!_overlayWindow.IsVisible)
-            {
-                _overlayWindow.Show();
-            }
-
-            if (_overlayWindow.WindowState == WindowState.Minimized)
-            {
-                _overlayWindow.WindowState = WindowState.Normal;
-            }
-
-            _overlayWindow.Activate();
+            _overlayHolder.Window?.ShowOverlay();
         });
     }
 

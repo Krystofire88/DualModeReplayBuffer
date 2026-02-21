@@ -16,5 +16,7 @@ public interface IAppChannels
     Channel<OcrResult> OcrToOverlay { get; }
 
     Channel<ClipRequest> OverlayToStorage { get; }
+
+    Channel<ContextFrame> ProcessorToStorage { get; }
 }
 

@@ -1,0 +1,545 @@
+2026-02-20 08:20:38.671 +01:00 [INF] StorageManager thread starting.
+2026-02-20 08:20:38.671 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 08:20:38.671 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 08:20:38.671 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 08:20:38.671 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 08:20:38.671 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 08:20:38.671 +01:00 [INF] Initializing tray icon.
+2026-02-20 08:20:38.698 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 08:20:38.726 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 08:20:38.750 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 08:20:38.769 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 08:20:38.769 +01:00 [INF] Hosting environment: Production
+2026-02-20 08:20:38.769 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 08:20:38.780 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 08:20:38.782 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 08:20:38.835 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072038_832.mp4
+2026-02-20 08:20:38.836 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:20:38.838 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:20:39.197 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072038_832.mp4
+2026-02-20 08:20:59.042 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 08:20:59.042 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 08:20:59.042 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 08:20:59.042 +01:00 [INF] StorageManager thread starting.
+2026-02-20 08:20:59.042 +01:00 [INF] Initializing tray icon.
+2026-02-20 08:20:59.042 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 08:20:59.042 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 08:20:59.069 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 08:20:59.094 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 08:20:59.121 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 08:20:59.144 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 08:20:59.144 +01:00 [INF] Hosting environment: Production
+2026-02-20 08:20:59.144 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 08:20:59.145 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 08:20:59.147 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 08:20:59.213 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072059_210.mp4
+2026-02-20 08:20:59.213 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:20:59.216 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:20:59.571 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072059_210.mp4
+2026-02-20 08:21:03.548 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072059_210.mp4 ("00:00:05")
+2026-02-20 08:21:03.551 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072059_210.mp4
+2026-02-20 08:21:03.650 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072103_650.mp4
+2026-02-20 08:21:03.650 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:03.650 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:04.006 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072103_650.mp4
+2026-02-20 08:21:08.757 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072103_650.mp4 ("00:00:05")
+2026-02-20 08:21:08.757 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072103_650.mp4
+2026-02-20 08:21:08.762 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072108_762.mp4
+2026-02-20 08:21:08.762 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:08.763 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:09.186 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072108_762.mp4
+2026-02-20 08:21:12.310 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072108_762.mp4 ("00:00:05")
+2026-02-20 08:21:12.311 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072108_762.mp4
+2026-02-20 08:21:12.328 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072112_328.mp4
+2026-02-20 08:21:12.328 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:12.329 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:12.672 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072112_328.mp4
+2026-02-20 08:21:17.474 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072112_328.mp4 ("00:00:05")
+2026-02-20 08:21:17.474 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072112_328.mp4
+2026-02-20 08:21:17.491 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072117_491.mp4
+2026-02-20 08:21:17.491 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:17.492 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:17.675 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072117_491.mp4
+2026-02-20 08:21:23.713 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072117_491.mp4 ("00:00:05")
+2026-02-20 08:21:23.713 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072117_491.mp4
+2026-02-20 08:21:23.815 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072123_815.mp4
+2026-02-20 08:21:23.815 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:23.816 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:24.023 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072123_815.mp4
+2026-02-20 08:21:27.986 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072123_815.mp4 ("00:00:05")
+2026-02-20 08:21:27.986 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072123_815.mp4
+2026-02-20 08:21:28.011 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072128_011.mp4
+2026-02-20 08:21:28.011 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:28.012 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:28.215 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072128_011.mp4
+2026-02-20 08:21:31.860 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072128_011.mp4 ("00:00:05")
+2026-02-20 08:21:31.860 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072128_011.mp4
+2026-02-20 08:21:31.871 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072131_871.mp4
+2026-02-20 08:21:31.871 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:31.872 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:32.084 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072131_871.mp4
+2026-02-20 08:21:35.742 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072131_871.mp4 ("00:00:05")
+2026-02-20 08:21:35.742 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072131_871.mp4
+2026-02-20 08:21:35.754 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072135_754.mp4
+2026-02-20 08:21:35.754 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:35.755 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:35.949 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072135_754.mp4
+2026-02-20 08:21:39.669 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072135_754.mp4 ("00:00:05")
+2026-02-20 08:21:39.669 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072135_754.mp4
+2026-02-20 08:21:39.670 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072139_670.mp4
+2026-02-20 08:21:39.670 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:39.671 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:39.868 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072139_670.mp4
+2026-02-20 08:21:43.053 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072139_670.mp4 ("00:00:05")
+2026-02-20 08:21:43.053 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072139_670.mp4
+2026-02-20 08:21:43.160 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072143_160.mp4
+2026-02-20 08:21:43.160 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:43.161 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:43.374 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072143_160.mp4
+2026-02-20 08:21:49.669 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072143_160.mp4 ("00:00:05")
+2026-02-20 08:21:49.669 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072143_160.mp4
+2026-02-20 08:21:49.786 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072149_786.mp4
+2026-02-20 08:21:49.786 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:49.786 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:49.990 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072149_786.mp4
+2026-02-20 08:21:54.396 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072149_786.mp4 ("00:00:05")
+2026-02-20 08:21:54.396 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072149_786.mp4
+2026-02-20 08:21:54.404 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072154_404.mp4
+2026-02-20 08:21:54.405 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:54.405 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:54.596 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072154_404.mp4
+2026-02-20 08:21:57.918 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072154_404.mp4 ("00:00:05")
+2026-02-20 08:21:57.918 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072154_404.mp4
+2026-02-20 08:21:57.928 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072157_928.mp4
+2026-02-20 08:21:57.928 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:21:57.929 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:21:58.298 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072157_928.mp4
+2026-02-20 08:22:01.579 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072157_928.mp4 ("00:00:05")
+2026-02-20 08:22:01.579 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072157_928.mp4
+2026-02-20 08:22:01.589 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072201_589.mp4
+2026-02-20 08:22:01.589 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:22:01.590 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:31.675 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 08:23:31.675 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 08:23:31.675 +01:00 [INF] StorageManager thread starting.
+2026-02-20 08:23:31.675 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 08:23:31.675 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 08:23:31.675 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 08:23:31.675 +01:00 [INF] Initializing tray icon.
+2026-02-20 08:23:31.702 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 08:23:31.724 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 08:23:31.748 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 08:23:31.768 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 08:23:31.768 +01:00 [INF] Hosting environment: Production
+2026-02-20 08:23:31.768 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 08:23:31.772 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 08:23:31.774 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 08:23:31.834 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072331_831.mp4
+2026-02-20 08:23:31.835 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:31.837 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:32.197 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072331_831.mp4
+2026-02-20 08:23:37.638 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072331_831.mp4 ("00:00:05")
+2026-02-20 08:23:37.640 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072331_831.mp4
+2026-02-20 08:23:37.648 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072337_648.mp4
+2026-02-20 08:23:37.648 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:37.649 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:37.855 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072337_648.mp4
+2026-02-20 08:23:42.060 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072337_648.mp4 ("00:00:05")
+2026-02-20 08:23:42.061 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072337_648.mp4
+2026-02-20 08:23:42.076 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072342_076.mp4
+2026-02-20 08:23:42.076 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:42.077 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:42.268 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072342_076.mp4
+2026-02-20 08:23:45.291 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072342_076.mp4 ("00:00:05")
+2026-02-20 08:23:45.292 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072342_076.mp4
+2026-02-20 08:23:45.302 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072345_302.mp4
+2026-02-20 08:23:45.302 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:45.303 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:45.497 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072345_302.mp4
+2026-02-20 08:23:48.519 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072345_302.mp4 ("00:00:05")
+2026-02-20 08:23:48.520 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072345_302.mp4
+2026-02-20 08:23:48.528 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072348_528.mp4
+2026-02-20 08:23:48.528 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:48.529 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:48.734 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072348_528.mp4
+2026-02-20 08:23:51.737 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072348_528.mp4 ("00:00:05")
+2026-02-20 08:23:51.737 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072348_528.mp4
+2026-02-20 08:23:51.756 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072351_756.mp4
+2026-02-20 08:23:51.756 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:51.757 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:51.944 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072351_756.mp4
+2026-02-20 08:23:54.986 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072351_756.mp4 ("00:00:05")
+2026-02-20 08:23:54.986 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072351_756.mp4
+2026-02-20 08:23:55.008 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072355_008.mp4
+2026-02-20 08:23:55.008 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:23:55.009 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:23:55.216 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072355_008.mp4
+2026-02-20 08:24:00.228 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072355_008.mp4 ("00:00:05")
+2026-02-20 08:24:00.228 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072355_008.mp4
+2026-02-20 08:24:00.237 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072400_237.mp4
+2026-02-20 08:24:00.237 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:00.238 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:00.435 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072400_237.mp4
+2026-02-20 08:24:06.550 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072400_237.mp4 ("00:00:05")
+2026-02-20 08:24:06.550 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072400_237.mp4
+2026-02-20 08:24:06.567 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072406_567.mp4
+2026-02-20 08:24:06.568 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:06.568 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:06.759 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072406_567.mp4
+2026-02-20 08:24:12.136 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072406_567.mp4 ("00:00:05")
+2026-02-20 08:24:12.137 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072406_567.mp4
+2026-02-20 08:24:12.152 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072412_152.mp4
+2026-02-20 08:24:12.152 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:12.153 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:12.350 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072412_152.mp4
+2026-02-20 08:24:17.484 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072412_152.mp4 ("00:00:05")
+2026-02-20 08:24:17.484 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072412_152.mp4
+2026-02-20 08:24:17.609 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072417_609.mp4
+2026-02-20 08:24:17.610 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:17.610 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:17.829 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072417_609.mp4
+2026-02-20 08:24:21.492 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072417_609.mp4 ("00:00:05")
+2026-02-20 08:24:21.492 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072417_609.mp4
+2026-02-20 08:24:21.511 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072421_511.mp4
+2026-02-20 08:24:21.512 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:21.512 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:21.716 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072421_511.mp4
+2026-02-20 08:24:25.687 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072421_511.mp4 ("00:00:05")
+2026-02-20 08:24:25.687 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072421_511.mp4
+2026-02-20 08:24:25.696 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072425_696.mp4
+2026-02-20 08:24:25.696 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:24:25.697 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:24:25.893 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072425_696.mp4
+2026-02-20 08:25:29.166 +01:00 [INF] StorageManager thread starting.
+2026-02-20 08:25:29.166 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 08:25:29.166 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 08:25:29.166 +01:00 [INF] Initializing tray icon.
+2026-02-20 08:25:29.166 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 08:25:29.166 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 08:25:29.166 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 08:25:29.193 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 08:25:29.219 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 08:25:29.240 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 08:25:29.263 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 08:25:29.263 +01:00 [INF] Hosting environment: Production
+2026-02-20 08:25:29.263 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 08:25:29.268 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 08:25:29.270 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 08:25:29.333 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072529_331.mp4
+2026-02-20 08:25:29.334 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:29.336 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:29.678 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072529_331.mp4
+2026-02-20 08:25:32.808 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072529_331.mp4 ("00:00:05")
+2026-02-20 08:25:32.810 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072529_331.mp4
+2026-02-20 08:25:32.819 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072532_819.mp4
+2026-02-20 08:25:32.819 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:32.820 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:33.013 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072532_819.mp4
+2026-02-20 08:25:36.425 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072532_819.mp4 ("00:00:05")
+2026-02-20 08:25:36.425 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072536_425.mp4
+2026-02-20 08:25:36.425 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:36.425 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072532_819.mp4
+2026-02-20 08:25:36.426 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:36.647 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072536_425.mp4
+2026-02-20 08:25:39.981 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072536_425.mp4 ("00:00:05")
+2026-02-20 08:25:39.982 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072536_425.mp4
+2026-02-20 08:25:40.005 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072540_005.mp4
+2026-02-20 08:25:40.005 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:40.006 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:40.339 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072540_005.mp4
+2026-02-20 08:25:43.534 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072540_005.mp4 ("00:00:05")
+2026-02-20 08:25:43.534 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072540_005.mp4
+2026-02-20 08:25:43.555 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072543_555.mp4
+2026-02-20 08:25:43.555 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:43.556 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:43.926 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072543_555.mp4
+2026-02-20 08:25:47.096 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072543_555.mp4 ("00:00:05")
+2026-02-20 08:25:47.096 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072543_555.mp4
+2026-02-20 08:25:47.117 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072547_117.mp4
+2026-02-20 08:25:47.117 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:47.118 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:47.310 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072547_117.mp4
+2026-02-20 08:25:50.619 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072547_117.mp4 ("00:00:05")
+2026-02-20 08:25:50.619 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072547_117.mp4
+2026-02-20 08:25:50.638 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072550_638.mp4
+2026-02-20 08:25:50.638 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:50.639 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:50.827 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072550_638.mp4
+2026-02-20 08:25:54.158 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072550_638.mp4 ("00:00:05")
+2026-02-20 08:25:54.158 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072550_638.mp4
+2026-02-20 08:25:54.175 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072554_175.mp4
+2026-02-20 08:25:54.175 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:54.176 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:54.363 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072554_175.mp4
+2026-02-20 08:25:57.696 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072554_175.mp4 ("00:00:05")
+2026-02-20 08:25:57.696 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072554_175.mp4
+2026-02-20 08:25:57.711 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072557_711.mp4
+2026-02-20 08:25:57.711 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:25:57.711 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:25:57.900 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072557_711.mp4
+2026-02-20 08:26:01.240 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072557_711.mp4 ("00:00:05")
+2026-02-20 08:26:01.240 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072557_711.mp4
+2026-02-20 08:26:01.255 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072601_255.mp4
+2026-02-20 08:26:01.255 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:01.256 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:01.462 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072601_255.mp4
+2026-02-20 08:26:04.795 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072601_255.mp4 ("00:00:05")
+2026-02-20 08:26:04.795 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072601_255.mp4
+2026-02-20 08:26:04.812 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072604_812.mp4
+2026-02-20 08:26:04.812 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:04.813 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:05.013 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072604_812.mp4
+2026-02-20 08:26:08.344 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072604_812.mp4 ("00:00:05")
+2026-02-20 08:26:08.344 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072604_812.mp4
+2026-02-20 08:26:08.360 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072608_360.mp4
+2026-02-20 08:26:08.360 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:08.361 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:08.550 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072608_360.mp4
+2026-02-20 08:26:11.862 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072608_360.mp4 ("00:00:05")
+2026-02-20 08:26:11.863 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072608_360.mp4
+2026-02-20 08:26:11.883 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072611_883.mp4
+2026-02-20 08:26:11.883 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:11.884 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:12.081 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072611_883.mp4
+2026-02-20 08:26:15.403 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072611_883.mp4 ("00:00:05")
+2026-02-20 08:26:15.403 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072611_883.mp4
+2026-02-20 08:26:15.420 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072615_420.mp4
+2026-02-20 08:26:15.420 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:15.422 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:15.610 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072615_420.mp4
+2026-02-20 08:26:18.960 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072615_420.mp4 ("00:00:05")
+2026-02-20 08:26:18.960 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072615_420.mp4
+2026-02-20 08:26:18.977 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072618_977.mp4
+2026-02-20 08:26:18.977 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:18.977 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:19.170 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072618_977.mp4
+2026-02-20 08:26:22.500 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072618_977.mp4 ("00:00:05")
+2026-02-20 08:26:22.501 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072618_977.mp4
+2026-02-20 08:26:22.517 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072622_517.mp4
+2026-02-20 08:26:22.517 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:22.518 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:22.709 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072622_517.mp4
+2026-02-20 08:26:26.029 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072622_517.mp4 ("00:00:05")
+2026-02-20 08:26:26.029 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072622_517.mp4
+2026-02-20 08:26:26.041 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072626_041.mp4
+2026-02-20 08:26:26.041 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:26.042 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:26.240 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072626_041.mp4
+2026-02-20 08:26:29.560 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072626_041.mp4 ("00:00:05")
+2026-02-20 08:26:29.560 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072626_041.mp4
+2026-02-20 08:26:29.576 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072629_576.mp4
+2026-02-20 08:26:29.576 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:29.577 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:29.796 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072629_576.mp4
+2026-02-20 08:26:33.210 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072629_576.mp4 ("00:00:05")
+2026-02-20 08:26:33.210 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072629_576.mp4
+2026-02-20 08:26:33.224 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072633_224.mp4
+2026-02-20 08:26:33.224 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:26:33.225 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:26:33.408 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_072633_224.mp4
+2026-02-20 08:30:12.342 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 08:30:12.342 +01:00 [INF] StorageManager thread starting.
+2026-02-20 08:30:12.342 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 08:30:12.342 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 08:30:12.342 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 08:30:12.342 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 08:30:12.344 +01:00 [INF] Initializing tray icon.
+2026-02-20 08:30:12.390 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 08:30:12.421 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 08:30:12.476 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 08:30:12.502 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 08:30:12.504 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 08:30:12.509 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 08:30:12.509 +01:00 [INF] Hosting environment: Production
+2026-02-20 08:30:12.510 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 08:30:12.577 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073012_572.mp4
+2026-02-20 08:30:12.579 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:12.581 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:13.058 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073012_572.mp4
+2026-02-20 08:30:17.489 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073012_572.mp4 ("00:00:05")
+2026-02-20 08:30:17.491 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073017_491.mp4
+2026-02-20 08:30:17.491 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:17.491 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073012_572.mp4
+2026-02-20 08:30:17.492 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:17.790 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073017_491.mp4
+2026-02-20 08:30:21.324 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073017_491.mp4 ("00:00:05")
+2026-02-20 08:30:21.324 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073017_491.mp4
+2026-02-20 08:30:21.330 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073021_330.mp4
+2026-02-20 08:30:21.331 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:21.332 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:21.577 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073021_330.mp4
+2026-02-20 08:30:25.253 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073021_330.mp4 ("00:00:05")
+2026-02-20 08:30:25.254 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073021_330.mp4
+2026-02-20 08:30:25.262 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073025_262.mp4
+2026-02-20 08:30:25.262 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:25.264 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:25.536 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073025_262.mp4
+2026-02-20 08:30:29.312 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073025_262.mp4 ("00:00:05")
+2026-02-20 08:30:29.313 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073025_262.mp4
+2026-02-20 08:30:29.320 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073029_320.mp4
+2026-02-20 08:30:29.320 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:29.321 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:29.574 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073029_320.mp4
+2026-02-20 08:30:33.292 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073029_320.mp4 ("00:00:05")
+2026-02-20 08:30:33.293 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073029_320.mp4
+2026-02-20 08:30:33.299 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073033_299.mp4
+2026-02-20 08:30:33.299 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:33.300 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:33.586 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073033_299.mp4
+2026-02-20 08:30:37.085 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073033_299.mp4 ("00:00:05")
+2026-02-20 08:30:37.085 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073033_299.mp4
+2026-02-20 08:30:37.092 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073037_092.mp4
+2026-02-20 08:30:37.092 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:37.093 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:37.549 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073037_092.mp4
+2026-02-20 08:30:41.007 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073037_092.mp4 ("00:00:05")
+2026-02-20 08:30:41.008 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073037_092.mp4
+2026-02-20 08:30:41.014 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073041_014.mp4
+2026-02-20 08:30:41.014 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:41.015 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:41.243 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073041_014.mp4
+2026-02-20 08:30:44.921 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073041_014.mp4 ("00:00:05")
+2026-02-20 08:30:44.921 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073041_014.mp4
+2026-02-20 08:30:44.926 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073044_926.mp4
+2026-02-20 08:30:44.927 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:44.928 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:45.155 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073044_926.mp4
+2026-02-20 08:30:48.693 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073044_926.mp4 ("00:00:05")
+2026-02-20 08:30:48.694 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073044_926.mp4
+2026-02-20 08:30:48.699 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073048_699.mp4
+2026-02-20 08:30:48.700 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:48.701 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:48.943 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073048_699.mp4
+2026-02-20 08:30:52.484 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073048_699.mp4 ("00:00:05")
+2026-02-20 08:30:52.484 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073048_699.mp4
+2026-02-20 08:30:52.492 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073052_492.mp4
+2026-02-20 08:30:52.492 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:52.494 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:52.745 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073052_492.mp4
+2026-02-20 08:30:56.323 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073052_492.mp4 ("00:00:05")
+2026-02-20 08:30:56.323 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073052_492.mp4
+2026-02-20 08:30:56.328 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073056_328.mp4
+2026-02-20 08:30:56.328 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 08:30:56.331 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 08:30:56.565 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_073056_328.mp4
+2026-02-20 23:25:58.331 +01:00 [INF] OcrWorker thread starting (stub).
+2026-02-20 23:25:58.331 +01:00 [INF] Capture thread starting (DXGI Desktop Duplication).
+2026-02-20 23:25:58.331 +01:00 [INF] Encoder thread starting (Media Foundation H.264).
+2026-02-20 23:25:58.331 +01:00 [INF] FrameProcessor thread starting.
+2026-02-20 23:25:58.331 +01:00 [INF] OverlayUI thread starting (stub).
+2026-02-20 23:25:58.331 +01:00 [INF] StorageManager thread starting.
+2026-02-20 23:25:58.361 +01:00 [INF] Initializing tray icon.
+2026-02-20 23:25:58.373 +01:00 [INF] Initializing DXGI Desktop Duplication…
+2026-02-20 23:25:58.408 +01:00 [INF] Using adapter: AMD Radeon RX 6600, output: \\.\DISPLAY1
+2026-02-20 23:25:58.453 +01:00 [INF] Selected H.264 encoder: H264 Encoder MFT
+2026-02-20 23:25:58.518 +01:00 [INF] Desktop format: "B8G8R8A8_UNorm", HDR: false
+2026-02-20 23:25:58.521 +01:00 [INF] Desktop Duplication initialized – 2560×1440.
+2026-02-20 23:25:58.560 +01:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-20 23:25:58.560 +01:00 [INF] Hosting environment: Production
+2026-02-20 23:25:58.560 +01:00 [INF] Content root path: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer
+2026-02-20 23:25:58.585 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222558_580.mp4
+2026-02-20 23:25:58.586 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:25:58.588 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:25:59.087 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222558_580.mp4
+2026-02-20 23:26:02.385 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222558_580.mp4 ("00:00:05")
+2026-02-20 23:26:02.387 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222558_580.mp4
+2026-02-20 23:26:02.388 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222602_388.mp4
+2026-02-20 23:26:02.388 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:02.389 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:02.630 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222602_388.mp4
+2026-02-20 23:26:06.127 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222602_388.mp4 ("00:00:05")
+2026-02-20 23:26:06.127 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222602_388.mp4
+2026-02-20 23:26:06.157 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222606_157.mp4
+2026-02-20 23:26:06.157 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:06.158 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:06.524 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222606_157.mp4
+2026-02-20 23:26:09.937 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222606_157.mp4 ("00:00:05")
+2026-02-20 23:26:09.937 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222606_157.mp4
+2026-02-20 23:26:09.944 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222609_944.mp4
+2026-02-20 23:26:09.945 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:09.946 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:10.190 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222609_944.mp4
+2026-02-20 23:26:15.536 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222609_944.mp4 ("00:00:05")
+2026-02-20 23:26:15.537 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222609_944.mp4
+2026-02-20 23:26:15.546 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222615_546.mp4
+2026-02-20 23:26:15.546 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:15.547 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:15.745 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222615_546.mp4
+2026-02-20 23:26:19.076 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222615_546.mp4 ("00:00:05")
+2026-02-20 23:26:19.076 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222615_546.mp4
+2026-02-20 23:26:19.085 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222619_085.mp4
+2026-02-20 23:26:19.085 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:19.086 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:19.287 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222619_085.mp4
+2026-02-20 23:26:25.020 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222619_085.mp4 ("00:00:05")
+2026-02-20 23:26:25.020 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222619_085.mp4
+2026-02-20 23:26:25.068 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222625_068.mp4
+2026-02-20 23:26:25.068 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:25.069 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:25.287 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222625_068.mp4
+2026-02-20 23:26:29.311 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222625_068.mp4 ("00:00:05")
+2026-02-20 23:26:29.311 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222625_068.mp4
+2026-02-20 23:26:29.321 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222629_321.mp4
+2026-02-20 23:26:29.321 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:29.322 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:29.554 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222629_321.mp4
+2026-02-20 23:26:33.403 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222629_321.mp4 ("00:00:05")
+2026-02-20 23:26:33.403 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222629_321.mp4
+2026-02-20 23:26:33.410 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222633_410.mp4
+2026-02-20 23:26:33.410 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:33.411 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:33.659 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222633_410.mp4
+2026-02-20 23:26:37.783 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222633_410.mp4 ("00:00:05")
+2026-02-20 23:26:37.783 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222633_410.mp4
+2026-02-20 23:26:37.811 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222637_811.mp4
+2026-02-20 23:26:37.812 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:37.812 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:38.051 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222637_811.mp4
+2026-02-20 23:26:43.976 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222637_811.mp4 ("00:00:05")
+2026-02-20 23:26:43.976 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222637_811.mp4
+2026-02-20 23:26:43.989 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222643_989.mp4
+2026-02-20 23:26:43.989 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:43.991 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:44.233 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222643_989.mp4
+2026-02-20 23:26:49.555 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222643_989.mp4 ("00:00:05")
+2026-02-20 23:26:49.555 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222643_989.mp4
+2026-02-20 23:26:49.566 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222649_566.mp4
+2026-02-20 23:26:49.566 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:49.567 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:49.767 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222649_566.mp4
+2026-02-20 23:26:55.801 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222649_566.mp4 ("00:00:05")
+2026-02-20 23:26:55.801 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222649_566.mp4
+2026-02-20 23:26:55.814 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222655_814.mp4
+2026-02-20 23:26:55.814 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:55.815 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:26:56.038 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222655_814.mp4
+2026-02-20 23:26:59.809 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222655_814.mp4 ("00:00:05")
+2026-02-20 23:26:59.809 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222655_814.mp4
+2026-02-20 23:26:59.820 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222659_820.mp4
+2026-02-20 23:26:59.820 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:26:59.821 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:27:00.036 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222659_820.mp4
+2026-02-20 23:27:03.630 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222659_820.mp4 ("00:00:05")
+2026-02-20 23:27:03.630 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222659_820.mp4
+2026-02-20 23:27:03.644 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222703_644.mp4
+2026-02-20 23:27:03.644 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:27:03.645 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:27:04.009 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222703_644.mp4
+2026-02-20 23:27:08.591 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222703_644.mp4 ("00:00:05")
+2026-02-20 23:27:08.591 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222703_644.mp4
+2026-02-20 23:27:08.603 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222708_603.mp4
+2026-02-20 23:27:08.603 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:27:08.604 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:27:08.818 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222708_603.mp4
+2026-02-20 23:27:12.841 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222708_603.mp4 ("00:00:05")
+2026-02-20 23:27:12.841 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222708_603.mp4
+2026-02-20 23:27:12.871 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222712_871.mp4
+2026-02-20 23:27:12.871 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:27:12.884 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:27:13.107 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222712_871.mp4
+2026-02-20 23:27:16.824 +01:00 [DBG] Completed segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222712_871.mp4 ("00:00:05")
+2026-02-20 23:27:16.824 +01:00 [DBG] Received encoded segment marker: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222712_871.mp4
+2026-02-20 23:27:16.835 +01:00 [DBG] Creating sink writer for: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222716_835.mp4
+2026-02-20 23:27:16.835 +01:00 [DBG] Calling MFCreateSinkWriterFromURL...
+2026-02-20 23:27:16.836 +01:00 [DBG] Sink writer created successfully.
+2026-02-20 23:27:17.030 +01:00 [DBG] Started new segment: C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\data\focus_buffer\20260220_222716_835.mp4

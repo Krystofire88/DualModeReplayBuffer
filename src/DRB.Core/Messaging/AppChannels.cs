@@ -12,15 +12,23 @@ public sealed class AppChannels : IAppChannels
         SingleWriter = false
     };
 
+    private static BoundedChannelOptions BoundedWait(int capacity) => new(capacity)
+    {
+        FullMode = BoundedChannelFullMode.Wait,
+        SingleReader = false,
+        SingleWriter = false
+    };
+
     public AppChannels()
     {
-        CaptureToEncoder = Channel.CreateBounded<RawFrame>(Bounded(256));
+        CaptureToEncoder = Channel.CreateBounded<RawFrame>(BoundedWait(4));
         CaptureToProcessor = Channel.CreateBounded<RawFrame>(Bounded(256));
         EncoderToStorage = Channel.CreateBounded<EncodedFrame>(Bounded(256));
         ProcessorToOverlay = Channel.CreateBounded<ProcessedFrame>(Bounded(256));
         ProcessorToOcr = Channel.CreateBounded<OcrJob>(Bounded(256));
         OcrToOverlay = Channel.CreateBounded<OcrResult>(Bounded(256));
         OverlayToStorage = Channel.CreateBounded<ClipRequest>(Bounded(64));
+        ProcessorToStorage = Channel.CreateBounded<ContextFrame>(Bounded(32));
     }
 
     public Channel<RawFrame> CaptureToEncoder { get; }
@@ -30,5 +38,6 @@ public sealed class AppChannels : IAppChannels
     public Channel<OcrJob> ProcessorToOcr { get; }
     public Channel<OcrResult> OcrToOverlay { get; }
     public Channel<ClipRequest> OverlayToStorage { get; }
+    public Channel<ContextFrame> ProcessorToStorage { get; }
 }
 

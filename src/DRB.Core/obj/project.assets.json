@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj",
+      "projectUniqueName": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj",
       "projectName": "DRB.Core",
-      "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj",
+      "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj",
       "packagesPath": "C:\\Users\\kryst\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\obj\\",
+      "outputPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

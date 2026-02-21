@@ -418,11 +418,8 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     // ──────────────────── Frame Writing ──────────────────────────
 
-    [System.Runtime.ExceptionServices.HandleProcessCorruptedStateExceptions]
     private void WriteSample(byte[] nv12Data, long timestampHns)
     {
-        _logger.LogDebug("WriteSample called, frameCount={F}", _frameCount);
-
         if (_sinkWriter == IntPtr.Zero) return;
 
         try
@@ -510,9 +507,10 @@ public sealed class HardwareVideoEncoder : IDisposable
             for (int x = 0; x < _width; x++)
             {
                 int srcIdx = rowOffset + x * 4;
-                byte r = rgba[srcIdx + 0];
+                // DXGI gives BGRA, not RGBA - swap R and B
+                byte b = rgba[srcIdx + 0];
                 byte g = rgba[srcIdx + 1];
-                byte b = rgba[srcIdx + 2];
+                byte r = rgba[srcIdx + 2];
 
                 // BT.601 luma
                 _nv12Buffer[yRowOffset + x] = ClampByte((66 * r + 129 * g + 25 * b + 128) / 256 + 16);
@@ -529,9 +527,10 @@ public sealed class HardwareVideoEncoder : IDisposable
             for (int x = 0; x < _width; x += 2)
             {
                 int srcIdx = rowOffset + x * 4;
-                byte r = rgba[srcIdx + 0];
+                // DXGI gives BGRA, not RGBA - swap R and B
+                byte b = rgba[srcIdx + 0];
                 byte g = rgba[srcIdx + 1];
-                byte b = rgba[srcIdx + 2];
+                byte r = rgba[srcIdx + 2];
 
                 // BT.601 chroma
                 byte u = ClampByte((-38 * r - 74 * g + 112 * b + 128) / 256 + 128);

@@ -14,3 +14,5 @@ c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\refint\DRB.Capture.dll
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\DRB.Capture.pdb
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\obj\Release\net9.0-windows\ref\DRB.Capture.dll
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Storage.dll
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.Capture\bin\Release\net9.0-windows\DRB.Storage.pdb

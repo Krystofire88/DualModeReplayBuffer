@@ -30,16 +30,25 @@ public sealed class Config
     public int SegmentDurationSeconds { get; set; } = 5;
 
     [JsonPropertyName("encodeWidth")]
-    public int EncodeWidth { get; set; } = 1920;
+    public int EncodeWidth { get; set; } = 2560;
 
     [JsonPropertyName("encodeHeight")]
-    public int EncodeHeight { get; set; } = 1080;
+    public int EncodeHeight { get; set; } = 1440;
 
     [JsonPropertyName("encodeFps")]
     public int EncodeFps { get; set; } = 30;
 
     [JsonPropertyName("ocrEnabled")]
     public bool OcrEnabled { get; set; } = false;
+
+    [JsonPropertyName("overlayHotkey")]
+    public string OverlayHotkey { get; set; } = "Ctrl+Shift+R";
+
+    [JsonPropertyName("captureLast30Hotkey")]
+    public string CaptureLast30Hotkey { get; set; } = "Ctrl+Shift+T";
+
+    [JsonPropertyName("theme")]
+    public string Theme { get; set; } = "dark";
 
     public static async Task<Config> LoadAsync(string? path = null, CancellationToken cancellationToken = default)
     {

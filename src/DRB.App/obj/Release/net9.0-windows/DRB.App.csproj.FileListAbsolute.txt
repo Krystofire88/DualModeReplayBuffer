@@ -94,3 +94,14 @@ c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-win
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\DRB.App.genruntimeconfig.cache
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\ref\DRB.App.dll
 C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\Serilog.Sinks.Console.dll
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\SixLabors.ImageSharp.dll
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\bin\Release\net9.0-windows\config.json
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\HotkeyWindow.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\IslandWindow.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\SettingsWindow.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\HotkeyWindow.g.cs
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\IslandWindow.g.cs
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\SettingsWindow.g.cs
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\DarkTheme.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\LightTheme.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\App.baml

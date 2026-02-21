@@ -6,13 +6,18 @@
         Background="Transparent"
         Topmost="True"
         ShowInTaskbar="False"
-        Width="800"
-        Height="200"
-        Title="DualModeReplayBuffer Overlay">
-    <Border Background="#80000000" CornerRadius="8" Padding="8">
-        <TextBlock Text="DualModeReplayBuffer Overlay (stub)"
-                   Foreground="White"
-                   FontSize="16" />
-    </Border>
+        ResizeMode="NoResize"
+        WindowStartupLocation="Manual"
+        Title="DualModeReplayBuffer Overlay"
+        Loaded="Window_Loaded"
+        Left="0"
+        Top="0"
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}">
+    <Grid>
+        <!-- Darkened background - WS_EX_TRANSPARENT makes this click-through (see code-behind) -->
+        <Border x:Name="BackgroundOverlay"
+                Background="#000000"
+                Opacity="0"/>
+    </Grid>
 </Window>
-

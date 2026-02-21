@@ -11,6 +11,7 @@ public static class AppPaths
     public static string ContextBufferFolder => Path.Combine(DataRoot, "context_buffer");
     public static string ClipsFolder => Path.Combine(BaseDirectory, "clips");
     public static string IndexDatabasePath => Path.Combine(BaseDirectory, "index.sqlite");
+    public static string SqliteDbPath => Path.Combine(DataRoot, "index.sqlite");
     public static string ConfigPath => Path.Combine(BaseDirectory, "config.json");
     public static string LogsFolder => Path.Combine(BaseDirectory, "logs");
 

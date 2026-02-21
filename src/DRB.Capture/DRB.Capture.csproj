@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DRB.Core\DRB.Core.csproj" />
+    <ProjectReference Include="..\DRB.Storage\DRB.Storage.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +18,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
     <PackageReference Include="SharpDX.DXGI" Version="4.2.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 </Project>
 

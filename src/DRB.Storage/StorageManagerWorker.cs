@@ -12,17 +12,20 @@ public sealed class StorageManager : BackgroundService
     private readonly IClipStorage _clipStorage;
     private readonly FocusRingBuffer _ringBuffer;
     private readonly ILogger<StorageManager> _logger;
+    private readonly ContextIndex? _contextIndex;
 
     public StorageManager(
         IAppChannels channels,
         IClipStorage clipStorage,
         FocusRingBuffer ringBuffer,
-        ILogger<StorageManager> logger)
+        ILogger<StorageManager> logger,
+        ContextIndex? contextIndex = null)
     {
         _channels = channels;
         _clipStorage = clipStorage;
         _ringBuffer = ringBuffer;
         _logger = logger;
+        _contextIndex = contextIndex;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,6 +34,22 @@ public sealed class StorageManager : BackgroundService
 
         await _clipStorage.InitializeAsync(stoppingToken).ConfigureAwait(false);
 
+        // Process Focus Mode: encoded frames and clip requests.
+        var focusTask = ProcessFocusSegments(stoppingToken);
+
+        // Process Context Mode: context frames from ProcessorToStorage channel.
+        var contextTask = ProcessContextFrames(stoppingToken);
+
+        await Task.WhenAll(focusTask, contextTask).ConfigureAwait(false);
+
+        _logger.LogInformation("StorageManager thread stopping.");
+    }
+
+    /// <summary>
+    /// Process Focus Mode: encoded frames from encoder and clip requests from overlay.
+    /// </summary>
+    private async Task ProcessFocusSegments(CancellationToken stoppingToken)
+    {
         var encodedFrames = _channels.EncoderToStorage.Reader;
         var clipRequests = _channels.OverlayToStorage.Reader;
 
@@ -67,7 +86,33 @@ public sealed class StorageManager : BackgroundService
         }, stoppingToken);
 
         await Task.WhenAll(encodedTask, clipTask).ConfigureAwait(false);
+    }
 
-        _logger.LogInformation("StorageManager thread stopping.");
+    /// <summary>
+    /// Process Context Mode: context frames from ProcessorToStorage channel.
+    /// </summary>
+    private async Task ProcessContextFrames(CancellationToken stoppingToken)
+    {
+        if (_contextIndex == null)
+        {
+            // ContextIndex not available (running in Focus mode).
+            return;
+        }
+
+        await foreach (var frame in _channels.ProcessorToStorage.Reader.ReadAllAsync(stoppingToken))
+        {
+            _contextIndex.Insert(frame);
+
+            // Enforce 2-minute rolling window.
+            _contextIndex.DeleteBefore(DateTime.UtcNow - TimeSpan.FromMinutes(2));
+
+            _logger.LogDebug("Context frame indexed: {Path}", frame.Path);
+        }
+    }
+
+    public override async Task StopAsync(CancellationToken cancellationToken)
+    {
+        _contextIndex?.Dispose();
+        await base.StopAsync(cancellationToken);
     }
 }

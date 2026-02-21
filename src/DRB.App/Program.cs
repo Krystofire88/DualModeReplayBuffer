@@ -55,10 +55,24 @@ builder.ConfigureServices(services =>
             TimeSpan.FromSeconds(cfg.BufferDurationSeconds),
             logger);
     });
+    services.AddSingleton<ContextIndex>(_ =>
+        new ContextIndex(AppPaths.SqliteDbPath));
+
+    // Pause/capture control
+    services.AddSingleton<CapturePauseState>();
+    services.AddSingleton<IPauseCapture>(sp => sp.GetRequiredService<CapturePauseState>());
+    services.AddSingleton<ICaptureController>(sp => sp.GetRequiredService<CapturePauseState>());
 
     // WPF + overlay
     services.AddSingleton<App>();
-    services.AddSingleton<OverlayWindow>();
+    services.AddSingleton<IOverlayWindowHolder, OverlayWindowHolder>();
+
+    // Context frame processor (pHash change detection)
+    services.AddSingleton<ContextFrameProcessor>(sp =>
+    {
+        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextFrameProcessor>();
+        return new ContextFrameProcessor(logger);
+    });
 
     // Thread slots (6)
     services.AddHostedService<CaptureWorker>();
@@ -67,6 +81,7 @@ builder.ConfigureServices(services =>
     services.AddHostedService<StorageManager>();
     services.AddHostedService<OverlayUI>();
     services.AddHostedService<OcrWorker>();
+    services.AddHostedService<OverlayService>();
 
     // Tray icon
     services.AddHostedService<TrayIconService>();
@@ -74,10 +89,12 @@ builder.ConfigureServices(services =>
 
 using var host = builder.Build();
 
-await host.StartAsync().ConfigureAwait(false);
-
+// Create App first so Application.Current is set before hosted services run.
 var app = host.Services.GetRequiredService<App>();
 app.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+await host.StartAsync().ConfigureAwait(false);
+
 app.Run();
 
 await host.StopAsync().ConfigureAwait(false);

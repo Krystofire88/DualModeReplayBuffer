@@ -11,27 +11,27 @@ public sealed class CaptureWorker : BackgroundService
 {
     private readonly IAppChannels _channels;
     private readonly Config _config;
+    private readonly IPauseCapture _pauseCapture;
+    private readonly ICaptureController _captureController;
     private readonly ILogger<CaptureWorker> _logger;
 
-    /// <summary>
-    /// Delay before retrying after an access-lost / re-init failure.
-    /// Prevents a tight spin when the desktop is unavailable (UAC, lock screen, etc.).
-    /// </summary>
     private static readonly TimeSpan ReinitDelay = TimeSpan.FromSeconds(1);
 
-    public CaptureWorker(IAppChannels channels, Config config, ILogger<CaptureWorker> logger)
+    public CaptureWorker(IAppChannels channels, Config config, IPauseCapture pauseCapture, ICaptureController captureController, ILogger<CaptureWorker> logger)
     {
         _channels = channels;
         _config = config;
+        _pauseCapture = pauseCapture;
+        _captureController = captureController;
         _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Capture thread starting (DXGI Desktop Duplication).");
+        _logger.LogInformation("Capture mode: {CaptureMode}", _config.CaptureMode);
 
         var processorWriter = _channels.CaptureToProcessor.Writer;
-        var encoderWriter = _channels.CaptureToEncoder.Writer;
 
         using var captureService = new DxgiCaptureService(_config, _logger);
 
@@ -57,6 +57,17 @@ public sealed class CaptureWorker : BackgroundService
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
+                    if (!_captureController.IsRunning)
+                    {
+                        await Task.Delay(500, stoppingToken).ConfigureAwait(false);
+                        continue;
+                    }
+                    if (_pauseCapture.IsPaused)
+                    {
+                        await Task.Delay(100, stoppingToken).ConfigureAwait(false);
+                        continue;
+                    }
+
                     var frameInterval = captureService.GetFrameInterval();
 
                     // Rate-limit: skip if not enough time has elapsed since the last emitted frame.
@@ -89,9 +100,9 @@ public sealed class CaptureWorker : BackgroundService
 
                     lastFrameTicks = stopwatch.ElapsedTicks;
 
-                    // Push the frame into both channels (bounded, DropOldest – won't block).
+                    // Push raw frame to the processor channel.
+                    // FrameProcessor routes to encoder (Focus) or context pipeline (Context).
                     await processorWriter.WriteAsync(frame, stoppingToken).ConfigureAwait(false);
-                    await encoderWriter.WriteAsync(frame, stoppingToken).ConfigureAwait(false);
                 }
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)

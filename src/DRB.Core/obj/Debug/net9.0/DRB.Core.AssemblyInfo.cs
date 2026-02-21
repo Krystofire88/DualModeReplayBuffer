@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DRB.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33981096125ba339b014d4579d7570b620364e21")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae917763137b4a71b25fd7bf00665a39ad1bef04")]
 [assembly: System.Reflection.AssemblyProductAttribute("DRB.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DRB.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
