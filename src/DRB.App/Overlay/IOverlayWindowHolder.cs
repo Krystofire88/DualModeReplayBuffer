@@ -5,4 +5,5 @@ public interface IOverlayWindowHolder
     OverlayWindow? Window { get; }
     void Set(OverlayWindow window);
     void WhenReady(Action<OverlayWindow> callback);
+    void RefreshHotkeys();
 }

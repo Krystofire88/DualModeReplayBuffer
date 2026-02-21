@@ -23,8 +23,9 @@ public sealed class Config
     [JsonPropertyName("saveFolder")]
     public string SaveFolder { get; set; } = AppPaths.ClipsFolder;
 
+    [JsonIgnore]
     [JsonPropertyName("captureMode")]
-    public CaptureMode CaptureMode { get; set; } = CaptureMode.Focus;
+    public CaptureMode CaptureMode { get; set; } = CaptureMode.Context;
 
     [JsonPropertyName("segmentDurationSeconds")]
     public int SegmentDurationSeconds { get; set; } = 5;
@@ -42,7 +43,7 @@ public sealed class Config
     public bool OcrEnabled { get; set; } = false;
 
     [JsonPropertyName("overlayHotkey")]
-    public string OverlayHotkey { get; set; } = "Ctrl+Shift+R";
+    public string OverlayHotkey { get; set; } = "Ctrl+Shift+F9";
 
     [JsonPropertyName("captureLast30Hotkey")]
     public string CaptureLast30Hotkey { get; set; } = "Ctrl+Shift+T";

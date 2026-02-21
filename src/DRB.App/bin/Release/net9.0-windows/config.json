@@ -3,13 +3,12 @@
   "modifierKey": "Control, Shift",
   "bufferDurationSeconds": 30,
   "saveFolder": "clips",
-  "captureMode": "Focus",
   "segmentDurationSeconds": 5,
   "encodeWidth": 2560,
   "encodeHeight": 1440,
   "encodeFps": 30,
   "ocrEnabled": false,
-  "overlayHotkey": "Ctrl\u002BOem3",
-  "captureLast30Hotkey": "Ctrl\u002BShift\u002BOem3",
+  "overlayHotkey": "Ctrl\u002BC",
+  "captureLast30Hotkey": "Ctrl\u002BAlt\u002BShift\u002BP",
   "theme": "dark"
 }

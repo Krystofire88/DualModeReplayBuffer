@@ -12,59 +12,15 @@
         Width="420"
         Height="500"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Window.Resources>
-        <Style x:Key="IslandButton" TargetType="Button">
-            <Setter Property="Background" Value="#2A2A2A"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12,8"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="6"
-                                Padding="{TemplateBinding Padding}"
-                                BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#3A3A3A"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#1A1A1A"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="AccentButton" TargetType="Button" BasedOn="{StaticResource IslandButton}">
-            <Setter Property="Background" Value="#0078D4"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1E8AD4"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="ScrollBar">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Width" Value="8"/>
-        </Style>
-    </Window.Resources>
-    <Border CornerRadius="16"
-            Background="#F2202020"
+    <Border x:Name="MainBorder" CornerRadius="16"
+            Background="{x:Null}"
             Padding="20"
-            BorderBrush="#333"
+            BorderBrush="{x:Null}"
             BorderThickness="1">
         <Border.Effect>
             <DropShadowEffect BlurRadius="16" ShadowDepth="4" Opacity="0.5" Color="Black"/>
         </Border.Effect>
-        <Grid>
+        <Grid x:Name="RootGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -75,7 +31,7 @@
             <Grid Grid.Row="0" Margin="0,0,0,16">
                 <TextBlock Text="Settings" Foreground="White" FontFamily="Segoe UI" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
                 <Button Content="✕" HorizontalAlignment="Right" Padding="8,4" FontSize="14" 
-                        Style="{StaticResource IslandButton}" Click="CloseButton_Click" ToolTip="Close (Escape)"/>
+                        Background="{x:Null}" Click="CloseButton_Click" ToolTip="Close (Escape)"/>
             </Grid>
             
             <!-- Content -->
@@ -83,7 +39,7 @@
                 <StackPanel>
                     <!-- Hotkeys Section -->
                     <TextBlock Text="HOTKEYS" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border Background="#2A2A2A" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                    <Border x:Name="HotkeysBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
                         <StackPanel>
                             <!-- Overlay Hotkey -->
                             <Grid Margin="0,0,0,12">
@@ -95,12 +51,7 @@
                                     <TextBlock Text="Toggle Overlay" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
                                     <TextBlock Text="Show/hide the replay overlay" Foreground="#888" FontFamily="Segoe UI" FontSize="12"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                    <Button x:Name="RecordOverlayHotkeyBtn" Content="Record" Style="{StaticResource IslandButton}" Padding="10,6" Margin="0,0,6,0" Click="RecordOverlayHotkeyBtn_Click"/>
-                                    <Border Background="#1A1A1A" CornerRadius="4" Padding="8,6" MinWidth="100">
-                                        <TextBox x:Name="OverlayHotkeyDisplay" Text="Ctrl+Shift+R" Foreground="White" Background="Transparent" BorderThickness="0" IsReadOnly="True" FontFamily="Segoe UI" FontSize="12"/>
-                                    </Border>
-                                </StackPanel>
+                                <Button x:Name="RecordOverlayHotkeyBtn" Content="Ctrl+Shift+F9" Width="160" Height="32" HorizontalAlignment="Right" FontSize="12" Click="RecordOverlayHotkeyBtn_Click"/>
                             </Grid>
                             
                             <!-- Capture Last 30 Hotkey -->
@@ -113,19 +64,14 @@
                                     <TextBlock Text="Capture Last 30s" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
                                     <TextBlock Text="Immediately save last 30 seconds" Foreground="#888" FontFamily="Segoe UI" FontSize="12"/>
                                 </StackPanel>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                    <Button x:Name="RecordCapture30HotkeyBtn" Content="Record" Style="{StaticResource IslandButton}" Padding="10,6" Margin="0,0,6,0" Click="RecordCapture30HotkeyBtn_Click"/>
-                                    <Border Background="#1A1A1A" CornerRadius="4" Padding="8,6" MinWidth="100">
-                                        <TextBox x:Name="Capture30HotkeyDisplay" Text="Ctrl+Shift+T" Foreground="White" Background="Transparent" BorderThickness="0" IsReadOnly="True" FontFamily="Segoe UI" FontSize="12"/>
-                                    </Border>
-                                </StackPanel>
+                                <Button x:Name="RecordCapture30HotkeyBtn" Content="Ctrl+Shift+T" Width="160" Height="32" HorizontalAlignment="Right" FontSize="12" Click="RecordCapture30HotkeyBtn_Click"/>
                             </Grid>
                         </StackPanel>
                     </Border>
 
                     <!-- Appearance Section -->
                     <TextBlock Text="APPEARANCE" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border Background="#2A2A2A" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                    <Border x:Name="AppearanceBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -144,7 +90,7 @@
 
                     <!-- Storage Section -->
                     <TextBlock Text="STORAGE" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border Background="#2A2A2A" CornerRadius="8" Padding="12" Margin="0,0,0,8">
+                    <Border x:Name="StorageBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,8">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -154,7 +100,7 @@
                                 <TextBlock Text="Clips Directory" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
                                 <TextBlock x:Name="ClipsFolderTextBlock" Text="No folder selected" Foreground="#888" FontFamily="Segoe UI" FontSize="12" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
                             </StackPanel>
-                            <Button x:Name="BrowseButton" Grid.Column="1" Content="Browse" Style="{StaticResource IslandButton}" Padding="10,6" Click="BrowseButton_Click"/>
+                            <Button x:Name="BrowseButton" Grid.Column="1" Content="Browse" Background="{x:Null}" Padding="10,6" Click="BrowseButton_Click"/>
                         </Grid>
                     </Border>
                 </StackPanel>
@@ -163,7 +109,7 @@
             <!-- Footer -->
             <Grid Grid.Row="2" Margin="0,16,0,0">
                 <TextBlock Text="Press Escape to close" Foreground="#666" FontFamily="Segoe UI" FontSize="11" VerticalAlignment="Center"/>
-                <Button x:Name="SaveButton" Content="Save Settings" Style="{StaticResource AccentButton}" HorizontalAlignment="Right" Click="SaveButton_Click"/>
+                <Button x:Name="SaveButton" Content="Save Settings" Background="#0078D4" HorizontalAlignment="Right" Click="SaveButton_Click"/>
             </Grid>
         </Grid>
     </Border>

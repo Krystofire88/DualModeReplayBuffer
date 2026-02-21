@@ -66,6 +66,7 @@ builder.ConfigureServices(services =>
     // WPF + overlay
     services.AddSingleton<App>();
     services.AddSingleton<IOverlayWindowHolder, OverlayWindowHolder>();
+    services.AddSingleton<ThemeService>();
 
     // Context frame processor (pHash change detection)
     services.AddSingleton<ContextFrameProcessor>(sp =>

@@ -5,6 +5,16 @@ public sealed class OverlayWindowHolder : IOverlayWindowHolder
     private OverlayWindow? _window;
     private readonly List<Action<OverlayWindow>> _pendingCallbacks = [];
     private readonly object _lock = new();
+    private Action? _refreshHotkeysCallback;
+
+    // Static reference for easy access
+    private static OverlayWindowHolder? _instance;
+    public static OverlayWindowHolder? Instance => _instance;
+
+    public OverlayWindowHolder()
+    {
+        _instance = this;
+    }
 
     public OverlayWindow? Window => _window;
 
@@ -32,5 +42,15 @@ public sealed class OverlayWindowHolder : IOverlayWindowHolder
                 _pendingCallbacks.Add(callback);
             }
         }
+    }
+
+    public void SetRefreshHotkeysCallback(Action callback)
+    {
+        _refreshHotkeysCallback = callback;
+    }
+
+    public void RefreshHotkeys()
+    {
+        _refreshHotkeysCallback?.Invoke();
     }
 }

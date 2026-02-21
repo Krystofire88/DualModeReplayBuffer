@@ -11,43 +11,10 @@
         Title="DRB Island"
         ContentRendered="Window_ContentRendered"
         PreviewKeyDown="Window_PreviewKeyDown">
-    <Window.Resources>
-        <Style x:Key="IslandButton" TargetType="Button">
-            <Setter Property="Background" Value="#2A2A2A"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="FontSize" Value="13"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12,6"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="6"
-                                Padding="{TemplateBinding Padding}"
-                                BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#3A3A3A"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Button" BasedOn="{StaticResource IslandButton}"/>
-    </Window.Resources>
-    <Border CornerRadius="16"
-            Background="#F2202020"
+    <Border x:Name="MainBorder" CornerRadius="16"
+            Background="{x:Null}"
             Padding="16,10"
-            BorderBrush="#333"
+            BorderBrush="{x:Null}"
             BorderThickness="1"
             MinHeight="44">
         <Border.Effect>
@@ -56,23 +23,24 @@
         <StackPanel x:Name="IslandContent" Orientation="Horizontal">
             <Border x:Name="ModeToggle"
                     Margin="0,0,4,0"
-                    Background="#2A2A2A"
+                    Background="{x:Null}"
                     CornerRadius="12"
                     Padding="4,2"
                     VerticalAlignment="Center"
                     Cursor="Hand"
                     MouseLeftButtonDown="ModeToggle_MouseLeftButtonDown">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="ModeContext" Text="Context" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
+                    <TextBlock x:Name="BtnContext" Text="Context" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
                     <TextBlock Text=" | " Foreground="#888" FontFamily="Segoe UI" FontSize="13" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="ModeFocus" Text="Focus" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
+                    <TextBlock x:Name="BtnFocus" Text="Focus" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
                 </StackPanel>
             </Border>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" Click="ClipsButton_Click"/>
+            <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" Background="{x:Null}" Click="ClipsButton_Click"/>
             <Button x:Name="CaptureButton"
                     Margin="4,0"
                     Content="⏺ Capture 30s"
+                    Background="{x:Null}"
                     Click="CaptureButton_Click"
                     ToolTip="Capture last 30 seconds&#x0a;Hotkey: Win+F10 (not yet active)"/>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
@@ -80,12 +48,13 @@
                     Margin="4,0"
                     Content="🖼 Context Viewer"
                     IsEnabled="False"
+                    Background="{x:Null}"
                     ToolTip="Coming soon"/>
-            <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" Click="SettingsButton_Click"/>
+            <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" Background="{x:Null}" Click="SettingsButton_Click"/>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
             <Border x:Name="PowerToggle"
                     Margin="4,0,4,0"
-                    Background="#2A2A2A"
+                    Background="{x:Null}"
                     CornerRadius="12"
                     Padding="4,2"
                     VerticalAlignment="Center"
@@ -97,9 +66,6 @@
                     <TextBlock x:Name="PowerOff" Text="OFF" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
                 </StackPanel>
             </Border>
-            <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Button x:Name="CloseButton" Content="✕" Margin="0" Padding="8,4" FontSize="14" ToolTip="Close overlay (Escape)"
-                    Click="CloseButton_Click"/>
         </StackPanel>
     </Border>
 </Window>

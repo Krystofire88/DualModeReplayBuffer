@@ -20,22 +20,25 @@ public partial class OverlayWindow : Window
     private readonly Config _config;
     private readonly IPauseCapture _pauseCapture;
     private readonly IslandWindow _islandWindow;
+    private readonly ThemeService _themeService;
     private bool _isClosing;
+
+    public IslandWindow IslandWindow => _islandWindow;
 
     public event Action<DRB.Core.CaptureMode>? OnModeToggled;
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
 
-    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController)
+    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService)
     {
         _config = config;
         _pauseCapture = pauseCapture;
-        _islandWindow = new IslandWindow(config, captureController);
+        _themeService = themeService;
+        _islandWindow = new IslandWindow(config, captureController, themeService);
 
         _islandWindow.OnModeToggled += mode => OnModeToggled?.Invoke(mode);
         _islandWindow.OnCaptureRequested += () => OnCaptureRequested?.Invoke();
         _islandWindow.OnPowerToggled += on => OnPowerToggled?.Invoke(on);
-        _islandWindow.CloseRequested += HideOverlay;
         _islandWindow.PreviewKeyDown += IslandWindow_PreviewKeyDown;
 
         InitializeComponent();
@@ -61,8 +64,25 @@ public partial class OverlayWindow : Window
     protected override void OnSourceInitialized(EventArgs e)
     {
         base.OnSourceInitialized(e);
-        // Make darkened area click-through — clicks pass to windows below
-        SetClickThrough(true);
+        // Don't make click-through - we need to detect clicks on background to close overlay
+        // SetClickThrough(true);
+    }
+
+    private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape)
+        {
+            HideOverlay();
+            e.Handled = true;
+        }
+    }
+
+    private void BackgroundOverlay_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        // Only close if click was on the background, not the island
+        // The island is a child window, so clicks on it won't reach this handler
+        // because the island window will handle them first
+        HideOverlay();
     }
 
     public void ShowOverlay()

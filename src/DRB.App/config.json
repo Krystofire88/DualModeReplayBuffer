@@ -10,5 +10,5 @@
   "encodeFps": 30,
   "ocrEnabled": false,
   "hdrLinearInput": true,
-  "overlayHotkey": "Ctrl+Shift+R"
+  "overlayHotkey": "Ctrl+Shift+F9"
 }

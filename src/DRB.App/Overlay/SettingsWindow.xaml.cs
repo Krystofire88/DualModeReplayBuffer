@@ -4,35 +4,40 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using DRB.Core;
+using Microsoft.Extensions.Logging;
 using Color = System.Windows.Media.Color;
-using Brushes = System.Windows.Media.Brushes;
+using CornerRadius = System.Windows.CornerRadius;
+using Thickness = System.Windows.Thickness;
 
 namespace DRB.App.Overlay;
 
 public partial class SettingsWindow : Window
 {
     private readonly Config _config;
+    private readonly IOverlayWindowHolder? _holder;
+    private readonly ThemeService _themeService;
+    private readonly ILogger<SettingsWindow>? _logger;
     private bool _isRecordingOverlayHotkey;
     private bool _isRecordingCapture30Hotkey;
     private string _pendingOverlayHotkey = "";
     private string _pendingCapture30Hotkey = "";
 
-    // Theme colors
-    private readonly SolidColorBrush _darkBackground = new(Color.FromArgb(0xF2, 0x20, 0x20, 0x20));
-    private readonly SolidColorBrush _darkCard = new(Color.FromRgb(0x2A, 0x2A, 0x2A));
-    private readonly SolidColorBrush _darkText = new(Colors.White);
-    private readonly SolidColorBrush _darkSecondary = new(Color.FromRgb(0x88, 0x88, 0x88));
-    
-    private readonly SolidColorBrush _lightBackground = new(Color.FromArgb(0xF2, 0xFF, 0xFF, 0xFF));
-    private readonly SolidColorBrush _lightCard = new(Color.FromRgb(0xF5, 0xF5, 0xF5));
-    private readonly SolidColorBrush _lightText = new(Color.FromRgb(0x1E, 0x1E, 0x1E));
-    private readonly SolidColorBrush _lightSecondary = new(Color.FromRgb(0x66, 0x66, 0x66));
-
-    public SettingsWindow(Config config)
+    public SettingsWindow(Config config, ThemeService themeService, IOverlayWindowHolder? holder = null, ILogger<SettingsWindow>? logger = null)
     {
         _config = config;
+        _themeService = themeService;
+        _holder = holder;
+        _logger = logger;
         InitializeComponent();
+        
+        // Load config values WITHOUT triggering theme changes
         LoadFromConfig();
+        
+        ContentRendered += (_, _) =>
+        {
+            ApplyTheme(_themeService.IsDark);
+            _themeService.ThemeChanged += ApplyTheme;
+        };
         PreviewKeyDown += Window_PreviewKeyDown;
     }
 
@@ -46,79 +51,107 @@ public partial class SettingsWindow : Window
 
     private void Theme_Checked(object sender, RoutedEventArgs e)
     {
-        if (ThemeLight == null || ThemeDark == null) return;
-        
-        bool isLight = ThemeLight.IsChecked == true;
-        ApplyTheme(isLight ? "light" : "dark");
+        // Don't call SetTheme here - only call it when user clicks Save
+        // This prevents theme from being reset when opening settings
     }
 
-    private void ApplyTheme(string themeName)
+    private ControlTemplate CreateRoundedTemplate(Color bg)
     {
-        bool isLight = themeName == "light";
+        var template = new ControlTemplate(typeof(Button));
+        var border = new FrameworkElementFactory(typeof(Border));
+        border.SetValue(Border.CornerRadiusProperty, new CornerRadius(8));
+        border.SetValue(Border.BackgroundProperty, new SolidColorBrush(bg));
+        border.SetValue(Border.BorderThicknessProperty, new Thickness(0));
+        border.SetValue(Border.PaddingProperty, new Thickness(12, 6, 12, 6));
+        var presenter = new FrameworkElementFactory(typeof(ContentPresenter));
+        presenter.SetValue(ContentPresenter.HorizontalAlignmentProperty, HorizontalAlignment.Center);
+        presenter.SetValue(ContentPresenter.VerticalAlignmentProperty, VerticalAlignment.Center);
+        border.AppendChild(presenter);
+        template.VisualTree = border;
+        return template;
+    }
+
+    private void StyleButton(Button btn, Color bg, Color fg)
+    {
+        btn.Background = new SolidColorBrush(bg);
+        btn.Foreground = new SolidColorBrush(fg);
+        btn.BorderThickness = new Thickness(0);
+        btn.Padding = new Thickness(12, 6, 12, 6);
+        btn.Cursor = Cursors.Hand;
+        btn.Template = CreateRoundedTemplate(bg);
+    }
+
+    private void ApplyTheme(bool isDark)
+    {
+        var bg      = isDark ? "#1E1E1E" : "#F5F5F5";
+        var fg      = isDark ? "White"   : "Black";
+        var inputBg = isDark ? "#2A2A2A" : "#FFFFFF";
+        var btnBg   = isDark ? "#3A3A3A" : "#E0E0E0";
+        var sectionBg = isDark ? "#2A2A2A" : "#E8E8E8";
+        var borderColor = isDark ? "#333333" : "#CCCCCC";
+        var footerFg = isDark ? "#666666" : "#666666";
         
-        // Update this window
-        UpdateThemeRecursive(Content as DependencyObject, isLight);
+        MainBorder.Background = new SolidColorBrush(
+            (Color)System.Windows.Media.ColorConverter.ConvertFromString(bg));
+        MainBorder.BorderBrush = new SolidColorBrush(
+            (Color)System.Windows.Media.ColorConverter.ConvertFromString(borderColor));
         
-        // Update all other windows
-        foreach (Window window in Application.Current.Windows)
+        // Apply to section borders
+        if (HotkeysBorder != null)
+            HotkeysBorder.Background = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+        if (AppearanceBorder != null)
+            AppearanceBorder.Background = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+        if (StorageBorder != null)
+            StorageBorder.Background = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+        
+        // Apply footer text color
+        if (RootGrid != null && RootGrid.Children.Count > 0)
         {
-            if (window != this && window.Content != null)
+            foreach (var child in RootGrid.Children)
             {
-                UpdateThemeRecursive(window.Content as DependencyObject, isLight);
+                if (child is Grid grid && grid.Children.Count > 0)
+                {
+                    foreach (var gridChild in grid.Children)
+                    {
+                        if (gridChild is TextBlock tb && tb.Text == "Press Escape to close")
+                            tb.Foreground = new SolidColorBrush(
+                                (Color)System.Windows.Media.ColorConverter.ConvertFromString(footerFg));
+                    }
+                }
             }
         }
-    }
-    
-    private void UpdateThemeRecursive(DependencyObject? element, bool isLight)
-    {
-        if (element == null) return;
         
-        for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(element); i++)
+        foreach (var tb in FindVisualChildren<TextBlock>(this))
+            tb.Foreground = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(fg));
+        foreach (var tb in FindVisualChildren<TextBox>(this))
         {
-            var child = System.Windows.Media.VisualTreeHelper.GetChild(element, i);
-            
-            if (child is TextBlock textBlock)
-            {
-                var text = textBlock.Text ?? "";
-                if (text == "Settings" || text == "✕" || text == "Record" || text == "Browse" || text == "Save Settings" || text == "Press Escape to close")
-                    continue;
-                else if (text == "HOTKEYS" || text == "APPEARANCE" || text == "STORAGE" || text == "RECORDING")
-                    textBlock.Foreground = isLight ? _lightSecondary : _darkSecondary;
-                else if (textBlock.Name == "ClipsFolderTextBlock")
-                    textBlock.Foreground = isLight ? _lightSecondary : _darkSecondary;
-                else
-                    textBlock.Foreground = isLight ? _lightText : _darkText;
-            }
-            else if (child is Border border)
-            {
-                // Update card backgrounds
-                if (border.Background is SolidColorBrush sb)
-                {
-                    if (sb.Color == Color.FromRgb(0x2A, 0x2A, 0x2A) || sb.Color == Color.FromRgb(0xF5, 0xF5, 0xF5))
-                    {
-                        border.Background = isLight ? _lightCard : _darkCard;
-                    }
-                }
-                // Update main border
-                if (border.Name == "" && border.Background is SolidColorBrush bsb)
-                {
-                    if (bsb.Color == Color.FromArgb(0xF2, 0x20, 0x20, 0x20) || bsb.Color == Color.FromArgb(0xF2, 0xFF, 0xFF, 0xFF))
-                    {
-                        border.Background = isLight ? _lightBackground : _darkBackground;
-                        border.BorderBrush = isLight ? Brushes.LightGray : new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33));
-                    }
-                }
-            }
-            else if (child is System.Windows.Controls.Primitives.ToggleButton || child is RadioButton)
-            {
-                // Update radio buttons
-                if (child is RadioButton rb)
-                {
-                    rb.Foreground = isLight ? _lightText : _darkText;
-                }
-            }
-            
-            UpdateThemeRecursive(child, isLight);
+            tb.Background = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(inputBg));
+            tb.Foreground = new SolidColorBrush(
+                (Color)System.Windows.Media.ColorConverter.ConvertFromString(fg));
+        }
+        
+        // Style all buttons with rounded corners and no border
+        var buttonBg = isDark ? Color.FromRgb(0x3A, 0x3A, 0x3A) : Color.FromRgb(0xE0, 0xE0, 0xE0);
+        var textColor = isDark ? Colors.White : Colors.Black;
+        
+        foreach (var btn in FindVisualChildren<Button>(this))
+            StyleButton(btn, buttonBg, textColor);
+    }
+
+    private static IEnumerable<T> FindVisualChildren<T>(DependencyObject depObj) where T : DependencyObject
+    {
+        if (depObj == null) yield break;
+        for (int i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(depObj); i++)
+        {
+            var child = System.Windows.Media.VisualTreeHelper.GetChild(depObj, i);
+            if (child is T t) yield return t;
+            foreach (var childOfChild in FindVisualChildren<T>(child))
+                yield return childOfChild;
         }
     }
 
@@ -137,14 +170,14 @@ public partial class SettingsWindow : Window
 
     private void LoadFromConfig()
     {
-        OverlayHotkeyDisplay.Text = _config.OverlayHotkey ?? "Ctrl+Shift+R";
-        Capture30HotkeyDisplay.Text = _config.CaptureLast30Hotkey ?? "Ctrl+Shift+T";
+        // Set button content to current hotkey values
+        RecordOverlayHotkeyBtn.Content = _config.OverlayHotkey ?? "Ctrl+Shift+F9";
+        RecordCapture30HotkeyBtn.Content = _config.CaptureLast30Hotkey ?? "Ctrl+Shift+T";
+        
+        // Set radio buttons to match current theme WITHOUT calling SetTheme
         ThemeDark.IsChecked = _config.Theme != "light";
         ThemeLight.IsChecked = _config.Theme == "light";
         ClipsFolderTextBlock.Text = _config.SaveFolder;
-        
-        // Apply theme on load
-        ApplyTheme(_config.Theme ?? "dark");
     }
 
     private void RecordOverlayHotkeyBtn_Click(object sender, RoutedEventArgs e)
@@ -153,9 +186,8 @@ public partial class SettingsWindow : Window
         {
             // Cancel recording
             _isRecordingOverlayHotkey = false;
-            RecordOverlayHotkeyBtn.Content = "Record";
-            OverlayHotkeyDisplay.Text = string.IsNullOrEmpty(_pendingOverlayHotkey) 
-                ? _config.OverlayHotkey 
+            RecordOverlayHotkeyBtn.Content = string.IsNullOrEmpty(_pendingOverlayHotkey) 
+                ? _config.OverlayHotkey ?? "Ctrl+Shift+F9" 
                 : _pendingOverlayHotkey;
             _pendingOverlayHotkey = "";
         }
@@ -164,11 +196,9 @@ public partial class SettingsWindow : Window
             // Start recording
             _isRecordingOverlayHotkey = true;
             _isRecordingCapture30Hotkey = false;
-            RecordOverlayHotkeyBtn.Content = "Cancel";
-            RecordCapture30HotkeyBtn.Content = "Record";
-            OverlayHotkeyDisplay.Text = "Press keys...";
-            Capture30HotkeyDisplay.Text = string.IsNullOrEmpty(_pendingCapture30Hotkey)
-                ? _config.CaptureLast30Hotkey
+            RecordOverlayHotkeyBtn.Content = "Press keys...";
+            RecordCapture30HotkeyBtn.Content = string.IsNullOrEmpty(_pendingCapture30Hotkey)
+                ? _config.CaptureLast30Hotkey ?? "Ctrl+Shift+T"
                 : _pendingCapture30Hotkey;
             
             // Focus the window to capture key events
@@ -183,9 +213,8 @@ public partial class SettingsWindow : Window
         {
             // Cancel recording
             _isRecordingCapture30Hotkey = false;
-            RecordCapture30HotkeyBtn.Content = "Record";
-            Capture30HotkeyDisplay.Text = string.IsNullOrEmpty(_pendingCapture30Hotkey) 
-                ? _config.CaptureLast30Hotkey 
+            RecordCapture30HotkeyBtn.Content = string.IsNullOrEmpty(_pendingCapture30Hotkey) 
+                ? _config.CaptureLast30Hotkey ?? "Ctrl+Shift+T" 
                 : _pendingCapture30Hotkey;
             _pendingCapture30Hotkey = "";
         }
@@ -194,11 +223,9 @@ public partial class SettingsWindow : Window
             // Start recording
             _isRecordingCapture30Hotkey = true;
             _isRecordingOverlayHotkey = false;
-            RecordCapture30HotkeyBtn.Content = "Cancel";
-            RecordOverlayHotkeyBtn.Content = "Record";
-            Capture30HotkeyDisplay.Text = "Press keys...";
-            OverlayHotkeyDisplay.Text = string.IsNullOrEmpty(_pendingOverlayHotkey)
-                ? _config.OverlayHotkey
+            RecordCapture30HotkeyBtn.Content = "Press keys...";
+            RecordOverlayHotkeyBtn.Content = string.IsNullOrEmpty(_pendingOverlayHotkey)
+                ? _config.OverlayHotkey ?? "Ctrl+Shift+F9"
                 : _pendingOverlayHotkey;
             
             // Focus the window to capture key events
@@ -209,6 +236,7 @@ public partial class SettingsWindow : Window
 
     private void OnOverlayHotkeyPreviewKeyDown(object sender, KeyEventArgs e)
     {
+        if (!_isRecordingOverlayHotkey) return;
         e.Handled = true;
         
         // Cancel on Escape
@@ -242,7 +270,7 @@ public partial class SettingsWindow : Window
         if (modifiers.Count == 0)
         {
             // Need at least one modifier
-            OverlayHotkeyDisplay.Text = "Need modifier (Ctrl/Alt/Shift/Win)";
+            RecordOverlayHotkeyBtn.Content = "Need modifier!";
             return;
         }
 
@@ -251,16 +279,16 @@ public partial class SettingsWindow : Window
         var hotkeyStr = string.Join("+", modifiers) + "+" + keyStr;
         
         _pendingOverlayHotkey = hotkeyStr;
-        OverlayHotkeyDisplay.Text = hotkeyStr;
+        RecordOverlayHotkeyBtn.Content = hotkeyStr;
         
         // Stop recording
         _isRecordingOverlayHotkey = false;
-        RecordOverlayHotkeyBtn.Content = "Record";
         this.PreviewKeyDown -= OnOverlayHotkeyPreviewKeyDown;
     }
 
     private void OnCapture30HotkeyPreviewKeyDown(object sender, KeyEventArgs e)
     {
+        if (!_isRecordingCapture30Hotkey) return;
         e.Handled = true;
         
         // Cancel on Escape
@@ -294,7 +322,7 @@ public partial class SettingsWindow : Window
         if (modifiers.Count == 0)
         {
             // Need at least one modifier
-            Capture30HotkeyDisplay.Text = "Need modifier (Ctrl/Alt/Shift/Win)";
+            RecordCapture30HotkeyBtn.Content = "Need modifier!";
             return;
         }
 
@@ -303,11 +331,10 @@ public partial class SettingsWindow : Window
         var hotkeyStr = string.Join("+", modifiers) + "+" + keyStr;
         
         _pendingCapture30Hotkey = hotkeyStr;
-        Capture30HotkeyDisplay.Text = hotkeyStr;
+        RecordCapture30HotkeyBtn.Content = hotkeyStr;
         
         // Stop recording
         _isRecordingCapture30Hotkey = false;
-        RecordCapture30HotkeyBtn.Content = "Record";
         this.PreviewKeyDown -= OnCapture30HotkeyPreviewKeyDown;
     }
 
@@ -328,18 +355,60 @@ public partial class SettingsWindow : Window
 
     private async void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        // Save hotkeys
-        _config.OverlayHotkey = string.IsNullOrEmpty(_pendingOverlayHotkey) 
-            ? OverlayHotkeyDisplay.Text 
-            : _pendingOverlayHotkey;
-        _config.CaptureLast30Hotkey = string.IsNullOrEmpty(_pendingCapture30Hotkey) 
-            ? Capture30HotkeyDisplay.Text 
-            : _pendingCapture30Hotkey;
+        _logger?.LogInformation("Save clicked. _pendingOverlayHotkey='{H}', current='{C}",
+            _pendingOverlayHotkey, _config.OverlayHotkey);
         
-        // Save theme
-        _config.Theme = ThemeLight.IsChecked == true ? "light" : "dark";
+        // Only re-register if user actually recorded a new hotkey (pending is non-empty and different from current)
+        var newOverlayHotkey = _pendingOverlayHotkey;
+        var currentOverlayHotkey = _config.OverlayHotkey ?? "";
+        
+        // Check if user recorded a new hotkey
+        bool userRecordedNewHotkey = !string.IsNullOrEmpty(newOverlayHotkey) && newOverlayHotkey != currentOverlayHotkey;
+        
+        if (userRecordedNewHotkey)
+        {
+            _logger?.LogInformation("Attempting to register new overlay hotkey: {H}", newOverlayHotkey);
+            
+            // Try to register the new hotkey - this will fail if it's in use by another app
+            var task = OverlayService.Instance?.TryReregisterOverlayHotkey(newOverlayHotkey);
+            bool ok = task != null ? await task : false;
+            _logger?.LogInformation("TryReregisterOverlayHotkey result: {R}", ok);
+            
+            if (!ok)
+            {
+                MessageBox.Show(this,
+                    $"'{newOverlayHotkey}' is already in use by another application.\n" +
+                    "Please choose a different combination.",
+                    "Hotkey Conflict", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return; // Don't save or change anything
+            }
+            
+            // Only persist if registration succeeded
+            _config.OverlayHotkey = newOverlayHotkey;
+        }
+        else if (!string.IsNullOrEmpty(newOverlayHotkey) && newOverlayHotkey == currentOverlayHotkey)
+        {
+            // User didn't change the hotkey - just inform them
+            MessageBox.Show(this,
+                $"'{newOverlayHotkey}' is already your current hotkey.",
+                "No Change", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Don't return - still allow saving other settings
+        }
+        
+        // Handle capture hotkey
+        if (!string.IsNullOrEmpty(_pendingCapture30Hotkey))
+            _config.CaptureLast30Hotkey = _pendingCapture30Hotkey;
+        
+        // Save theme - this also triggers ThemeChanged to update all windows
+        bool isDark = ThemeDark.IsChecked == true;
+        _themeService.SetTheme(isDark);
+        _config.Theme = isDark ? "dark" : "light";
         
         await _config.SaveAsync();
+        
+        // Refresh hotkeys using static instance
+        OverlayWindowHolder.Instance?.RefreshHotkeys();
+        
         Close();
     }
 }

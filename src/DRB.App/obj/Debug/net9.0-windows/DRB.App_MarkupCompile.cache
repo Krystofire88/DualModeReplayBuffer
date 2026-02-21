@@ -1,5 +1,5 @@
 ﻿DRB.App
-1.0.0.0
+
 
 winexe
 C#
@@ -8,13 +8,13 @@ c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Debug\net9.0-windo
 DRB.App
 none
 false
-TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\App.xaml
-6-682632520
+5-1018068486
 
-16-1513147429
-2531972680949
-Overlay\DarkTheme.xaml;Overlay\HotkeyWindow.xaml;Overlay\IslandWindow.xaml;Overlay\LightTheme.xaml;Overlay\OverlayWindow.xaml;Overlay\SettingsWindow.xaml;
+141760758675
+253-1982226317
+Overlay\DarkTheme.xaml;Overlay\IslandWindow.xaml;Overlay\LightTheme.xaml;Overlay\OverlayWindow.xaml;Overlay\SettingsWindow.xaml;
 
 False
 
