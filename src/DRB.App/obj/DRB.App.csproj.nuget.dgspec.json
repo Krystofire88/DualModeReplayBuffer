@@ -32,14 +32,14 @@
           "net9.0-windows7.0": {
             "targetAlias": "net9.0-windows",
             "projectReferences": {
-              "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj": {
-                "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj"
+              "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj": {
+                "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj"
               },
               "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj": {
                 "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj"
               },
-              "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
-                "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj"
+              "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
+                "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj"
               }
             }
           }
@@ -104,14 +104,14 @@
         }
       }
     },
-    "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj": {
+    "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj",
+        "projectUniqueName": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj",
         "projectName": "DRB.Capture",
-        "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj",
+        "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\DRB.Capture.csproj",
         "packagesPath": "C:\\Users\\kryst\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\obj\\",
+        "outputPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Capture\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -135,8 +135,8 @@
               "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj": {
                 "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Core\\DRB.Core.csproj"
               },
-              "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
-                "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj"
+              "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
+                "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj"
               }
             }
           }
@@ -266,14 +266,14 @@
         }
       }
     },
-    "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
+    "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
+        "projectUniqueName": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
         "projectName": "DRB.Storage",
-        "projectPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
+        "projectPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
         "packagesPath": "C:\\Users\\kryst\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\obj\\",
+        "outputPath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -21,7 +21,7 @@ public sealed class AppChannels : IAppChannels
 
     public AppChannels()
     {
-        CaptureToEncoder = Channel.CreateBounded<RawFrame>(BoundedWait(4));
+        CaptureToEncoder = Channel.CreateBounded<RawFrame>(BoundedWait(64));
         CaptureToProcessor = Channel.CreateBounded<RawFrame>(Bounded(256));
         EncoderToStorage = Channel.CreateBounded<EncodedFrame>(Bounded(256));
         ProcessorToOverlay = Channel.CreateBounded<ProcessedFrame>(Bounded(256));

@@ -60,6 +60,9 @@ public sealed class ContextFrameProcessor
 
         int distance = HammingDistance(_lastHash!, currentHash);
 
+        _logger.LogDebug("Context pHash: distance={Distance}, threshold={Threshold}", 
+            distance, ChangeThreshold);
+
         if (distance > ChangeThreshold)
         {
             _logger.LogDebug(

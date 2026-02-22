@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "w37FYDuHkfs=",
+  "dgSpecHash": "Y/8BAAMTYm0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
+  "projectFilePath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kryst\\.nuget\\packages\\microsoft.data.sqlite\\8.0.0\\microsoft.data.sqlite.8.0.0.nupkg.sha512",
     "C:\\Users\\kryst\\.nuget\\packages\\microsoft.data.sqlite.core\\8.0.0\\microsoft.data.sqlite.core.8.0.0.nupkg.sha512",

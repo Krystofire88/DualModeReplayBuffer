@@ -48,15 +48,16 @@ builder.ConfigureServices(services =>
     services.AddSingleton<IClipStorage, SqliteClipStorage>();
     services.AddSingleton<FocusRingBuffer>(sp =>
     {
-        var cfg = sp.GetRequiredService<Config>();
         var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FocusRingBuffer>();
         return new FocusRingBuffer(
             AppPaths.FocusBufferFolder,
-            TimeSpan.FromSeconds(cfg.BufferDurationSeconds),
             logger);
     });
-    services.AddSingleton<ContextIndex>(_ =>
-        new ContextIndex(AppPaths.SqliteDbPath));
+    services.AddSingleton<ContextIndex>(sp =>
+    {
+        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextIndex>();
+        return new ContextIndex(AppPaths.SqliteDbPath, logger);
+    });
 
     // Pause/capture control
     services.AddSingleton<CapturePauseState>();

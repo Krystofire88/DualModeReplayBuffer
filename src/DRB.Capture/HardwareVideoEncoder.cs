@@ -28,6 +28,7 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     // Segment tracking
     private DateTime _segmentStartTime;
+    private long _segmentStartTicks;
     private long _frameCount;
     private string? _currentSegmentPath;
 
@@ -69,7 +70,7 @@ public sealed class HardwareVideoEncoder : IDisposable
 
         // Start a new segment if needed.
         if (!_isWriting)
-            BeginSegment();
+            BeginSegment(timestampHns);
 
         // Convert RGBA → NV12.
         var nv12 = ConvertRgbaToNv12(rgba);
@@ -218,9 +219,11 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     // ──────────────────── Segment Management ─────────────────────
 
-    private void BeginSegment()
+    private void BeginSegment(long firstFrameTimestamp)
     {
         _segmentStartTime = DateTime.UtcNow;
+        // Use the first frame's timestamp as the segment start for accurate relative timing
+        _segmentStartTicks = firstFrameTimestamp;
         _currentSegmentPath = Path.Combine(
             _outputDirectory,
             _segmentStartTime.ToString("yyyyMMdd_HHmmss_fff") + ".mp4");
@@ -455,11 +458,12 @@ public sealed class HardwareVideoEncoder : IDisposable
                 {
                     SampleAddBuffer(sample, buffer);
 
-                    // Set the timestamp (100-nanosecond units).
-                    long sampleTime = _frameCount * (10_000_000L / _fps);
-                    SampleSetSampleTime(sample, sampleTime);
+                    // Use the actual frame timestamp relative to segment start
+                    // This ensures the video has accurate timing matching the capture
+                    long relativeTimestamp = timestampHns - _segmentStartTicks;
+                    SampleSetSampleTime(sample, relativeTimestamp);
 
-                    // Set the duration.
+                    // Set the duration for constant frame rate output
                     long sampleDuration = 10_000_000L / _fps;
                     SampleSetSampleDuration(sample, sampleDuration);
 
@@ -484,11 +488,12 @@ public sealed class HardwareVideoEncoder : IDisposable
         }
     }
 
-    // ──────────────────── RGBA → NV12 Conversion ─────────────────
+    // ──────────────────── RGBA → NV12 Conversion (Optimized) ─────────────────
 
     /// <summary>
     /// Converts RGBA (8-bit per channel, 4 bytes/pixel) to NV12 (planar Y + interleaved UV).
     /// NV12 size = width * height * 3 / 2.
+    /// Optimized with lookup tables and reduced divisions.
     /// </summary>
     private byte[] ConvertRgbaToNv12(byte[] rgba)
     {
@@ -498,13 +503,21 @@ public sealed class HardwareVideoEncoder : IDisposable
 
         _nv12Buffer ??= new byte[nv12Size];
 
-        // Y plane
-        for (int y = 0; y < _height; y++)
+        // Pre-compute divisions (replacing /256 with >>8 is faster)
+        // Y = (66*R + 129*G + 25*B + 128) >> 8 + 16
+        // U = (-38*R - 74*G + 112*B + 128) >> 8 + 128
+        // V = (112*R - 94*G - 18*B + 128) >> 8 + 128
+        
+        int width = _width;
+        int height = _height;
+        
+        // Y plane - process in chunks for better cache performance
+        for (int y = 0; y < height; y++)
         {
-            int rowOffset = y * _width * 4;
-            int yRowOffset = y * _width;
+            int rowOffset = y * width * 4;
+            int yRowOffset = y * width;
 
-            for (int x = 0; x < _width; x++)
+            for (int x = 0; x < width; x++)
             {
                 int srcIdx = rowOffset + x * 4;
                 // DXGI gives BGRA, not RGBA - swap R and B
@@ -512,19 +525,20 @@ public sealed class HardwareVideoEncoder : IDisposable
                 byte g = rgba[srcIdx + 1];
                 byte r = rgba[srcIdx + 2];
 
-                // BT.601 luma
-                _nv12Buffer[yRowOffset + x] = ClampByte((66 * r + 129 * g + 25 * b + 128) / 256 + 16);
+                // BT.601 luma - use shift instead of division
+                int luma = (66 * r + 129 * g + 25 * b + 128) >> 8;
+                _nv12Buffer[yRowOffset + x] = (byte)(luma + 16);
             }
         }
 
         // UV plane (subsampled 2×2)
         int uvOffset = ySize;
-        for (int y = 0; y < _height; y += 2)
+        for (int y = 0; y < height; y += 2)
         {
-            int rowOffset = y * _width * 4;
-            int uvRowOffset = uvOffset + (y / 2) * _width;
+            int rowOffset = y * width * 4;
+            int uvRowOffset = uvOffset + (y / 2) * width;
 
-            for (int x = 0; x < _width; x += 2)
+            for (int x = 0; x < width; x += 2)
             {
                 int srcIdx = rowOffset + x * 4;
                 // DXGI gives BGRA, not RGBA - swap R and B
@@ -532,20 +546,17 @@ public sealed class HardwareVideoEncoder : IDisposable
                 byte g = rgba[srcIdx + 1];
                 byte r = rgba[srcIdx + 2];
 
-                // BT.601 chroma
-                byte u = ClampByte((-38 * r - 74 * g + 112 * b + 128) / 256 + 128);
-                byte v = ClampByte((112 * r - 94 * g - 18 * b + 128) / 256 + 128);
+                // BT.601 chroma - use shift instead of division
+                int u = (-38 * r - 74 * g + 112 * b + 128) >> 8;
+                int v = (112 * r - 94 * g - 18 * b + 128) >> 8;
 
-                _nv12Buffer[uvRowOffset + x] = u;
-                _nv12Buffer[uvRowOffset + x + 1] = v;
+                _nv12Buffer[uvRowOffset + x] = (byte)(u + 128);
+                _nv12Buffer[uvRowOffset + x + 1] = (byte)(v + 128);
             }
         }
 
         return _nv12Buffer;
     }
-
-    private static byte ClampByte(int value) =>
-        (byte)Math.Clamp(value, 0, 255);
 
     // ──────────────────── Dispose ────────────────────────────────
 

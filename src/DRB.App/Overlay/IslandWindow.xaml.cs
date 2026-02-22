@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using DRB.Core;
+using Microsoft.Extensions.Logging;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -18,6 +19,7 @@ public partial class IslandWindow : Window
     private readonly Config _config;
     private readonly ICaptureController _captureController;
     private readonly ThemeService _themeService;
+    private readonly ILogger _logger;
 
     // Theme brushes
     private readonly Brush _darkBackground = new SolidColorBrush(Color.FromArgb(0xF2, 0x20, 0x20, 0x20));
@@ -38,11 +40,12 @@ public partial class IslandWindow : Window
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
 
-    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService)
+    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger)
     {
         _config = config;
         _captureController = captureController;
         _themeService = themeService;
+        _logger = logger;
         InitializeComponent();
         Loaded += (_, _) =>
         {
@@ -303,11 +306,14 @@ public partial class IslandWindow : Window
                     ? _config.SaveFolder
                     : Path.Combine(AppPaths.BaseDirectory, _config.SaveFolder)
                 : AppPaths.ClipsFolder;
-            System.Diagnostics.Process.Start("explorer.exe", folder);
+            
+            var browser = new ClipsBrowserWindow(folder, _themeService);
+            browser.Owner = this;
+            browser.ShowDialog();
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Failed to open clips folder: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"Failed to open clips browser: {ex.Message}");
         }
     }
 
@@ -323,7 +329,7 @@ public partial class IslandWindow : Window
 
     private void SettingsButton_Click(object sender, RoutedEventArgs e)
     {
-        var settings = new SettingsWindow(_config, _themeService);
+        var settings = new SettingsWindow(_config, _themeService, holder: null, logger: _logger, overlayService: OverlayService.Instance);
         settings.Owner = this;
         settings.ShowDialog();
     }

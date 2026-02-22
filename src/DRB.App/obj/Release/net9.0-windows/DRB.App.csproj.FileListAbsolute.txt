@@ -103,3 +103,5 @@ C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-win
 C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\DarkTheme.baml
 C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\LightTheme.baml
 C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\App.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\ClipsBrowserWindow.baml
+C:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows\Overlay\ClipsBrowserWindow.g.cs

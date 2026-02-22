@@ -17,6 +17,7 @@ public sealed class FrameProcessor : BackgroundService
     private readonly ILogger<FrameProcessor> _logger;
     private readonly ContextFrameProcessor _contextProcessor;
     private readonly ContextIndex _contextIndex;
+    private DateTime _lastCaptureTime = DateTime.MinValue;
 
     public FrameProcessor(IAppChannels channels, Config config, ILogger<FrameProcessor> logger, ContextFrameProcessor contextProcessor, ContextIndex contextIndex)
     {
@@ -75,16 +76,33 @@ public sealed class FrameProcessor : BackgroundService
     /// <summary>
     /// Context Mode: run pHash change detection, save changed frames as JPEG,
     /// and push a <see cref="ContextFrame"/> record to the ProcessorToStorage channel.
+    /// Captures at 1fps and only saves frames that differ from the previous one.
     /// </summary>
     private async Task ProcessContextFrameAsync(RawFrame frame, CancellationToken ct)
     {
+        var now = DateTime.UtcNow;
+        
+        // Throttle to 1fps - wait if we've captured within the last second
+        var timeSinceLastCapture = now - _lastCaptureTime;
+        _logger.LogDebug("Context throttle: timeSinceLastCapture={Time}ms, lastCapture={Last}", 
+            timeSinceLastCapture.TotalMilliseconds, _lastCaptureTime);
+        
+        if (timeSinceLastCapture < TimeSpan.FromSeconds(1))
+        {
+            _logger.LogDebug("Context throttle: dropping frame, too soon");
+            return; // Drop frame, wait for next second
+        }
+        
         if (!_contextProcessor.HasChanged(frame.Pixels, frame.Width, frame.Height))
         {
+            _logger.LogDebug("Context throttle: frame unchanged, dropping");
             // Frame is visually identical to the last stored one – discard.
             return;
         }
 
-        var timestamp = DateTime.UtcNow;
+        _lastCaptureTime = now;
+        _logger.LogDebug("Context throttle: capturing frame, enough time passed and frame changed");
+        var timestamp = now;
         string fileName = $"{timestamp:yyyyMMdd_HHmmss_fff}.jpg";
         string filePath = Path.Combine(AppPaths.ContextBufferFolder, fileName);
 
@@ -106,9 +124,8 @@ public sealed class FrameProcessor : BackgroundService
             return;
         }
 
-        // Index the frame in SQLite and push downstream.
+        // Push frame downstream for storage.
         var contextFrameRecord = new ContextFrame(filePath, timestamp, _contextProcessor.LastHashCompact);
-        _contextIndex.Insert(contextFrameRecord);
         await _channels.ProcessorToStorage.Writer.WriteAsync(contextFrameRecord, ct)
             .ConfigureAwait(false);
     }

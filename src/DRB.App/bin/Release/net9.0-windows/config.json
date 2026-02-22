@@ -2,13 +2,13 @@
   "hotkey": "F10",
   "modifierKey": "Control, Shift",
   "bufferDurationSeconds": 30,
-  "saveFolder": "clips",
+  "saveFolder": "C:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.App\\bin\\Release\\net9.0-windows\\clips",
   "segmentDurationSeconds": 5,
   "encodeWidth": 2560,
   "encodeHeight": 1440,
   "encodeFps": 30,
   "ocrEnabled": false,
-  "overlayHotkey": "Ctrl\u002BC",
-  "captureLast30Hotkey": "Ctrl\u002BAlt\u002BShift\u002BP",
+  "overlayHotkey": "Alt\u002BShift\u002BOem3",
+  "captureLast30Hotkey": "Ctrl\u002BAlt\u002BShift\u002BOem3",
   "theme": "dark"
 }

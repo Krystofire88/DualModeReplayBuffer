@@ -11,6 +11,14 @@ public sealed class OverlayService : IHostedService, IDisposable
 {
     // Static instance for cross-class access (e.g., SettingsWindow)
     public static OverlayService? Instance { get; private set; }
+    
+    // Public property to check if message window is initialized
+    public IntPtr MsgHwnd => _msgHwnd;
+    public string CurrentActiveHotkey
+    {
+        get => _currentActiveHotkey;
+        set => _currentActiveHotkey = value;
+    }
     // P/Invoke declarations for message-only window
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr CreateWindowEx(
@@ -66,10 +74,12 @@ public sealed class OverlayService : IHostedService, IDisposable
     private Thread? _msgThread;
     private bool _overlayRegistered;
     private bool _captureRegistered;
+    private int _hotkeyThreadStarted = 0;
+    private volatile string _currentActiveHotkey = "";
     
     // For thread-safe hotkey re-registration
     private volatile string? _pendingHotkey;
-    private volatile TaskCompletionSource<bool>? _pendingTcs;
+    private volatile TaskCompletionSource<bool>? _reregisterTcs;
 
     public OverlayService(
         IOverlayWindowHolder holder,
@@ -110,7 +120,7 @@ public sealed class OverlayService : IHostedService, IDisposable
             try
             {
                 _logger.LogInformation("UI thread: creating OverlayWindow...");
-                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService);
+                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger);
                 _holder.Set(_overlayWindow);
                 _logger.LogInformation("OverlayWindow created.");
 
@@ -129,6 +139,13 @@ public sealed class OverlayService : IHostedService, IDisposable
 
     private void StartHotkeyThread()
     {
+        // Guard: only start once
+        if (Interlocked.CompareExchange(ref _hotkeyThreadStarted, 1, 0) != 0)
+        {
+            _logger.LogWarning("StartHotkeyThread called more than once — ignored.");
+            return;
+        }
+        
         // Try overlay hotkey candidates first
         var overlayCandidates = new[] { _config.OverlayHotkey ?? "Ctrl+Shift+F9", "Ctrl+Shift+F9", "Ctrl+Shift+F8", "Ctrl+Shift+F7" };
         (uint, uint)? overlayParsed = null;
@@ -180,6 +197,10 @@ public sealed class OverlayService : IHostedService, IDisposable
                 _overlayRegistered = RegisterHotKey(_msgHwnd, OverlayHotkeyId, overlayParsed.Value.Item1 | MOD_NOREPEAT, overlayParsed.Value.Item2);
                 err = Marshal.GetLastWin32Error();
                 _logger.LogInformation("RegisterOverlayHotKey: ok={Ok} err={Err}", _overlayRegistered, err);
+                if (_overlayRegistered)
+                {
+                    _currentActiveHotkey = _config.OverlayHotkey ?? "";
+                }
             }
 
             // Register capture hotkey if we have valid parsed values
@@ -220,6 +241,8 @@ public sealed class OverlayService : IHostedService, IDisposable
                 }
                 else if (msg.message == WM_APP_REREGISTER && _pendingHotkey != null)
                 {
+                    _logger.LogInformation("Pump received WM_APP_REREGISTER, _pendingHotkey='{H}'", _pendingHotkey);
+                    
                     // Handle re-registration request from UI thread
                     var parsed = HotkeyParser.Parse(_pendingHotkey);
                     bool ok = false;
@@ -236,23 +259,24 @@ public sealed class OverlayService : IHostedService, IDisposable
                         
                         if (!ok)
                         {
-                            // Restore old hotkey
-                            var old = HotkeyParser.Parse(_config.OverlayHotkey ?? "");
+                            // Restore old hotkey using _currentActiveHotkey (not config)
+                            var old = HotkeyParser.Parse(_currentActiveHotkey);
                             if (old.HasValue)
                             {
                                 bool restored = RegisterHotKey(_msgHwnd, OverlayHotkeyId,
-                                    old.Value.Modifiers | MOD_NOREPEAT, old.Value.Vk);
+                                    old.Value.Item1 | MOD_NOREPEAT, old.Value.Item2);
                                 _logger.LogInformation("Restored old hotkey: ok={Ok}", restored);
                             }
                         }
                         else
                         {
                             _overlayRegistered = true;
+                            _currentActiveHotkey = _pendingHotkey; // Update active hotkey on success
                         }
                     }
-                    _pendingTcs?.SetResult(ok);
+                    _reregisterTcs?.SetResult(ok);
                     _pendingHotkey = null;
-                    _pendingTcs = null;
+                    _reregisterTcs = null;
                 }
             }
 
@@ -270,9 +294,11 @@ public sealed class OverlayService : IHostedService, IDisposable
     /// </summary>
     public Task<bool> TryReregisterOverlayHotkey(string newHotkey)
     {
+        _logger.LogInformation("TryReregisterOverlayHotkey called with '{H}', _msgHwnd={Hwnd}", newHotkey, _msgHwnd);
+        
         if (_msgHwnd == IntPtr.Zero)
         {
-            _logger.LogWarning("Cannot re-register hotkey: message window not initialized");
+            _logger.LogError("_msgHwnd is Zero — message window not initialized!");
             return Task.FromResult(false);
         }
 
@@ -285,12 +311,14 @@ public sealed class OverlayService : IHostedService, IDisposable
 
         // Post the re-registration request to the message pump thread
         _pendingHotkey = newHotkey;
-        _pendingTcs = new TaskCompletionSource<bool>();
+        _reregisterTcs = new TaskCompletionSource<bool>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
         
         _logger.LogInformation("Posting WM_APP_REREGISTER for '{H}'", newHotkey);
-        PostMessage(_msgHwnd, WM_APP_REREGISTER, IntPtr.Zero, IntPtr.Zero);
+        bool posted = PostMessage(_msgHwnd, WM_APP_REREGISTER, IntPtr.Zero, IntPtr.Zero);
+        _logger.LogInformation("PostMessage WM_APP_REREGISTER: posted={P}", posted);
         
-        return _pendingTcs.Task;
+        return _reregisterTcs.Task;
     }
 
     /// <summary>Re-registers hotkeys (call after config changes).</summary>

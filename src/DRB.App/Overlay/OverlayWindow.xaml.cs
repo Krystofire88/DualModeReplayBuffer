@@ -3,6 +3,13 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using DRB.Core;
+using Microsoft.Extensions.Logging;
+using Brush = System.Windows.Media.Brush;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Windows.Media.Color;
+using CornerRadius = System.Windows.CornerRadius;
+using SolidColorBrush = System.Windows.Media.SolidColorBrush;
+using Thickness = System.Windows.Thickness;
 
 namespace DRB.App.Overlay;
 
@@ -21,6 +28,7 @@ public partial class OverlayWindow : Window
     private readonly IPauseCapture _pauseCapture;
     private readonly IslandWindow _islandWindow;
     private readonly ThemeService _themeService;
+    private readonly ILogger _logger;
     private bool _isClosing;
 
     public IslandWindow IslandWindow => _islandWindow;
@@ -29,12 +37,13 @@ public partial class OverlayWindow : Window
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
 
-    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService)
+    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, ILogger logger)
     {
         _config = config;
         _pauseCapture = pauseCapture;
         _themeService = themeService;
-        _islandWindow = new IslandWindow(config, captureController, themeService);
+        _logger = logger;
+        _islandWindow = new IslandWindow(config, captureController, themeService, logger);
 
         _islandWindow.OnModeToggled += mode => OnModeToggled?.Invoke(mode);
         _islandWindow.OnCaptureRequested += () => OnCaptureRequested?.Invoke();

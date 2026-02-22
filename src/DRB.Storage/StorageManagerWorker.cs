@@ -31,8 +31,13 @@ public sealed class StorageManager : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("StorageManager thread starting.");
+        _logger.LogInformation("Context buffer folder: '{Path}'", 
+            DRB.Core.AppPaths.ContextBufferFolder);
 
         await _clipStorage.InitializeAsync(stoppingToken).ConfigureAwait(false);
+
+        // Reconcile DB with disk before processing
+        _contextIndex?.ReconcileWithDisk();
 
         // Process Focus Mode: encoded frames and clip requests.
         var focusTask = ProcessFocusSegments(stoppingToken);
@@ -63,10 +68,10 @@ public sealed class StorageManager : BackgroundService
                 if (File.Exists(segmentPath))
                 {
                     var start = new DateTime(frame.TimestampTicks, DateTimeKind.Utc);
-                    // Estimate duration from the file — the encoder sets this properly
-                    // via the OnSegmentComplete event, but here we receive the marker.
-                    // For now, use the ring buffer's AddSegment which will be called
-                    // directly by the encoder event. This path is a fallback.
+                    // Add segment to the ring buffer for count-based eviction.
+                    _logger.LogDebug("Completed segment received: '{Path}', " +
+                        "calling FocusRingBuffer.AddSegment", segmentPath);
+                    _ringBuffer.AddSegment(segmentPath);
                     _logger.LogDebug("Received encoded segment marker: {Path}", segmentPath);
                 }
 
@@ -103,8 +108,10 @@ public sealed class StorageManager : BackgroundService
         {
             _contextIndex.Insert(frame);
 
-            // Enforce 2-minute rolling window.
-            _contextIndex.DeleteBefore(DateTime.UtcNow - TimeSpan.FromMinutes(2));
+            // Enforce 120 frame rolling window.
+            int limit = 120;
+            _logger.LogDebug("EnforceMaxFrames limit={Limit}", limit);
+            _contextIndex.EnforceMaxFrames(limit);
 
             _logger.LogDebug("Context frame indexed: {Path}", frame.Path);
         }
