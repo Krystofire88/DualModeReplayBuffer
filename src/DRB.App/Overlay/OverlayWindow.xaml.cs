@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using DRB.Core;
+using DRB.Storage;
 using Microsoft.Extensions.Logging;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
@@ -29,7 +30,9 @@ public partial class OverlayWindow : Window
     private readonly IslandWindow _islandWindow;
     private readonly ThemeService _themeService;
     private readonly ILogger _logger;
+    private readonly FocusRingBuffer _focusRingBuffer;
     private bool _isClosing;
+    private ClipsBrowserWindow? _clipsBrowserWindow;
 
     public IslandWindow IslandWindow => _islandWindow;
 
@@ -37,17 +40,24 @@ public partial class OverlayWindow : Window
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
 
-    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, ILogger logger)
+    public void SetClipsBrowserWindow(ClipsBrowserWindow? window)
+    {
+        _clipsBrowserWindow = window;
+    }
+
+    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer)
     {
         _config = config;
         _pauseCapture = pauseCapture;
         _themeService = themeService;
         _logger = logger;
-        _islandWindow = new IslandWindow(config, captureController, themeService, logger);
+        _focusRingBuffer = focusRingBuffer;
+        _islandWindow = new IslandWindow(config, captureController, themeService, logger, focusRingBuffer);
 
         _islandWindow.OnModeToggled += mode => OnModeToggled?.Invoke(mode);
         _islandWindow.OnCaptureRequested += () => OnCaptureRequested?.Invoke();
         _islandWindow.OnPowerToggled += on => OnPowerToggled?.Invoke(on);
+        _islandWindow.OnVideoSaved += videoPath => ShowVideoSavedNotification(videoPath);
         _islandWindow.PreviewKeyDown += IslandWindow_PreviewKeyDown;
 
         InitializeComponent();
@@ -60,6 +70,15 @@ public partial class OverlayWindow : Window
             HideOverlay();
             e.Handled = true;
         }
+    }
+
+    private void ShowVideoSavedNotification(string videoPath)
+    {
+        // Show notification popup on the UI thread
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            NotificationPopup.ShowOnCurrentApp(videoPath);
+        }));
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -135,6 +154,14 @@ public partial class OverlayWindow : Window
         {
             _pauseCapture.Resume();
             _islandWindow.Hide();
+            // Close any open clips browser windows
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is ClipsBrowserWindow)
+                {
+                    window.Close();
+                }
+            }
             Hide();
         };
         BackgroundOverlay.BeginAnimation(UIElement.OpacityProperty, anim);

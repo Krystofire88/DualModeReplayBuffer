@@ -64,6 +64,10 @@
               "target": "Package",
               "version": "[10.0.3, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
             "Serilog": {
               "target": "Package",
               "version": "[4.2.0, )"
@@ -246,6 +250,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

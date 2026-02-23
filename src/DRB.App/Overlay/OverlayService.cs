@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 using DRB.Core;
+using DRB.Storage;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Application = System.Windows.Application;
@@ -67,6 +68,7 @@ public sealed class OverlayService : IHostedService, IDisposable
     private readonly ICaptureController _captureController;
     private readonly ILogger<OverlayService> _logger;
     private readonly ThemeService _themeService;
+    private readonly FocusRingBuffer _focusRingBuffer;
     private OverlayWindow? _overlayWindow;
 
     // Message-only window state
@@ -87,7 +89,8 @@ public sealed class OverlayService : IHostedService, IDisposable
         IPauseCapture pauseCapture,
         ICaptureController captureController,
         ThemeService themeService,
-        ILogger<OverlayService> logger)
+        ILogger<OverlayService> logger,
+        FocusRingBuffer focusRingBuffer)
     {
         _holder = holder;
         _config = config;
@@ -95,6 +98,7 @@ public sealed class OverlayService : IHostedService, IDisposable
         _captureController = captureController;
         _themeService = themeService;
         _logger = logger;
+        _focusRingBuffer = focusRingBuffer;
         
         // Set static instance for cross-class access
         Instance = this;
@@ -120,7 +124,7 @@ public sealed class OverlayService : IHostedService, IDisposable
             try
             {
                 _logger.LogInformation("UI thread: creating OverlayWindow...");
-                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger);
+                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger, _focusRingBuffer);
                 _holder.Set(_overlayWindow);
                 _logger.LogInformation("OverlayWindow created.");
 

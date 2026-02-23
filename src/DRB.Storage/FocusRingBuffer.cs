@@ -67,6 +67,15 @@ public sealed class FocusRingBuffer
         }
     }
 
+    /// <summary>
+    /// Returns a copy of current segment paths in order (oldest → newest).
+    /// </summary>
+    public IReadOnlyList<string> GetSegmentsCopy()
+    {
+        lock (_lock)
+            return _segments.ToArray(); // Queue<T>.ToArray() is oldest→newest
+    }
+
     // ──────────────────── Crash Recovery ──────────────────────────
 
     /// <summary>

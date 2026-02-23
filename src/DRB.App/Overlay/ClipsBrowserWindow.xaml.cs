@@ -3,8 +3,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Color = System.Windows.Media.Color;
 using ColorConverter = System.Windows.Media.ColorConverter;
+using Visibility = System.Windows.Visibility;
 
 namespace DRB.App.Overlay;
 
@@ -23,6 +25,10 @@ public partial class ClipsBrowserWindow : Window
     private readonly ThemeService _themeService;
     private readonly string[] _videoExtensions = { ".mp4", ".avi", ".mkv", ".mov", ".wmv", ".flv", ".webm" };
     private readonly string[] _imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
+    private readonly DispatcherTimer _positionTimer;
+    private bool _isDraggingSlider = false;
+    private string? _currentVideoPath;
+    private bool _isVideoPlaying = false;
 
     public ClipsBrowserWindow(string initialPath, ThemeService themeService)
     {
@@ -39,12 +45,36 @@ public partial class ClipsBrowserWindow : Window
             ApplyTheme(_themeService.IsDark);
             _themeService.ThemeChanged += ApplyTheme;
             NavigateTo(_initialPath);
+            Focus(); // Ensure window can receive keyboard events
         };
         
-        KeyDown += (s, e) =>
+        // Set up position timer for video progress
+        _positionTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(200)
+        };
+        _positionTimer.Tick += PositionTimer_Tick;
+        
+        // Handle keyboard input
+        PreviewKeyDown += (s, e) =>
         {
             if (e.Key == Key.Escape)
-                Close();
+            {
+                if (VideoPlayerBorder.Visibility == Visibility.Visible)
+                {
+                    CloseVideoPlayer();
+                }
+                else
+                {
+                    Close();
+                }
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Space && VideoPlayerBorder.Visibility == Visibility.Visible)
+            {
+                TogglePlayPause();
+                e.Handled = true;
+            }
         };
     }
 
@@ -118,21 +148,165 @@ public partial class ClipsBrowserWindow : Window
             }
             else
             {
-                // Open file with default application
-                try
+                var ext = Path.GetExtension(item.FullPath).ToLowerInvariant();
+                if (_videoExtensions.Contains(ext))
                 {
-                    var startInfo = new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = item.FullPath,
-                        UseShellExecute = true
-                    };
-                    System.Diagnostics.Process.Start(startInfo);
+                    // Play video in the built-in player
+                    PlayVideo(item.FullPath);
                 }
-                catch (Exception ex)
+                else if (_imageExtensions.Contains(ext))
                 {
-                    MessageBox.Show($"Could not open file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Open image with default application
+                    OpenFileWithDefaultApp(item.FullPath);
+                }
+                else
+                {
+                    // Open other files with default application
+                    OpenFileWithDefaultApp(item.FullPath);
                 }
             }
+        }
+    }
+
+    private void PlayVideo(string videoPath)
+    {
+        try
+        {
+            _currentVideoPath = videoPath;
+            VideoTitleText.Text = Path.GetFileName(videoPath);
+            VideoDurationText.Text = "Loading...";
+            VideoPlayerBorder.Visibility = Visibility.Visible;
+            OpenWithButton.Visibility = Visibility.Visible;
+            
+            VideoPlayer.Source = new Uri(videoPath);
+            VideoPlayer.Play();
+            _isVideoPlaying = true;
+            PlayPauseButton.Content = "⏸";
+            _positionTimer.Start();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Could not play video: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            CloseVideoPlayer();
+        }
+    }
+
+    private void VideoPlayer_MediaOpened(object sender, RoutedEventArgs e)
+    {
+        if (VideoPlayer.NaturalDuration.HasTimeSpan)
+        {
+            var duration = VideoPlayer.NaturalDuration.TimeSpan;
+            VideoDurationText.Text = $"{duration:mm\\:ss}";
+            VideoProgressSlider.Maximum = duration.TotalSeconds;
+        }
+    }
+
+    private void VideoPlayer_MediaEnded(object sender, RoutedEventArgs e)
+    {
+        _isVideoPlaying = false;
+        PlayPauseButton.Content = "▶";
+        _positionTimer.Stop();
+        VideoProgressSlider.Value = 0;
+    }
+
+    private void VideoPlayer_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+    {
+        MessageBox.Show($"Media playback failed: {e.ErrorException?.Message ?? "Unknown error"}", 
+            "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        CloseVideoPlayer();
+    }
+
+    private void PositionTimer_Tick(object? sender, EventArgs e)
+    {
+        if (!_isDraggingSlider && VideoPlayer.NaturalDuration.HasTimeSpan)
+        {
+            VideoProgressSlider.Value = VideoPlayer.Position.TotalSeconds;
+        }
+    }
+
+    private void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+    {
+        TogglePlayPause();
+    }
+
+    private void TogglePlayPause()
+    {
+        if (_isVideoPlaying)
+        {
+            VideoPlayer.Pause();
+            _isVideoPlaying = false;
+            PlayPauseButton.Content = "▶";
+            _positionTimer.Stop();
+        }
+        else
+        {
+            VideoPlayer.Play();
+            _isVideoPlaying = true;
+            PlayPauseButton.Content = "⏸";
+            _positionTimer.Start();
+        }
+    }
+
+    private void VideoProgressSlider_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+    {
+        _isDraggingSlider = true;
+    }
+
+    private void VideoProgressSlider_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+    {
+        _isDraggingSlider = false;
+        if (VideoPlayer.NaturalDuration.HasTimeSpan)
+        {
+            VideoPlayer.Position = TimeSpan.FromSeconds(VideoProgressSlider.Value);
+        }
+    }
+
+    private void VideoProgressSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        if (_isDraggingSlider && VideoPlayer.NaturalDuration.HasTimeSpan)
+        {
+            VideoPlayer.Position = TimeSpan.FromSeconds(e.NewValue);
+        }
+    }
+
+    private void ClosePlayerButton_Click(object sender, RoutedEventArgs e)
+    {
+        CloseVideoPlayer();
+    }
+
+    private void CloseVideoPlayer()
+    {
+        _positionTimer.Stop();
+        VideoPlayer.Stop();
+        VideoPlayer.Source = null;
+        _currentVideoPath = null;
+        _isVideoPlaying = false;
+        VideoPlayerBorder.Visibility = Visibility.Collapsed;
+        OpenWithButton.Visibility = Visibility.Collapsed;
+    }
+
+    private void OpenWithButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(_currentVideoPath))
+        {
+            OpenFileWithDefaultApp(_currentVideoPath);
+        }
+    }
+
+    private void OpenFileWithDefaultApp(string filePath)
+    {
+        try
+        {
+            var startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true
+            };
+            System.Diagnostics.Process.Start(startInfo);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Could not open file: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 

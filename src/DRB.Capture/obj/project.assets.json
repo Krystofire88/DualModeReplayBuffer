@@ -1673,6 +1673,9 @@
       "DRB.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.3"
+        },
         "compile": {
           "bin/placeholder/DRB.Core.dll": {}
         },

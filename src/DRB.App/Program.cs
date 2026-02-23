@@ -83,7 +83,17 @@ builder.ConfigureServices(services =>
     services.AddHostedService<StorageManager>();
     services.AddHostedService<OverlayUI>();
     services.AddHostedService<OcrWorker>();
-    services.AddHostedService<OverlayService>();
+    services.AddHostedService<OverlayService>(sp =>
+    {
+        var holder = sp.GetRequiredService<IOverlayWindowHolder>();
+        var config = sp.GetRequiredService<Config>();
+        var pause = sp.GetRequiredService<IPauseCapture>();
+        var controller = sp.GetRequiredService<ICaptureController>();
+        var theme = sp.GetRequiredService<ThemeService>();
+        var logger = sp.GetRequiredService<ILogger<OverlayService>>();
+        var focusRing = sp.GetRequiredService<FocusRingBuffer>();
+        return new OverlayService(holder, config, pause, controller, theme, logger, focusRing);
+    });
 
     // Tray icon
     services.AddHostedService<TrayIconService>();

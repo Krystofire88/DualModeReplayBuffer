@@ -11,10 +11,55 @@
         Title="DRB Island"
         ContentRendered="Window_ContentRendered"
         PreviewKeyDown="Window_PreviewKeyDown">
+    <Window.Resources>
+        <Style x:Key="DarkButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#3A3A3A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#4A4A4A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                                <Setter Property="Foreground" Value="#666666"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="CaptureButtonStyle" TargetType="Button" BasedOn="{StaticResource DarkButtonStyle}">
+            <Setter Property="Background" Value="#2E7D32"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#388E3C"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#1B5E20"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Border x:Name="MainBorder" CornerRadius="16"
-            Background="{x:Null}"
+            Background="#E6202020"
             Padding="16,10"
-            BorderBrush="{x:Null}"
+            BorderBrush="#444444"
             BorderThickness="1"
             MinHeight="44">
         <Border.Effect>
@@ -23,7 +68,7 @@
         <StackPanel x:Name="IslandContent" Orientation="Horizontal">
             <Border x:Name="ModeToggle"
                     Margin="0,0,4,0"
-                    Background="{x:Null}"
+                    Background="#3A3A3A"
                     CornerRadius="12"
                     Padding="4,2"
                     VerticalAlignment="Center"
@@ -36,11 +81,11 @@
                 </StackPanel>
             </Border>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" Background="{x:Null}" Click="ClipsButton_Click"/>
+            <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" Style="{StaticResource DarkButtonStyle}" Click="ClipsButton_Click"/>
             <Button x:Name="CaptureButton"
                     Margin="4,0"
                     Content="⏺ Capture 30s"
-                    Background="{x:Null}"
+                    Style="{StaticResource CaptureButtonStyle}"
                     Click="CaptureButton_Click"
                     ToolTip="Capture last 30 seconds&#x0a;Hotkey: Win+F10 (not yet active)"/>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
@@ -48,13 +93,13 @@
                     Margin="4,0"
                     Content="🖼 Context Viewer"
                     IsEnabled="False"
-                    Background="{x:Null}"
+                    Style="{StaticResource DarkButtonStyle}"
                     ToolTip="Coming soon"/>
-            <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" Background="{x:Null}" Click="SettingsButton_Click"/>
+            <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" Style="{StaticResource DarkButtonStyle}" Click="SettingsButton_Click"/>
             <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
             <Border x:Name="PowerToggle"
                     Margin="4,0,4,0"
-                    Background="{x:Null}"
+                    Background="#3A3A3A"
                     CornerRadius="12"
                     Padding="4,2"
                     VerticalAlignment="Center"

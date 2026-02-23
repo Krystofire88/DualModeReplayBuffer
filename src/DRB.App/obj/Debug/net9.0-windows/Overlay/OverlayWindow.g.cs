@@ -60,7 +60,7 @@ namespace DRB.App.Overlay {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DRB.App;component/overlay/overlaywindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DRB.App;V1.0.0.0;component/overlay/overlaywindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Overlay\OverlayWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

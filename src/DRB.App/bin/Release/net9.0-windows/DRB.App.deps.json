@@ -12,6 +12,7 @@
           "DRB.Core": "1.0.0",
           "DRB.Storage": "1.0.0",
           "Microsoft.Extensions.Hosting": "10.0.3",
+          "Microsoft.Extensions.Logging": "10.0.3",
           "Serilog": "4.2.0",
           "Serilog.Extensions.Hosting": "8.0.0",
           "Serilog.Sinks.Console": "6.0.0",
@@ -1390,6 +1391,9 @@
         }
       },
       "DRB.Core/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.3"
+        },
         "runtime": {
           "DRB.Core.dll": {
             "assemblyVersion": "1.0.0.0",

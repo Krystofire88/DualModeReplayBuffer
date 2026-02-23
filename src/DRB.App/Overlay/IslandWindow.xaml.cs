@@ -3,7 +3,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 using DRB.Core;
+using DRB.Storage;
 using Microsoft.Extensions.Logging;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
@@ -20,6 +23,8 @@ public partial class IslandWindow : Window
     private readonly ICaptureController _captureController;
     private readonly ThemeService _themeService;
     private readonly ILogger _logger;
+    private readonly FocusRingBuffer _focusRingBuffer;
+    private readonly string _clipsPath;
 
     // Theme brushes
     private readonly Brush _darkBackground = new SolidColorBrush(Color.FromArgb(0xF2, 0x20, 0x20, 0x20));
@@ -39,13 +44,20 @@ public partial class IslandWindow : Window
     public event Action<DRB.Core.CaptureMode>? OnModeToggled;
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
+    public event Action<string>? OnVideoSaved;
 
-    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger)
+    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer)
     {
         _config = config;
         _captureController = captureController;
         _themeService = themeService;
         _logger = logger;
+        _focusRingBuffer = focusRingBuffer;
+        _clipsPath = !string.IsNullOrEmpty(_config.SaveFolder)
+            ? Path.IsPathRooted(_config.SaveFolder)
+                ? _config.SaveFolder
+                : Path.Combine(AppPaths.BaseDirectory, _config.SaveFolder)
+            : AppPaths.ClipsFolder;
         InitializeComponent();
         Loaded += (_, _) =>
         {
@@ -319,12 +331,82 @@ public partial class IslandWindow : Window
 
     private void CaptureButton_Click(object sender, RoutedEventArgs e)
     {
-        OnCaptureRequested?.Invoke();
+        // Add visual feedback - pulse animation
+        ShowCaptureButtonFeedback();
+        _ = CaptureClipAsync();
+    }
+
+    private void ShowCaptureButtonFeedback()
+    {
+        if (CaptureButton == null) return;
+        
+        // Store original background
+        var originalBg = CaptureButton.Background;
+        
+        // Create pulse animation - flash color
+        var flashColor = new SolidColorBrush(Color.FromRgb(0x4A, 0x90, 0xE5)); // Nice blue
+        CaptureButton.Background = flashColor;
+        
+        // Create a fade-out storyboard
+        var storyboard = new Storyboard();
+        
+        // Animate background color back to original
+        var colorAnimation = new ColorAnimation
+        {
+            To = Color.FromRgb(0x2A, 0x2A, 0x2A),
+            Duration = TimeSpan.FromMilliseconds(300),
+            EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+        };
+        
+        Storyboard.SetTarget(colorAnimation, CaptureButton);
+        Storyboard.SetTargetProperty(colorAnimation, new PropertyPath("(Background).(SolidColorBrush.Color)"));
+        storyboard.Children.Add(colorAnimation);
+        
+        // Start animation
+        storyboard.Begin();
+        
+        // Also scale the button slightly
+        var scaleTransform = new ScaleTransform(1.0, 1.0);
+        CaptureButton.RenderTransform = scaleTransform;
+        CaptureButton.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
+        
+        var scaleXAnimation = new DoubleAnimation
+        {
+            To = 0.95,
+            Duration = TimeSpan.FromMilliseconds(50),
+            AutoReverse = true
+        };
+        scaleXAnimation.Completed += (s, e) => CaptureButton.RenderTransform = null;
+        scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, scaleXAnimation);
+        scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, scaleXAnimation);
     }
 
     public void TriggerCapture()
     {
-        OnCaptureRequested?.Invoke();
+        ShowCaptureButtonFeedback();
+        _ = CaptureClipAsync();
+    }
+
+    private async Task CaptureClipAsync()
+    {
+        var segments = _focusRingBuffer.GetSegmentsCopy();
+        _logger.LogInformation("Capture requested: {N} segments available.", segments.Count);
+
+        if (segments.Count == 0)
+        {
+            _logger.LogWarning("Capture: no focus segments buffered yet.");
+            return;
+        }
+
+        var assemblerLogger = LoggerFactory.Create(builder => { }).CreateLogger<ClipAssembler>();
+        var assembler = new ClipAssembler(assemblerLogger, _clipsPath);
+        string? path = await assembler.AssembleAsync(segments);
+
+        if (path != null)
+        {
+            _logger.LogInformation("Clip saved: '{Path}'", path);
+            OnVideoSaved?.Invoke(path);
+        }
     }
 
     private void SettingsButton_Click(object sender, RoutedEventArgs e)
