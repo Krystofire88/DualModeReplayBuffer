@@ -1,3 +1,5 @@
+using DRB.App.UI;
+
 namespace DRB.App.Overlay;
 
 public class ThemeService
@@ -8,6 +10,10 @@ public class ThemeService
     public void SetTheme(bool isDark)
     {
         IsDark = isDark;
+        
+        // Also update the static Theme class and fire its change event
+        Theme.Apply(isDark);
+        
         ThemeChanged?.Invoke(isDark);
     }
 }

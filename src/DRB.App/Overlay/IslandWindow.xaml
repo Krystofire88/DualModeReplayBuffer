@@ -12,11 +12,14 @@
         ContentRendered="Window_ContentRendered"
         PreviewKeyDown="Window_PreviewKeyDown">
     <Window.Resources>
+        <!-- Base button style -->
         <Style x:Key="DarkButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#3A3A3A"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="#919191"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="13"/>
@@ -24,93 +27,191 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border" Background="{TemplateBinding Background}" 
-                                CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#4A4A4A"/>
+                                <Setter TargetName="border" Property="Background" Value="#2C2C2C"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
+                                <Setter TargetName="border" Property="Background" Value="#1A1A1A"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="border" Property="Background" Value="#2A2A2A"/>
-                                <Setter Property="Foreground" Value="#666666"/>
+                                <Setter TargetName="border" Property="Background" Value="#1A1A1A"/>
+                                <Setter Property="Foreground" Value="#505050"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <!-- Capture button style - Green accent -->
         <Style x:Key="CaptureButtonStyle" TargetType="Button" BasedOn="{StaticResource DarkButtonStyle}">
-            <Setter Property="Background" Value="#2E7D32"/>
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#388E3C"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#1B5E20"/>
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Width" Value="Auto"/>
+            <Setter Property="Background" Value="#222222"/>
+            <Setter Property="Foreground" Value="#919191"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                CornerRadius="7" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#2C2C2C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A1A1A"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#1A1A1A"/>
+                                <Setter Property="Foreground" Value="#505050"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Toggle button style for mode switching -->
+        <Style x:Key="ToggleTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="8,4"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-    <Border x:Name="MainBorder" CornerRadius="16"
-            Background="#E6202020"
-            Padding="16,10"
-            BorderBrush="#444444"
-            BorderThickness="1"
+    
+    <!-- Island Border - Surface background with 12px radius, no shadow -->
+    <Border x:Name="MainBorder" 
+            CornerRadius="12"
+            Background="#181818"
+            Padding="14,10"
             MinHeight="44">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="12" ShadowDepth="2" Opacity="0.4" Color="Black"/>
-        </Border.Effect>
-        <StackPanel x:Name="IslandContent" Orientation="Horizontal">
-            <Border x:Name="ModeToggle"
-                    Margin="0,0,4,0"
-                    Background="#3A3A3A"
-                    CornerRadius="12"
-                    Padding="4,2"
-                    VerticalAlignment="Center"
-                    Cursor="Hand"
-                    MouseLeftButtonDown="ModeToggle_MouseLeftButtonDown">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="BtnContext" Text="Context" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
-                    <TextBlock Text=" | " Foreground="#888" FontFamily="Segoe UI" FontSize="13" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="BtnFocus" Text="Focus" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
-                </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Button row -->
+            <StackPanel x:Name="IslandContent" Grid.Row="0" Orientation="Horizontal">
+                <!-- Mode toggle -->
+                <Border x:Name="ModeToggle"
+                        Margin="0,0,4,0"
+                        Background="#222222"
+                        CornerRadius="7"
+                        Padding="4,2"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        MouseLeftButtonDown="ModeToggle_MouseLeftButtonDown">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="BtnContext" Text="Context" Foreground="#919191" Style="{StaticResource ToggleTextStyle}"/>
+                        <TextBlock Text=" | " Foreground="#505050" FontFamily="Segoe UI" FontSize="12" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="BtnFocus" Text="Focus" Foreground="#919191" Style="{StaticResource ToggleTextStyle}"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Separator -->
+                <Border Width="1" Background="#333333" Margin="4,0" VerticalAlignment="Stretch"/>
+                
+                <!-- Clips button -->
+                <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" 
+                        Style="{StaticResource DarkButtonStyle}" 
+                        Width="Auto" Padding="10,0"
+                        ToolTip="Clips Browser"
+                        Click="ClipsButton_Click"/>
+                
+                <!-- Capture button -->
+                <Button x:Name="CaptureButton"
+                        Margin="4,0"
+                        Content="⏺ Capture 30s"
+                        Style="{StaticResource CaptureButtonStyle}"
+                        Click="CaptureButton_Click"
+                        ToolTip="Capture last 30 seconds&#x0a;Hotkey: Win+F10 (not yet active)"/>
+                
+                <!-- Separator -->
+                <Border Width="1" Background="#333333" Margin="4,0" VerticalAlignment="Stretch"/>
+                
+                <!-- Context Viewer button -->
+                <Button x:Name="ContextViewerButton"
+                        Margin="4,0"
+                        Content="🖼 Context"
+                        Style="{StaticResource DarkButtonStyle}"
+                        ToolTip="Context Viewer"
+                        Click="ContextViewerButton_Click"/>
+                
+                <!-- Settings button -->
+                <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" 
+                        Style="{StaticResource DarkButtonStyle}" 
+                        Width="Auto" Padding="10,0"
+                        Click="SettingsButton_Click"
+                        ToolTip="Settings"/>
+                
+                <!-- Separator -->
+                <Border Width="1" Background="#333333" Margin="4,0" VerticalAlignment="Stretch"/>
+                
+                <!-- Power toggle -->
+                <Border x:Name="PowerToggle"
+                        Margin="4,0,4,0"
+                        Background="#222222"
+                        CornerRadius="7"
+                        Padding="4,2"
+                        VerticalAlignment="Center"
+                        Cursor="Hand"
+                        MouseLeftButtonDown="PowerToggle_MouseLeftButtonDown">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="PowerOn" Text="● ON" Foreground="#919191" Style="{StaticResource ToggleTextStyle}"/>
+                        <TextBlock Text=" | " Foreground="#505050" FontFamily="Segoe UI" FontSize="12" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="PowerOff" Text="OFF" Foreground="#919191" Style="{StaticResource ToggleTextStyle}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            
+            <!-- Scrub bar — hidden in Context mode -->
+            <Border x:Name="ScrubBarBorder" Grid.Row="1"
+                    Background="#19FFFFFF"
+                    CornerRadius="0,0,12,12"
+                    Padding="12,8,12,10"
+                    Visibility="Collapsed">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Thin separator -->
+                    <Rectangle Grid.Row="0" Height="1" Margin="10,0,10,6" 
+                               Fill="#19FFFFFF"/>
+                    
+                    <!-- Label -->
+                    <TextBlock Grid.Row="1" Text="LAST 30s" 
+                               Foreground="#505050" FontSize="9" 
+                               FontWeight="SemiBold" Margin="0,0,0,6"/>
+                    
+                    <!-- Thumbnail strip -->
+                    <ItemsControl x:Name="SegmentStrip" Grid.Row="1">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    
+                    <!-- Playhead timeline bar -->
+                    <Grid Grid.Row="2" Height="3" Margin="0,6,0,0">
+                        <Rectangle Fill="#333333" RadiusX="2" RadiusY="2"/>
+                        <Rectangle x:Name="PlayheadFill" 
+                                   Fill="#446CCD" RadiusX="2" RadiusY="2"
+                                   HorizontalAlignment="Right" Width="0"/>
+                    </Grid>
+                </Grid>
             </Border>
-            <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Button x:Name="ClipsButton" Content="📁 Clips" Margin="4,0" Style="{StaticResource DarkButtonStyle}" Click="ClipsButton_Click"/>
-            <Button x:Name="CaptureButton"
-                    Margin="4,0"
-                    Content="⏺ Capture 30s"
-                    Style="{StaticResource CaptureButtonStyle}"
-                    Click="CaptureButton_Click"
-                    ToolTip="Capture last 30 seconds&#x0a;Hotkey: Win+F10 (not yet active)"/>
-            <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Button x:Name="ContextViewerButton"
-                    Margin="4,0"
-                    Content="🖼 Context Viewer"
-                    IsEnabled="False"
-                    Style="{StaticResource DarkButtonStyle}"
-                    ToolTip="Coming soon"/>
-            <Button x:Name="SettingsButton" Content="⚙ Settings" Margin="4,0" Style="{StaticResource DarkButtonStyle}" Click="SettingsButton_Click"/>
-            <Border Width="1" Background="#444" Margin="4,0" VerticalAlignment="Stretch"/>
-            <Border x:Name="PowerToggle"
-                    Margin="4,0,4,0"
-                    Background="#3A3A3A"
-                    CornerRadius="12"
-                    Padding="4,2"
-                    VerticalAlignment="Center"
-                    Cursor="Hand"
-                    MouseLeftButtonDown="PowerToggle_MouseLeftButtonDown">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="PowerOn" Text="● ON" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
-                    <TextBlock Text=" | " Foreground="#888" FontFamily="Segoe UI" FontSize="13" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="PowerOff" Text="OFF" Foreground="White" FontFamily="Segoe UI" FontSize="13" Margin="8,4"/>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+        </Grid>
     </Border>
 </Window>

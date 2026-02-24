@@ -1,3 +1,4 @@
+using System.IO;
 using DRB.Core;
 using DRB.Core.Messaging;
 using DRB.Core.Models;
@@ -28,6 +29,45 @@ public sealed class StorageManager : BackgroundService
         _contextIndex = contextIndex;
     }
 
+    private void ClearBuffersOnStartup()
+    {
+        string focusBufferPath = DRB.Core.AppPaths.FocusBufferFolder;
+        string contextBufferPath = DRB.Core.AppPaths.ContextBufferFolder;
+        
+        // Clear focus buffer files
+        if (Directory.Exists(focusBufferPath))
+        {
+            foreach (var f in Directory.GetFiles(focusBufferPath, "*.mp4"))
+            {
+                try { File.Delete(f); }
+                catch (Exception ex) {
+                    _logger.LogWarning("Could not delete focus file '{F}': {E}", f, ex.Message);
+                }
+            }
+            _logger.LogInformation("Startup: cleared focus buffer folder.");
+        }
+        
+        // Clear context buffer files
+        if (Directory.Exists(contextBufferPath))
+        {
+            foreach (var f in Directory.GetFiles(contextBufferPath, "*.jpg"))
+            {
+                try { File.Delete(f); }
+                catch (Exception ex) {
+                    _logger.LogWarning("Could not delete context file '{F}': {E}", f, ex.Message);
+                }
+            }
+            _logger.LogInformation("Startup: cleared context buffer folder.");
+        }
+        
+        // Clear SQLite context_frames table
+        _contextIndex?.ClearAll();
+        
+        // Clear in-memory ring buffer
+        _ringBuffer.Clear();
+        _logger.LogInformation("Startup: cleared focus ring buffer.");
+    }
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("StorageManager thread starting.");
@@ -35,6 +75,9 @@ public sealed class StorageManager : BackgroundService
             DRB.Core.AppPaths.ContextBufferFolder);
 
         await _clipStorage.InitializeAsync(stoppingToken).ConfigureAwait(false);
+
+        // Clear buffers on startup
+        ClearBuffersOnStartup();
 
         // Reconcile DB with disk before processing
         _contextIndex?.ReconcileWithDisk();

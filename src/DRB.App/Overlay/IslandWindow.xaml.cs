@@ -4,7 +4,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 using System.Windows.Threading;
+using DRB.App.UI;
 using DRB.Core;
 using DRB.Storage;
 using Microsoft.Extensions.Logging;
@@ -12,6 +15,9 @@ using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 using CornerRadius = System.Windows.CornerRadius;
+using Image = System.Windows.Controls.Image;
+using Path = System.IO.Path;
+using Rectangle = System.Windows.Shapes.Rectangle;
 using SolidColorBrush = System.Windows.Media.SolidColorBrush;
 using Thickness = System.Windows.Thickness;
 
@@ -24,49 +30,54 @@ public partial class IslandWindow : Window
     private readonly ThemeService _themeService;
     private readonly ILogger _logger;
     private readonly FocusRingBuffer _focusRingBuffer;
+    private readonly DRB.Storage.ContextIndex _contextIndex;
     private readonly string _clipsPath;
-
-    // Theme brushes
-    private readonly Brush _darkBackground = new SolidColorBrush(Color.FromArgb(0xF2, 0x20, 0x20, 0x20));
-    private readonly Brush _darkCard = new SolidColorBrush(Color.FromRgb(0x2A, 0x2A, 0x2A));
-    private readonly Brush _darkButton = new SolidColorBrush(Color.FromRgb(0x2A, 0x2A, 0x2A));
-    private readonly Brush _darkText = Brushes.White;
-    private readonly Brush _darkSecondary = new SolidColorBrush(Color.FromRgb(0x88, 0x88, 0x88));
-    private readonly Brush _darkDivider = new SolidColorBrush(Color.FromRgb(0x44, 0x44, 0x44));
-
-    private readonly Brush _lightBackground = new SolidColorBrush(Color.FromArgb(0xF2, 0xFF, 0xFF, 0xFF));
-    private readonly Brush _lightCard = new SolidColorBrush(Color.FromRgb(0xE8, 0xE8, 0xE8));
-    private readonly Brush _lightButton = new SolidColorBrush(Color.FromRgb(180, 180, 180)); // darker than island #F0F0F0
-    private readonly Brush _lightText = new SolidColorBrush(Color.FromRgb(0x1E, 0x1E, 0x1E));
-    private readonly Brush _lightSecondary = new SolidColorBrush(Color.FromRgb(0x66, 0x66, 0x66));
-    private readonly Brush _lightDivider = new SolidColorBrush(Color.FromRgb(0xCC, 0xCC, 0xCC));
+    private int _scrubIndex = -1;
+    private System.Windows.Threading.DispatcherTimer? _scrubRefreshTimer;
 
     public event Action<DRB.Core.CaptureMode>? OnModeToggled;
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
     public event Action<string>? OnVideoSaved;
 
-    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer)
+    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer, DRB.Storage.ContextIndex contextIndex)
     {
         _config = config;
         _captureController = captureController;
         _themeService = themeService;
         _logger = logger;
         _focusRingBuffer = focusRingBuffer;
+        _contextIndex = contextIndex;
         _clipsPath = !string.IsNullOrEmpty(_config.SaveFolder)
             ? Path.IsPathRooted(_config.SaveFolder)
                 ? _config.SaveFolder
                 : Path.Combine(AppPaths.BaseDirectory, _config.SaveFolder)
             : AppPaths.ClipsFolder;
+        
+        // Initialize scrub bar refresh timer (4 second interval)
+        _scrubRefreshTimer = new System.Windows.Threading.DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(4)
+        };
+        _scrubRefreshTimer.Tick += async (s, e) =>
+        {
+            if (_config.CaptureMode == DRB.Core.CaptureMode.Focus)
+            {
+                await LoadScrubBarAsync();
+            }
+        };
+        
         InitializeComponent();
         Loaded += (_, _) =>
         {
             _themeService.ThemeChanged += ApplyTheme;
+            Theme.ThemeChanged += OnThemeChanged;
         };
         ContentRendered += (s, e) =>
         {
             ApplyTheme(_themeService.IsDark);
             SetActiveMode(_config.CaptureMode);
+            UpdatePowerToggleVisuals();
         };
     }
 
@@ -98,18 +109,21 @@ public partial class IslandWindow : Window
 
     public void ApplyTheme(bool isDark)
     {
-        var background = isDark ? _darkBackground : _lightBackground;
-        var card = isDark ? _darkCard : _lightCard;
-        var button = isDark ? _darkButton : _lightButton;
-        var text = isDark ? _darkText : _lightText;
-        var secondary = isDark ? _darkSecondary : _lightSecondary;
-        var divider = isDark ? _darkDivider : _lightDivider;
+        // Use Theme class for all colors - Theme.Apply() was already called
+        var background = isDark 
+            ? new SolidColorBrush(Theme.Tint(242)) // #F2 with alpha
+            : new SolidColorBrush(Theme.Tint(242));
+        var card = new SolidColorBrush(Theme.Card);
+        var button = new SolidColorBrush(Theme.Card);
+        var text = new SolidColorBrush(Theme.TextPrimary);
+        var secondary = new SolidColorBrush(Theme.TextSecondary);
+        var divider = new SolidColorBrush(Theme.Tint(50)); // #33
 
         // Apply to main border
         if (MainBorder != null)
         {
-            MainBorder.Background = background;
-            MainBorder.BorderBrush = isDark ? new SolidColorBrush(Color.FromRgb(0x33, 0x33, 0x33)) : new SolidColorBrush(Color.FromRgb(0xCC, 0xCC, 0xCC));
+            MainBorder.Background = new SolidColorBrush(Theme.Surface);
+            MainBorder.BorderBrush = new SolidColorBrush(Theme.Tint(26)); // #1A
         }
 
         // Apply to mode toggle
@@ -139,21 +153,22 @@ public partial class IslandWindow : Window
         }
 
         // Style buttons with rounded corners and no border
-        var buttonBg = isDark ? Color.FromRgb(42, 42, 42) : Color.FromRgb(180, 180, 180);
-        var textColor = isDark ? Colors.White : Colors.Black;
-        var disabledBg = isDark ? Color.FromRgb(35, 35, 35) : Color.FromRgb(200, 200, 200);
-        var disabledFg = isDark ? Color.FromRgb(90, 90, 90) : Color.FromRgb(150, 150, 150);
+        var buttonBg = Theme.Card;
+        var textColor = Theme.TextPrimary;
+        var disabledBg = Theme.Hover;
+        var disabledFg = Theme.TextMuted;
 
         // Apply rounded style to main buttons
         if (ClipsButton != null) StyleButton(ClipsButton, buttonBg, textColor);
         if (CaptureButton != null) StyleButton(CaptureButton, buttonBg, textColor);
         if (SettingsButton != null) StyleButton(SettingsButton, buttonBg, textColor);
 
-        // Context viewer — always disabled appearance regardless of theme
+        // Context viewer — now enabled!
         if (ContextViewerButton != null)
         {
-            StyleButton(ContextViewerButton, disabledBg, disabledFg);
-            ContextViewerButton.IsEnabled = false;
+            StyleButton(ContextViewerButton, buttonBg, textColor);
+            ContextViewerButton.IsEnabled = true;
+            ContextViewerButton.Click += ContextViewerButton_Click;
         }
 
         // Mode toggles styled same as buttons — SetActiveMode applies blue on top
@@ -162,6 +177,12 @@ public partial class IslandWindow : Window
 
         // Apply to divider
         ApplyThemeToVisualTree(this, card, button, text, secondary, divider);
+
+        // Apply to scrub bar
+        if (ScrubBarBorder != null)
+        {
+            ScrubBarBorder.Background = new SolidColorBrush(Theme.Tint(25)); // #19
+        }
     }
 
     private void ApplyThemeToVisualTree(DependencyObject element, Brush card, Brush button, Brush text, Brush secondary, Brush divider)
@@ -251,40 +272,75 @@ public partial class IslandWindow : Window
 
     public void SetActiveMode(DRB.Core.CaptureMode mode)
     {
+        // Theme colors - use Surface for active state instead of blue
+        var activeBg = new SolidColorBrush(Theme.Surface);
+        var activeFg = new SolidColorBrush(Theme.TextPrimary);
+        var inactiveBg = new SolidColorBrush(Theme.Card);
+        var inactiveFg = new SolidColorBrush(Theme.TextSecondary);
+
         // Reset both to normal style first
         if (BtnFocus != null)
         {
             BtnFocus.FontWeight = FontWeights.Normal;
-            BtnFocus.Opacity = 0.5;
+            BtnFocus.Opacity = 1.0;
+            BtnFocus.Foreground = inactiveFg;
         }
         if (BtnContext != null)
         {
             BtnContext.FontWeight = FontWeights.Normal;
-            BtnContext.Opacity = 0.5;
+            BtnContext.Opacity = 1.0;
+            BtnContext.Foreground = inactiveFg;
         }
 
-        // Then bold only the active one
+        // Reset mode toggle background
+        if (ModeToggle != null)
+        {
+            ModeToggle.Background = inactiveBg;
+        }
+
+        // Then highlight the active one
         if (mode == DRB.Core.CaptureMode.Focus)
         {
             if (BtnFocus != null)
             {
                 BtnFocus.FontWeight = FontWeights.SemiBold;
-                BtnFocus.Opacity = 1.0;
+                BtnFocus.Foreground = activeFg;
             }
+            if (ModeToggle != null)
+            {
+                ModeToggle.Background = activeBg;
+            }
+            // Show scrub bar in Focus mode and start refresh timer
+            _scrubRefreshTimer?.Start();
+            _ = LoadScrubBarAsync();
         }
         else
         {
             if (BtnContext != null)
             {
                 BtnContext.FontWeight = FontWeights.SemiBold;
-                BtnContext.Opacity = 1.0;
+                BtnContext.Foreground = activeFg;
             }
+            if (ModeToggle != null)
+            {
+                ModeToggle.Background = activeBg;
+            }
+            // Hide scrub bar and stop timer in Context mode
+            _scrubRefreshTimer?.Stop();
+            if (ScrubBarBorder != null)
+                ScrubBarBorder.Visibility = Visibility.Collapsed;
         }
     }
 
     private static System.Windows.Media.Brush DimBrush =>
         new System.Windows.Media.SolidColorBrush(
             (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#888888"));
+
+    private void OnThemeChanged()
+    {
+        // Called when Theme.Apply() is invoked - re-apply current mode visuals
+        ApplyTheme(_themeService.IsDark);
+    }
 
     private void PowerToggle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -414,5 +470,232 @@ public partial class IslandWindow : Window
         var settings = new SettingsWindow(_config, _themeService, holder: null, logger: _logger, overlayService: OverlayService.Instance);
         settings.Owner = this;
         settings.ShowDialog();
+    }
+
+    private void ContextViewerButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (_contextIndex == null) return;
+        
+        var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ContextViewerWindow>.Instance;
+        var viewer = new ContextViewerWindow(_contextIndex, logger);
+        // Modal dialog like Settings and Clips
+        viewer.Owner = this;
+        viewer.ShowDialog();
+    }
+
+    // ──────────────────── Scrub Bar ──────────────────────────
+
+    private async Task LoadScrubBarAsync()
+    {
+        if (ScrubBarBorder == null || SegmentStrip == null) return;
+        
+        ScrubBarBorder.Visibility = Visibility.Visible;
+        SegmentStrip.Items.Clear();
+
+        // Always clear first
+        SegmentStrip.Items.Clear();
+        if (PlayheadFill != null) PlayheadFill.Width = 0;
+
+        // Always get fresh segments (GetSegmentsCopy already filters incomplete files)
+        var segments = _focusRingBuffer.GetSegmentsCopy().ToList();
+
+        _logger.LogInformation("ScrubBar: loaded {N} fresh segments", segments.Count);
+        foreach (var seg in segments)
+            _logger.LogDebug("ScrubBar segment: {P} ({B} bytes)", 
+                seg, new FileInfo(seg).Length);
+
+        if (segments.Count == 0)
+        {
+            _logger.LogWarning("ScrubBar: no complete segments available yet.");
+            return;
+        }
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            int capturedI = i;
+            string seg = segments[i];
+
+            // Container for one segment card
+            var card = new Border
+            {
+                Width = 106,
+                Height = 60,
+                Margin = new Thickness(0, 0, 4, 0),
+                CornerRadius = new CornerRadius(6),
+                Background = new SolidColorBrush(Color.FromRgb(35, 35, 35)),
+                Cursor = Cursors.Hand,
+                ClipToBounds = true,
+            };
+
+            // Timestamp label (derive from filename)
+            var filename = Path.GetFileNameWithoutExtension(seg);
+            string timeLabel = "–:–";
+            if (filename.Length >= 15)
+            {
+                timeLabel = $"{filename[9..11]}:{filename[11..13]}:{filename[13..15]}";
+            }
+
+            var grid = new Grid();
+
+            // Placeholder while thumb loads
+            var placeholder = new Rectangle
+            {
+                Fill = new SolidColorBrush(Color.FromRgb(30, 30, 30))
+            };
+            grid.Children.Add(placeholder);
+
+            var timeText = new TextBlock
+            {
+                Text = timeLabel,
+                Foreground = new SolidColorBrush(Color.FromRgb(180, 180, 180)),
+                FontSize = 10,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+            grid.Children.Add(timeText);
+
+            card.Child = grid;
+
+            // Hover highlight
+            int secondsBack = (segments.Count - 1 - capturedI) * 5;
+            string hoverLabel = secondsBack == 0
+                ? "Save last 5s"
+                : $"Save last {(segments.Count - capturedI) * 5}s";
+
+            card.MouseEnter += (s, e) =>
+            {
+                _scrubIndex = capturedI;
+                card.BorderThickness = new Thickness(1.5);
+                card.BorderBrush = new SolidColorBrush(Color.FromRgb(80, 120, 200));
+                UpdatePlayhead(capturedI, segments.Count);
+                
+                // Show duration label on card
+                var durationOverlay = new Border
+                {
+                    Background = new SolidColorBrush(Color.FromArgb(180, 20, 60, 160)),
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Padding = new Thickness(4, 2, 4, 2),
+                    Tag = "hover",
+                };
+                durationOverlay.Child = new TextBlock
+                {
+                    Text = hoverLabel,
+                    Foreground = Brushes.White,
+                    FontSize = 9,
+                    FontWeight = FontWeights.SemiBold,
+                };
+                grid.Children.Add(durationOverlay);
+            };
+            card.MouseLeave += (s, e) =>
+            {
+                card.BorderThickness = new Thickness(0);
+                card.BorderBrush = null;
+                // Remove hover overlay
+                var toRemove = grid.Children.OfType<Border>()
+                    .Where(b => b.Tag as string == "hover").ToList();
+                foreach (var b in toRemove) grid.Children.Remove(b);
+            };
+
+            // Click — save clip from this segment TO the end (most recent)
+            card.MouseLeftButtonDown += async (s, e) =>
+            {
+                e.Handled = true;
+                // Save from clicked segment TO the end (most recent)
+                var segsToSave = segments.Skip(capturedI).ToList();
+                var assemblerLogger = LoggerFactory.Create(builder => { }).CreateLogger<ClipAssembler>();
+                var assembler = new ClipAssembler(assemblerLogger, _clipsPath);
+                string? path = await assembler.AssembleAsync(segsToSave);
+                if (path != null)
+                {
+                    _logger.LogInformation("Scrub clip saved: '{P}'", path);
+                    // Show save confirmation popup
+                    NotificationPopup.ShowOnCurrentApp(path);
+                }
+            };
+
+            SegmentStrip.Items.Add(card);
+
+            // Load thumbnail async — update card when ready
+            _ = Task.Run(async () =>
+            {
+                var thumbPath = await _focusRingBuffer.ExtractThumbnailAsync(seg);
+                if (thumbPath == null) return;
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    try
+                    {
+                        grid.Children.Clear();
+                        var bmp = new BitmapImage();
+                        bmp.BeginInit();
+                        bmp.UriSource = new Uri(thumbPath);
+                        bmp.CacheOption = BitmapCacheOption.OnLoad;
+                        bmp.EndInit();
+                        bmp.Freeze();
+
+                        var img = new Image
+                        {
+                            Source = bmp,
+                            Stretch = Stretch.UniformToFill
+                        };
+                        grid.Children.Add(img);
+
+                        // Re-add time label on top
+                        var overlay = new Border
+                        {
+                            Background = new SolidColorBrush(
+                                Color.FromArgb(140, 0, 0, 0)),
+                            VerticalAlignment = VerticalAlignment.Bottom,
+                            Padding = new Thickness(4, 2, 4, 2),
+                        };
+                        overlay.Child = new TextBlock
+                        {
+                            Text = timeLabel,
+                            Foreground = Brushes.White,
+                            FontSize = 9,
+                        };
+                        grid.Children.Add(overlay);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning("Failed to load thumbnail: {E}", ex.Message);
+                    }
+                });
+            });
+        }
+
+        // Initial state (no hover) = no selection = empty bar
+        if (segments.Count > 0)
+            UpdatePlayhead(segments.Count, segments.Count); // startX = maxW, fillW = 0 → empty
+    }
+
+    private void UpdatePlayhead(int fromIndex, int total)
+    {
+        if (total == 0) return;
+
+        double maxW = ScrubBarBorder.ActualWidth - 24;
+        if (maxW <= 0) maxW = 620;
+
+        // fromIndex=0 means all segments → full bar
+        // fromIndex=5 means only last segment → thin bar on right
+        double startX = maxW * ((double)fromIndex / total);
+        double fillW = maxW - startX; // fill FROM startX TO right edge
+
+        // Clear any previous animation
+        PlayheadFill.BeginAnimation(FrameworkElement.WidthProperty, null);
+        
+        // Position at right edge and animate width growing from right to left
+        PlayheadFill.Margin = new Thickness(0, 0, 0, 0);
+        PlayheadFill.HorizontalAlignment = HorizontalAlignment.Right;
+        
+        // Start from 0 width at right edge
+        PlayheadFill.Width = 0;
+        
+        var anim = new DoubleAnimation
+        {
+            To = fillW,
+            Duration = TimeSpan.FromMilliseconds(200),
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+        };
+        PlayheadFill.BeginAnimation(FrameworkElement.WidthProperty, anim);
     }
 }

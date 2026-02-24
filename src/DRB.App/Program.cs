@@ -17,96 +17,107 @@ using App = DRB.App.App;
 Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
 
-var builder = Host.CreateDefaultBuilder(args);
-
-builder.UseSerilog((context, services, configuration) =>
+try
 {
-    AppPaths.EnsureFoldersExist();
+    var builder = Host.CreateDefaultBuilder(args);
 
-    configuration
-        .MinimumLevel.Debug()
-        .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-        .Enrich.FromLogContext()
-        .WriteTo.Console()  // Add console output
-        .WriteTo.File(
-            path: Path.Combine(AppPaths.LogsFolder, "drb-.log"),
-            rollingInterval: RollingInterval.Day,
-            retainedFileCountLimit: 7);
-});
+    builder.UseSerilog((context, services, configuration) =>
+    {
+        AppPaths.EnsureFoldersExist();
 
-builder.ConfigureServices(services =>
+        configuration
+            .MinimumLevel.Debug()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .Enrich.FromLogContext()
+            .WriteTo.Console()  // Add console output
+            .WriteTo.File(
+                path: Path.Combine(AppPaths.LogsFolder, "drb-.log"),
+                rollingInterval: RollingInterval.Day,
+                retainedFileCountLimit: 7);
+    });
+
+    builder.ConfigureServices(services =>
+    {
+        // Core config + channels
+        services.AddSingleton<IAppChannels, AppChannels>();
+        services.AddSingleton<Config>(_ =>
+        {
+            // Load synchronously at startup for simplicity.
+            return Config.LoadAsync().GetAwaiter().GetResult();
+        });
+
+        // Storage
+        services.AddSingleton<IClipStorage, SqliteClipStorage>();
+        services.AddSingleton<FocusRingBuffer>(sp =>
+        {
+            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FocusRingBuffer>();
+            return new FocusRingBuffer(
+                AppPaths.FocusBufferFolder,
+                logger);
+        });
+        services.AddSingleton<ContextIndex>(sp =>
+        {
+            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextIndex>();
+            return new ContextIndex(AppPaths.SqliteDbPath, logger);
+        });
+
+        // Pause/capture control
+        services.AddSingleton<CapturePauseState>();
+        services.AddSingleton<IPauseCapture>(sp => sp.GetRequiredService<CapturePauseState>());
+        services.AddSingleton<ICaptureController>(sp => sp.GetRequiredService<CapturePauseState>());
+
+        // WPF + overlay
+        services.AddSingleton<App>();
+        services.AddSingleton<IOverlayWindowHolder, OverlayWindowHolder>();
+        services.AddSingleton<ThemeService>();
+
+        // Context frame processor (pHash change detection)
+        services.AddSingleton<ContextFrameProcessor>(sp =>
+        {
+            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextFrameProcessor>();
+            return new ContextFrameProcessor(logger);
+        });
+
+        // Thread slots (6)
+        services.AddHostedService<CaptureWorker>();
+        services.AddHostedService<Encoder>();
+        services.AddHostedService<FrameProcessor>();
+        services.AddHostedService<StorageManager>();
+        services.AddHostedService<OverlayUI>();
+        services.AddHostedService<OcrWorker>();
+        services.AddHostedService<OverlayService>(sp =>
+        {
+            var holder = sp.GetRequiredService<IOverlayWindowHolder>();
+            var config = sp.GetRequiredService<Config>();
+            var pause = sp.GetRequiredService<IPauseCapture>();
+            var controller = sp.GetRequiredService<ICaptureController>();
+            var theme = sp.GetRequiredService<ThemeService>();
+            var logger = sp.GetRequiredService<ILogger<OverlayService>>();
+            var focusRing = sp.GetRequiredService<FocusRingBuffer>();
+            var contextIndex = sp.GetRequiredService<ContextIndex>();
+            return new OverlayService(holder, config, pause, controller, theme, logger, focusRing, contextIndex);
+        });
+
+        // Tray icon
+        services.AddHostedService<TrayIconService>();
+    });
+
+    using var host = builder.Build();
+
+    // Create App first so Application.Current is set before hosted services run.
+    var app = host.Services.GetRequiredService<App>();
+    app.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+    await host.StartAsync().ConfigureAwait(false);
+
+    app.Run();
+
+    await host.StopAsync().ConfigureAwait(false);
+}
+catch (Exception ex)
 {
-    // Core config + channels
-    services.AddSingleton<IAppChannels, AppChannels>();
-    services.AddSingleton<Config>(_ =>
-    {
-        // Load synchronously at startup for simplicity.
-        return Config.LoadAsync().GetAwaiter().GetResult();
-    });
-
-    // Storage
-    services.AddSingleton<IClipStorage, SqliteClipStorage>();
-    services.AddSingleton<FocusRingBuffer>(sp =>
-    {
-        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FocusRingBuffer>();
-        return new FocusRingBuffer(
-            AppPaths.FocusBufferFolder,
-            logger);
-    });
-    services.AddSingleton<ContextIndex>(sp =>
-    {
-        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextIndex>();
-        return new ContextIndex(AppPaths.SqliteDbPath, logger);
-    });
-
-    // Pause/capture control
-    services.AddSingleton<CapturePauseState>();
-    services.AddSingleton<IPauseCapture>(sp => sp.GetRequiredService<CapturePauseState>());
-    services.AddSingleton<ICaptureController>(sp => sp.GetRequiredService<CapturePauseState>());
-
-    // WPF + overlay
-    services.AddSingleton<App>();
-    services.AddSingleton<IOverlayWindowHolder, OverlayWindowHolder>();
-    services.AddSingleton<ThemeService>();
-
-    // Context frame processor (pHash change detection)
-    services.AddSingleton<ContextFrameProcessor>(sp =>
-    {
-        var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextFrameProcessor>();
-        return new ContextFrameProcessor(logger);
-    });
-
-    // Thread slots (6)
-    services.AddHostedService<CaptureWorker>();
-    services.AddHostedService<Encoder>();
-    services.AddHostedService<FrameProcessor>();
-    services.AddHostedService<StorageManager>();
-    services.AddHostedService<OverlayUI>();
-    services.AddHostedService<OcrWorker>();
-    services.AddHostedService<OverlayService>(sp =>
-    {
-        var holder = sp.GetRequiredService<IOverlayWindowHolder>();
-        var config = sp.GetRequiredService<Config>();
-        var pause = sp.GetRequiredService<IPauseCapture>();
-        var controller = sp.GetRequiredService<ICaptureController>();
-        var theme = sp.GetRequiredService<ThemeService>();
-        var logger = sp.GetRequiredService<ILogger<OverlayService>>();
-        var focusRing = sp.GetRequiredService<FocusRingBuffer>();
-        return new OverlayService(holder, config, pause, controller, theme, logger, focusRing);
-    });
-
-    // Tray icon
-    services.AddHostedService<TrayIconService>();
-});
-
-using var host = builder.Build();
-
-// Create App first so Application.Current is set before hosted services run.
-var app = host.Services.GetRequiredService<App>();
-app.ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-await host.StartAsync().ConfigureAwait(false);
-
-app.Run();
-
-await host.StopAsync().ConfigureAwait(false);
+    // Write to a file since logger isn't up yet
+    File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "startup_crash.txt"),
+        $"{DateTime.Now}\n{ex}\n{ex.StackTrace}");
+    throw;
+}

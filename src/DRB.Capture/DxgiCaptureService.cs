@@ -169,7 +169,7 @@ public sealed class DxgiCaptureService : IDisposable
                     // Clone the array to avoid race conditions
                     byte[] frameCopy = new byte[_lastValidFrame.Length];
                     Array.Copy(_lastValidFrame, frameCopy, _lastValidFrame.Length);
-                    return new RawFrame(frameCopy, _width, _height, DateTime.UtcNow.Ticks);
+                    return new RawFrame(frameCopy, _width, _height, DateTime.Now.Ticks);
                 }
                 return null;
             }
@@ -255,7 +255,7 @@ public sealed class DxgiCaptureService : IDisposable
             // Store reference to last valid frame
             _lastValidFrame = pixels;
 
-            return new RawFrame(pixels, _width, _height, DateTime.UtcNow.Ticks);
+            return new RawFrame(pixels, _width, _height, DateTime.Now.Ticks);
         }
         finally
         {
@@ -366,7 +366,7 @@ public sealed class DxgiCaptureService : IDisposable
             // Store reference to last valid frame
             _lastValidFrame = pixels;
 
-            return new RawFrame(pixels, _width, _height, DateTime.UtcNow.Ticks);
+            return new RawFrame(pixels, _width, _height, DateTime.Now.Ticks);
         }
         finally
         {

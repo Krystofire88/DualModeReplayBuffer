@@ -51,6 +51,54 @@ public sealed class Config
     [JsonPropertyName("theme")]
     public string Theme { get; set; } = "dark";
 
+    [JsonPropertyName("ignoredProcesses")]
+    public List<string> IgnoredProcesses { get; set; } = new()
+    {
+        // Windows shell & system
+        "explorer",
+        "LockApp",
+        "SearchHost",
+        "SearchApp",
+        "StartMenuExperienceHost",
+        "ShellExperienceHost",
+        "SystemSettings",
+        "SettingsSyncHost",
+        "RuntimeBroker",
+        "TextInputHost",
+        "ctfmon",
+        "dwm",
+        "taskmgr",
+        "Taskmgr",
+
+        // Security & UAC
+        "consent",
+        "SecurityHealthSystray",
+        "SecurityHealthService",
+        "WindowsDefender",
+        "MsMpEng",
+
+        // Input & accessibility
+        "TabTip",
+        "osk",
+        "Magnify",
+        "Narrator",
+
+        // Windows Update
+        "WuaucltService",
+        "WindowsUpdateBox",
+
+        // Common noise
+        "ApplicationFrameHost",
+        "UserOOBEBroker",
+        "PicturePasswordLogonProvider",
+        "Idle",
+        "Registry",
+        "svchost",
+        "csrss",
+        "winlogon",
+        "lsass",
+    };
+
     public static async Task<Config> LoadAsync(string? path = null, CancellationToken cancellationToken = default)
     {
         AppPaths.EnsureFoldersExist();

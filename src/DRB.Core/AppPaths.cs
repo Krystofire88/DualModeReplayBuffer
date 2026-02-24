@@ -4,7 +4,12 @@ namespace DRB.Core;
 
 public static class AppPaths
 {
-    public static string BaseDirectory { get; } = AppContext.BaseDirectory;
+    // Use a fixed app data folder that doesn't change with TargetFramework updates
+    private static readonly string FixedBaseDir = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "DualModeReplayBuffer");
+
+    public static string BaseDirectory { get; } = FixedBaseDir;
 
     public static string DataRoot => Path.Combine(BaseDirectory, "data");
     public static string FocusBufferFolder => Path.Combine(DataRoot, "focus_buffer");
@@ -17,6 +22,7 @@ public static class AppPaths
 
     public static void EnsureFoldersExist()
     {
+        Directory.CreateDirectory(BaseDirectory);
         Directory.CreateDirectory(DataRoot);
         Directory.CreateDirectory(FocusBufferFolder);
         Directory.CreateDirectory(ContextBufferFolder);

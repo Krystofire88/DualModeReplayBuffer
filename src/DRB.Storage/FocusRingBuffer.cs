@@ -1,4 +1,8 @@
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using DRB.Core;
 
 namespace DRB.Storage;
 
@@ -69,11 +73,32 @@ public sealed class FocusRingBuffer
 
     /// <summary>
     /// Returns a copy of current segment paths in order (oldest → newest).
+    /// Filters out incomplete segments (< 100KB or being written).
     /// </summary>
     public IReadOnlyList<string> GetSegmentsCopy()
     {
         lock (_lock)
-            return _segments.ToArray(); // Queue<T>.ToArray() is oldest→newest
+            return _segments
+                .Where(p => {
+                    try {
+                        var fi = new FileInfo(p);
+                        // Must exist, be over 100KB, and not modified in last 2 seconds (not currently being written)
+                        return fi.Exists 
+                            && fi.Length > 102_400
+                            && (DateTime.Now - fi.LastWriteTime).TotalSeconds > 2;
+                    }
+                    catch { return false; }
+                })
+                .ToArray(); // Queue<T>.ToArray() is oldest→newest
+    }
+
+    /// <summary>
+    /// Clears all segments from the buffer.
+    /// </summary>
+    public void Clear()
+    {
+        lock (_lock)
+            _segments.Clear();
     }
 
     // ──────────────────── Crash Recovery ──────────────────────────
@@ -113,5 +138,64 @@ public sealed class FocusRingBuffer
 
         if (recovered > 0)
             _logger.LogInformation("Recovered {Count} segments from disk in {Dir}.", recovered, _directory);
+    }
+
+    // ──────────────────── Thumbnail Extraction ─────────────────────────
+
+    /// <summary>
+    /// Extracts a thumbnail image from an MP4 segment using FFmpeg.
+    /// Returns the path to the cached thumbnail, or null if extraction failed.
+    /// </summary>
+    public async Task<string?> ExtractThumbnailAsync(string segmentPath)
+    {
+        string thumbPath = Path.Combine(
+            Path.GetTempPath(),
+            $"drb_thumb_{Path.GetFileNameWithoutExtension(segmentPath)}.jpg");
+
+        if (File.Exists(thumbPath))
+            return thumbPath;
+
+        string ffmpeg = FindFfmpeg();
+        if (ffmpeg == null)
+        {
+            _logger.LogWarning("FFmpeg not found for thumbnail extraction");
+            return null;
+        }
+
+        // Extract frame at 1 second into segment
+        var psi = new ProcessStartInfo
+        {
+            FileName = ffmpeg,
+            Arguments = $"-y -ss 1 -i \"{segmentPath}\" -vframes 1 -vf scale=160:90 \"{thumbPath}\"",
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardError = true,
+        };
+        using var proc = Process.Start(psi)!;
+        await proc.WaitForExitAsync();
+
+        if (!File.Exists(thumbPath))
+        {
+            _logger.LogWarning("Thumbnail extraction failed for: {Path}", segmentPath);
+            return null;
+        }
+
+        return thumbPath;
+    }
+
+    private static string? FindFfmpeg()
+    {
+        // 1. Next to exe (use AppPaths for consistency)
+        string exeDir = AppPaths.BaseDirectory;
+        string candidate = Path.Combine(exeDir, "ffmpeg.exe");
+        if (File.Exists(candidate)) return candidate;
+
+        // 2. tools/ subfolder
+        candidate = Path.Combine(exeDir, "tools", "ffmpeg.exe");
+        if (File.Exists(candidate)) return candidate;
+
+        // 3. PATH
+        candidate = "ffmpeg";
+        return candidate;
     }
 }

@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using DRB.App.UI;
 using DRB.Core;
 using Microsoft.Extensions.Logging;
 using Color = System.Windows.Media.Color;
@@ -126,31 +127,48 @@ public partial class SettingsWindow : Window
         btn.Template = CreateRoundedTemplate(bg);
     }
 
+    /// <summary>
+    /// Creates a styled button with the specified parameters.
+    /// </summary>
+    private Button MakeButton(string label, Color bg, bool isPrimary = false)
+    {
+        var btn = new Button
+        {
+            Content = label,
+            Height = 30,
+            Padding = isPrimary ? new Thickness(20, 0, 20, 0) : new Thickness(14, 0, 14, 0),
+            Background = new SolidColorBrush(bg),
+            Foreground = new SolidColorBrush(Theme.TextPrimary),
+            BorderThickness = new Thickness(0),
+            FontSize = 12,
+            FontWeight = isPrimary ? FontWeights.SemiBold : FontWeights.Normal,
+            Cursor = Cursors.Hand,
+        };
+        // Apply corner radius via template
+        btn.Template = CreateRoundedTemplate(bg);
+        return btn;
+    }
+
     private void ApplyTheme(bool isDark)
     {
-        var bg      = isDark ? "#1E1E1E" : "#F5F5F5";
-        var fg      = isDark ? "White"   : "Black";
-        var inputBg = isDark ? "#2A2A2A" : "#FFFFFF";
-        var btnBg   = isDark ? "#3A3A3A" : "#E0E0E0";
-        var sectionBg = isDark ? "#2A2A2A" : "#E8E8E8";
-        var borderColor = isDark ? "#333333" : "#CCCCCC";
-        var footerFg = isDark ? "#666666" : "#666666";
+        // Use Theme colors - we're in dark mode by default
+        var bg = Theme.Deep;
+        var fg = Theme.TextPrimary;
+        var inputBg = Theme.Card;
+        var sectionBg = Theme.Surface;
+        var footerFg = Theme.TextMuted;
         
-        MainBorder.Background = new SolidColorBrush(
-            (Color)System.Windows.Media.ColorConverter.ConvertFromString(bg));
-        MainBorder.BorderBrush = new SolidColorBrush(
-            (Color)System.Windows.Media.ColorConverter.ConvertFromString(borderColor));
+        MainBorder.Background = new SolidColorBrush(bg);
         
         // Apply to section borders
         if (HotkeysBorder != null)
-            HotkeysBorder.Background = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+            HotkeysBorder.Background = new SolidColorBrush(sectionBg);
         if (AppearanceBorder != null)
-            AppearanceBorder.Background = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+            AppearanceBorder.Background = new SolidColorBrush(sectionBg);
         if (StorageBorder != null)
-            StorageBorder.Background = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(sectionBg));
+            StorageBorder.Background = new SolidColorBrush(sectionBg);
+        if (IgnoredProcessesBorder != null)
+            IgnoredProcessesBorder.Background = new SolidColorBrush(sectionBg);
         
         // Apply footer text color
         if (RootGrid != null && RootGrid.Children.Count > 0)
@@ -162,27 +180,23 @@ public partial class SettingsWindow : Window
                     foreach (var gridChild in grid.Children)
                     {
                         if (gridChild is TextBlock tb && tb.Text == "Press Escape to close")
-                            tb.Foreground = new SolidColorBrush(
-                                (Color)System.Windows.Media.ColorConverter.ConvertFromString(footerFg));
+                            tb.Foreground = new SolidColorBrush(footerFg);
                     }
                 }
             }
         }
         
         foreach (var tb in FindVisualChildren<TextBlock>(this))
-            tb.Foreground = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(fg));
+            tb.Foreground = new SolidColorBrush(fg);
         foreach (var tb in FindVisualChildren<TextBox>(this))
         {
-            tb.Background = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(inputBg));
-            tb.Foreground = new SolidColorBrush(
-                (Color)System.Windows.Media.ColorConverter.ConvertFromString(fg));
+            tb.Background = new SolidColorBrush(inputBg);
+            tb.Foreground = new SolidColorBrush(fg);
         }
         
         // Style all buttons with rounded corners and no border
-        var buttonBg = isDark ? Color.FromRgb(0x3A, 0x3A, 0x3A) : Color.FromRgb(0xE0, 0xE0, 0xE0);
-        var textColor = isDark ? Colors.White : Colors.Black;
+        var buttonBg = Theme.Card;
+        var textColor = Theme.TextPrimary;
         
         foreach (var btn in FindVisualChildren<Button>(this))
             StyleButton(btn, buttonBg, textColor);
@@ -215,6 +229,56 @@ public partial class SettingsWindow : Window
         ThemeDark.IsChecked = _config.Theme != "light";
         ThemeLight.IsChecked = _config.Theme == "light";
         ClipsFolderTextBlock.Text = _config.SaveFolder;
+        
+        // Initialize ignored processes textbox placeholder
+        IgnoredProcessesTextBox.Text = "Add process name...";
+        IgnoredProcessesTextBox.GotFocus += (s, e) =>
+        {
+            if (IgnoredProcessesTextBox.Text == "Add process name...") IgnoredProcessesTextBox.Text = "";
+        };
+        IgnoredProcessesTextBox.LostFocus += (s, e) =>
+        {
+            if (IgnoredProcessesTextBox.Text == "") IgnoredProcessesTextBox.Text = "Add process name...";
+        };
+        
+        // Allow Enter key to add
+        IgnoredProcessesTextBox.KeyDown += (s, e) =>
+        {
+            if (e.Key == Key.Enter) IgnoredProcessesAddButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        };
+        
+        // Populate ignored processes list
+        foreach (var p in _config.IgnoredProcesses)
+            IgnoredProcessesListBox.Items.Add(p);
+        
+        // Handle Add button
+        IgnoredProcessesAddButton.Click += (s, e) =>
+        {
+            string name = IgnoredProcessesTextBox.Text.Trim()
+                .Replace(".exe", "")
+                .Trim();
+            if (string.IsNullOrEmpty(name) || name == "Add process name...") return;
+            if (!IgnoredProcessesListBox.Items.Contains(name))
+            {
+                IgnoredProcessesListBox.Items.Add(name);
+                IgnoredProcessesTextBox.Text = "Add process name...";
+            }
+        };
+        
+        // Handle Remove button
+        IgnoredProcessesRemoveButton.Click += (s, e) =>
+        {
+            if (IgnoredProcessesListBox.SelectedItem != null)
+                IgnoredProcessesListBox.Items.Remove(IgnoredProcessesListBox.SelectedItem);
+        };
+        
+        // Handle Restore Defaults button
+        IgnoredProcessesRestoreButton.Click += (s, e) =>
+        {
+            IgnoredProcessesListBox.Items.Clear();
+            var defaults = new Config().IgnoredProcesses;
+            foreach (var p in defaults) IgnoredProcessesListBox.Items.Add(p);
+        };
     }
 
     private void RecordOverlayHotkeyBtn_Click(object sender, RoutedEventArgs e)
@@ -417,7 +481,17 @@ public partial class SettingsWindow : Window
         _themeService.SetTheme(isDark);
         _config.Theme = isDark ? "dark" : "light";
         
+        // Save ignored processes
+        _config.IgnoredProcesses = IgnoredProcessesListBox.Items
+            .Cast<string>()
+            .Where(s => !string.IsNullOrWhiteSpace(s))
+            .Distinct()
+            .ToList();
+        
         await _config.SaveAsync();
+        
+        // Show success notification
+        ShowAppDialog("Settings Saved", "Changes will apply to new captures.", true);
         
         // Refresh hotkeys using static instance
         OverlayWindowHolder.Instance?.RefreshHotkeys();
@@ -432,41 +506,100 @@ public partial class SettingsWindow : Window
 
     private void ShowStyledDialog(string title, string message)
     {
+        ShowAppDialog(title, message, true);
+    }
+
+    /// <summary>
+    /// Unified dialog method for all app notifications.
+    /// </summary>
+    private void ShowAppDialog(string title, string body, 
+        bool isSuccess, string? actionLabel = null, 
+        Action? onAction = null)
+    {
         var dlg = new Window
         {
-            Title = title,
-            Width = 360, Height = 160,
             WindowStyle = WindowStyle.None,
+            AllowsTransparency = false,
             ResizeMode = ResizeMode.NoResize,
+            Width = 360,
+            SizeToContent = SizeToContent.Height,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
             Owner = this,
-            Background = new SolidColorBrush(Color.FromRgb(30, 30, 30)),
-            BorderBrush = new SolidColorBrush(Color.FromRgb(60, 60, 60)),
-            BorderThickness = new Thickness(1)
+            Background = new SolidColorBrush(Theme.Surface),
+            Topmost = true,
         };
-        var root = new StackPanel { Margin = new Thickness(24) };
-        root.Children.Add(new TextBlock
-        {
-            Text = title, FontSize = 14, FontWeight = FontWeights.SemiBold,
-            Foreground = System.Windows.Media.Brushes.White, Margin = new Thickness(0, 0, 0, 10)
-        });
-        root.Children.Add(new TextBlock
-        {
-            Text = message, FontSize = 12, Foreground = System.Windows.Media.Brushes.LightGray,
-            TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 16)
-        });
-        var btn = new Button
-        {
-            Content = "OK", Width = 80, HorizontalAlignment = HorizontalAlignment.Right,
-            Background = new SolidColorBrush(Color.FromRgb(60, 60, 60)),
-            Foreground = System.Windows.Media.Brushes.White, BorderThickness = new Thickness(0),
-            Padding = new Thickness(0, 6, 0, 6), Cursor = Cursors.Hand
+        
+        var root = new StackPanel { Margin = new Thickness(24, 20, 24, 20) };
+        
+        // Title row with colored icon
+        var titleRow = new StackPanel { 
+            Orientation = Orientation.Horizontal,
+            Margin = new Thickness(0, 0, 0, 10)
         };
-        StyleButton(btn, Color.FromRgb(60, 60, 60), Colors.White);
-        btn.Click += (s, e) => dlg.Close();
-        root.Children.Add(btn);
+        titleRow.Children.Add(new TextBlock {
+            Text = isSuccess ? "✓" : "✕",
+            Foreground = new SolidColorBrush(isSuccess ? Theme.Green : Theme.Red),
+            FontSize = 15, FontWeight = FontWeights.Bold,
+            Margin = new Thickness(0, 0, 8, 0),
+            VerticalAlignment = VerticalAlignment.Center,
+        });
+        titleRow.Children.Add(new TextBlock {
+            Text = title,
+            Foreground = new SolidColorBrush(Theme.TextPrimary),
+            FontSize = 14, FontWeight = FontWeights.SemiBold,
+            VerticalAlignment = VerticalAlignment.Center,
+        });
+        root.Children.Add(titleRow);
+        
+        // Body text
+        root.Children.Add(new TextBlock {
+            Text = body,
+            Foreground = new SolidColorBrush(Theme.TextSecondary),
+            FontSize = 12,
+            TextWrapping = TextWrapping.Wrap,
+            Margin = new Thickness(0, 0, 0, 18),
+        });
+        
+        // Button row — right aligned
+        var btnRow = new StackPanel { 
+            Orientation = Orientation.Horizontal,
+            HorizontalAlignment = HorizontalAlignment.Right,
+        };
+        
+        if (actionLabel != null && onAction != null)
+        {
+            var btnAction = new Button {
+                Content = actionLabel,
+                Padding = new Thickness(14, 6, 14, 6),
+                Margin = new Thickness(0, 0, 8, 0),
+                Background = new SolidColorBrush(Theme.Card),
+                Foreground = new SolidColorBrush(Theme.TextPrimary),
+                BorderThickness = new Thickness(0),
+                FontSize = 12,
+                Cursor = Cursors.Hand,
+            };
+            btnAction.Template = CreateRoundedTemplate(Theme.Card);
+            btnAction.Click += (s, e) => { onAction(); dlg.Close(); };
+            btnRow.Children.Add(btnAction);
+        }
+        
+        var btnOk = new Button {
+            Content = "OK",
+            Padding = new Thickness(20, 6, 20, 6),
+            Background = new SolidColorBrush(Theme.Blue),
+            Foreground = new SolidColorBrush(Theme.TextPrimary),
+            BorderThickness = new Thickness(0),
+            FontSize = 12, FontWeight = FontWeights.SemiBold,
+            Cursor = Cursors.Hand,
+        };
+        btnOk.Template = CreateRoundedTemplate(Theme.Blue);
+        btnOk.Click += (s, e) => dlg.Close();
+        btnRow.Children.Add(btnOk);
+        root.Children.Add(btnRow);
+        
         dlg.Content = root;
         dlg.MouseLeftButtonDown += (s, e) => dlg.DragMove();
+        
         dlg.ShowDialog();
     }
 

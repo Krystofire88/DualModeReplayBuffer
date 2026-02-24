@@ -221,7 +221,7 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     private void BeginSegment(long firstFrameTimestamp)
     {
-        _segmentStartTime = DateTime.UtcNow;
+        _segmentStartTime = DateTime.Now;
         // Use the first frame's timestamp as the segment start for accurate relative timing
         _segmentStartTicks = firstFrameTimestamp;
         _currentSegmentPath = Path.Combine(

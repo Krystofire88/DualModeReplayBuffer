@@ -12,6 +12,7 @@ public interface IAppChannels
 
     Channel<ProcessedFrame> ProcessorToOverlay { get; }
     Channel<OcrJob> ProcessorToOcr { get; }
+    Channel<ContextOcrJob> ProcessorToOcrContext { get; }
 
     Channel<OcrResult> OcrToOverlay { get; }
 

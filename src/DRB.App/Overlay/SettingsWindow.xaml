@@ -9,17 +9,15 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Title="Settings"
-        Width="420"
-        Height="500"
+        Width="500"
+        SizeToContent="Height"
         MouseLeftButtonDown="Window_MouseLeftButtonDown">
-    <Border x:Name="MainBorder" CornerRadius="16"
-            Background="{x:Null}"
+    <!-- Root Border - Deep background, 12px radius -->
+    <Border x:Name="MainBorder" CornerRadius="12"
+            Background="#0F0F0F"
             Padding="20"
             BorderBrush="{x:Null}"
-            BorderThickness="1">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="16" ShadowDepth="4" Opacity="0.5" Color="Black"/>
-        </Border.Effect>
+            BorderThickness="0">
         <Grid x:Name="RootGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -27,19 +25,35 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <!-- Header -->
+            <!-- Header / Title bar -->
             <Grid Grid.Row="0" Margin="0,0,0,16">
-                <TextBlock Text="Settings" Foreground="White" FontFamily="Segoe UI" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                <Button Content="✕" HorizontalAlignment="Right" Padding="8,4" FontSize="14" 
-                        Background="{x:Null}" Click="CloseButton_Click" ToolTip="Close (Escape)"/>
+                <TextBlock Text="Settings" Foreground="#E1E1E1" FontFamily="Segoe UI" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                <Button Content="✕" HorizontalAlignment="Right" Padding="8,4" FontSize="12" 
+                        Background="Transparent" Foreground="#919191" BorderThickness="0" Cursor="Hand"
+                        Click="CloseButton_Click" ToolTip="Close (Escape)">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                    CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#C34141"/>
+                                    <Setter Property="Foreground" Value="#E1E1E1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
             
             <!-- Content -->
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                 <StackPanel>
                     <!-- Hotkeys Section -->
-                    <TextBlock Text="HOTKEYS" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border x:Name="HotkeysBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                    <TextBlock Text="HOTKEYS" Foreground="#919191" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <Border x:Name="HotkeysBorder" Background="#181818" CornerRadius="7" Padding="18" Margin="0,0,0,10">
                         <StackPanel>
                             <!-- Overlay Hotkey -->
                             <Grid Margin="0,0,0,12">
@@ -48,10 +62,12 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Toggle Overlay" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
-                                    <TextBlock Text="Show/hide the replay overlay" Foreground="#888" FontFamily="Segoe UI" FontSize="12"/>
+                                    <TextBlock Text="Toggle Overlay" Foreground="#E1E1E1" FontFamily="Segoe UI" FontSize="12"/>
+                                    <TextBlock Text="Show/hide the replay overlay" Foreground="#919191" FontFamily="Segoe UI" FontSize="11" Margin="0,3,0,0"/>
                                 </StackPanel>
-                                <Button x:Name="RecordOverlayHotkeyBtn" Content="Ctrl+Shift+F9" Width="160" Height="32" HorizontalAlignment="Right" FontSize="12" Click="RecordOverlayHotkeyBtn_Click"/>
+                                <Button x:Name="RecordOverlayHotkeyBtn" Content="Ctrl+Shift+F9" Width="160" Height="30" 
+                                        HorizontalAlignment="Right" FontSize="12" Click="RecordOverlayHotkeyBtn_Click"
+                                        Background="#222222" Foreground="#E1E1E1" BorderThickness="0" Padding="8,0"/>
                             </Grid>
                             
                             <!-- Capture Last 30 Hotkey -->
@@ -61,55 +77,107 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="Capture Last 30s" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
-                                    <TextBlock Text="Immediately save last 30 seconds" Foreground="#888" FontFamily="Segoe UI" FontSize="12"/>
+                                    <TextBlock Text="Capture Last 30s" Foreground="#E1E1E1" FontFamily="Segoe UI" FontSize="12"/>
+                                    <TextBlock Text="Immediately save last 30 seconds" Foreground="#919191" FontFamily="Segoe UI" FontSize="11" Margin="0,3,0,0"/>
                                 </StackPanel>
-                                <Button x:Name="RecordCapture30HotkeyBtn" Content="Ctrl+Shift+T" Width="160" Height="32" HorizontalAlignment="Right" FontSize="12" Click="RecordCapture30HotkeyBtn_Click"/>
+                                <Button x:Name="RecordCapture30HotkeyBtn" Content="Ctrl+Shift+T" Width="160" Height="30" 
+                                        HorizontalAlignment="Right" FontSize="12" Click="RecordCapture30HotkeyBtn_Click"
+                                        Background="#222222" Foreground="#E1E1E1" BorderThickness="0" Padding="8,0"/>
                             </Grid>
                         </StackPanel>
                     </Border>
 
                     <!-- Appearance Section -->
-                    <TextBlock Text="APPEARANCE" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border x:Name="AppearanceBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,16">
+                    <TextBlock Text="APPEARANCE" Foreground="#919191" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <Border x:Name="AppearanceBorder" Background="#181818" CornerRadius="7" Padding="18" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="Theme" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
-                                <TextBlock Text="Choose light or dark mode" Foreground="#888" FontFamily="Segoe UI" FontSize="12"/>
+                                <TextBlock Text="Theme" Foreground="#E1E1E1" FontFamily="Segoe UI" FontSize="12"/>
+                                <TextBlock Text="Choose light or dark mode" Foreground="#919191" FontFamily="Segoe UI" FontSize="11" Margin="0,3,0,0"/>
                             </StackPanel>
                             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <RadioButton x:Name="ThemeDark" Content="Dark" GroupName="Theme" Foreground="White" Margin="0,0,12,0" Checked="Theme_Checked"/>
-                                <RadioButton x:Name="ThemeLight" Content="Light" GroupName="Theme" Foreground="White" Checked="Theme_Checked"/>
+                                <RadioButton x:Name="ThemeDark" Content="Dark" GroupName="Theme" Foreground="#E1E1E1" Margin="0,0,12,0" Checked="Theme_Checked"/>
+                                <RadioButton x:Name="ThemeLight" Content="Light" GroupName="Theme" Foreground="#E1E1E1" Checked="Theme_Checked"/>
                             </StackPanel>
                         </Grid>
                     </Border>
 
                     <!-- Storage Section -->
-                    <TextBlock Text="STORAGE" Foreground="#AAA" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
-                    <Border x:Name="StorageBorder" Background="{x:Null}" CornerRadius="8" Padding="12" Margin="0,0,0,8">
+                    <TextBlock Text="STORAGE" Foreground="#919191" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <Border x:Name="StorageBorder" Background="#181818" CornerRadius="7" Padding="18" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0">
-                                <TextBlock Text="Clips Directory" Foreground="White" FontFamily="Segoe UI" FontSize="14"/>
-                                <TextBlock x:Name="ClipsFolderTextBlock" Text="No folder selected" Foreground="#888" FontFamily="Segoe UI" FontSize="12" TextTrimming="CharacterEllipsis" MaxWidth="250"/>
+                                <TextBlock Text="Clips Directory" Foreground="#E1E1E1" FontFamily="Segoe UI" FontSize="12"/>
+                                <TextBlock x:Name="ClipsFolderTextBlock" Text="No folder selected" Foreground="#919191" FontFamily="Segoe UI" FontSize="11" TextTrimming="CharacterEllipsis" MaxWidth="250" Margin="0,3,0,0"/>
                             </StackPanel>
-                            <Button x:Name="BrowseButton" Grid.Column="1" Content="Browse" Background="{x:Null}" Padding="10,6" Click="BrowseButton_Click"/>
+                            <Button x:Name="BrowseButton" Grid.Column="1" Content="Browse" Background="#222222" Foreground="#E1E1E1" 
+                                    Padding="14,6" BorderThickness="0" Cursor="Hand" Click="BrowseButton_Click"/>
                         </Grid>
+                    </Border>
+
+                    <!-- Ignored Processes Section -->
+                    <TextBlock Text="IGNORED PROCESSES" Foreground="#919191" FontFamily="Segoe UI" FontSize="12" FontWeight="SemiBold" Margin="0,0,0,8"/>
+                    <Border x:Name="IgnoredProcessesBorder" Background="#181818" CornerRadius="7" Padding="18" Margin="0,0,0,8">
+                        <StackPanel>
+                            <TextBlock Text="Context frames will not be captured when these apps are in the foreground." 
+                                       Foreground="#919191" FontFamily="Segoe UI" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,12"/>
+                            <ListBox x:Name="IgnoredProcessesListBox" Height="120" Background="#0F0F0F" Foreground="#E1E1E1" 
+                                     BorderThickness="1" BorderBrush="#1CFFFFFF" FontSize="12" Margin="0,0,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="IgnoredProcessesTextBox" Grid.Column="0" Width="200" Height="30" 
+                                         Background="#222222" Foreground="#E1E1E1" BorderThickness="1" 
+                                         BorderBrush="#1CFFFFFF" Padding="8,0,8,0" VerticalContentAlignment="Center" 
+                                         FontSize="12" Margin="0,0,6,0"/>
+                                <Button x:Name="IgnoredProcessesAddButton" Grid.Column="1" Content="+ Add" Width="70" Height="30" 
+                                        Margin="0,0,6,0" Background="#222222" Foreground="#E1E1E1" BorderThickness="0"/>
+                                <Button x:Name="IgnoredProcessesRemoveButton" Grid.Column="2" Content="- Remove" Width="80" Height="30" 
+                                        Margin="0,0,6,0" Background="#222222" Foreground="#E1E1E1" BorderThickness="0"/>
+                                <Button x:Name="IgnoredProcessesRestoreButton" Grid.Column="4" Content="Restore Defaults" Height="30"
+                                        Background="#222222" Foreground="#E1E1E1" BorderThickness="0"/>
+                            </Grid>
+                        </StackPanel>
                     </Border>
                 </StackPanel>
             </ScrollViewer>
             
             <!-- Footer -->
             <Grid Grid.Row="2" Margin="0,16,0,0">
-                <TextBlock Text="Press Escape to close" Foreground="#666" FontFamily="Segoe UI" FontSize="11" VerticalAlignment="Center"/>
-                <Button x:Name="SaveButton" Content="Save Settings" Background="#0078D4" HorizontalAlignment="Right" Click="SaveButton_Click"/>
+                <TextBlock Text="Press Escape to close" Foreground="#505050" FontFamily="Segoe UI" FontSize="11" VerticalAlignment="Center"/>
+                <Button x:Name="SaveButton" Content="Save Settings" Background="#446CCD" Foreground="#E1E1E1" 
+                        HorizontalAlignment="Right" Padding="20,8" BorderThickness="0" Cursor="Hand" 
+                        FontWeight="SemiBold" FontSize="12" Click="SaveButton_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                    CornerRadius="7" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#3250A0"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#284080"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </Grid>
     </Border>

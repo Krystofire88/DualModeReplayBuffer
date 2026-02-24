@@ -25,6 +25,12 @@ public sealed record OcrResult(
     OcrJob Job,
     string Text);
 
+/// <summary>
+/// Simple OCR job for context frames - just contains the file path.
+/// </summary>
+public sealed record ContextOcrJob(
+    string ImagePath);
+
 public sealed record VideoSegment(
     string Path,
     DateTime Start,

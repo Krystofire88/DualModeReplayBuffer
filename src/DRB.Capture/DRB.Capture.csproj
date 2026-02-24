@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <FrameworkReference Include="Microsoft.WindowsDesktop.App.WPF" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DRB.Core\DRB.Core.csproj" />
     <ProjectReference Include="..\DRB.Storage\DRB.Storage.csproj" />
   </ItemGroup>

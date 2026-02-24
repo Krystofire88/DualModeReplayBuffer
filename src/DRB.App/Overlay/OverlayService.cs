@@ -20,6 +20,7 @@ public sealed class OverlayService : IHostedService, IDisposable
         get => _currentActiveHotkey;
         set => _currentActiveHotkey = value;
     }
+    public ContextIndex ContextIndex => _contextIndex;
     // P/Invoke declarations for message-only window
     [DllImport("user32.dll", SetLastError = true)]
     private static extern IntPtr CreateWindowEx(
@@ -69,6 +70,7 @@ public sealed class OverlayService : IHostedService, IDisposable
     private readonly ILogger<OverlayService> _logger;
     private readonly ThemeService _themeService;
     private readonly FocusRingBuffer _focusRingBuffer;
+    private readonly ContextIndex _contextIndex;
     private OverlayWindow? _overlayWindow;
 
     // Message-only window state
@@ -90,7 +92,8 @@ public sealed class OverlayService : IHostedService, IDisposable
         ICaptureController captureController,
         ThemeService themeService,
         ILogger<OverlayService> logger,
-        FocusRingBuffer focusRingBuffer)
+        FocusRingBuffer focusRingBuffer,
+        ContextIndex contextIndex)
     {
         _holder = holder;
         _config = config;
@@ -99,6 +102,7 @@ public sealed class OverlayService : IHostedService, IDisposable
         _themeService = themeService;
         _logger = logger;
         _focusRingBuffer = focusRingBuffer;
+        _contextIndex = contextIndex;
         
         // Set static instance for cross-class access
         Instance = this;
@@ -124,7 +128,7 @@ public sealed class OverlayService : IHostedService, IDisposable
             try
             {
                 _logger.LogInformation("UI thread: creating OverlayWindow...");
-                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger, _focusRingBuffer);
+                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger, _focusRingBuffer, _contextIndex);
                 _holder.Set(_overlayWindow);
                 _logger.LogInformation("OverlayWindow created.");
 
