@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Core;
 
@@ -8,12 +7,10 @@ namespace DRB.Core;
 /// </summary>
 public class ClipAssembler
 {
-    private readonly ILogger<ClipAssembler> _logger;
     private readonly string _clipsFolder;
 
-    public ClipAssembler(ILogger<ClipAssembler> logger, string clipsFolder)
+    public ClipAssembler(string clipsFolder)
     {
-        _logger = logger;
         _clipsFolder = clipsFolder;
         Directory.CreateDirectory(_clipsFolder);
     }
@@ -22,7 +19,6 @@ public class ClipAssembler
     {
         if (segmentPaths.Count == 0)
         {
-            _logger.LogWarning("ClipAssembler: no segments to assemble.");
             return null;
         }
 
@@ -36,9 +32,6 @@ public class ClipAssembler
             num++;
         } while (File.Exists(outputPath));
 
-        _logger.LogInformation("ClipAssembler: assembling {N} segments → '{Out}'",
-            segmentPaths.Count, outputPath);
-
         // Write a concat list file for FFmpeg
         string listFile = Path.Combine(Path.GetTempPath(), $"drb_concat_{Guid.NewGuid():N}.txt");
         await File.WriteAllLinesAsync(listFile,
@@ -50,8 +43,6 @@ public class ClipAssembler
             string ffmpeg = FindFfmpeg();
             if (ffmpeg == null)
             {
-                _logger.LogError("ClipAssembler: ffmpeg.exe not found. " +
-                    "Place ffmpeg.exe next to the application or in a 'tools' subfolder.");
                 return null;
             }
 
@@ -74,13 +65,9 @@ public class ClipAssembler
 
             if (proc.ExitCode != 0)
             {
-                _logger.LogError("ClipAssembler: ffmpeg failed (exit {Code}):\n{Err}",
-                    proc.ExitCode, stderr);
                 return null;
             }
 
-            _logger.LogInformation("ClipAssembler: saved clip '{Out}' ({Size} bytes)",
-                outputPath, new FileInfo(outputPath).Length);
             return outputPath;
         }
         finally

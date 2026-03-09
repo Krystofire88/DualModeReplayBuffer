@@ -3,7 +3,6 @@ using DRB.Core;
 using DRB.Core.Messaging;
 using DRB.Core.Models;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Capture;
 
@@ -13,27 +12,22 @@ public sealed class CaptureWorker : BackgroundService
     private readonly Config _config;
     private readonly IPauseCapture _pauseCapture;
     private readonly ICaptureController _captureController;
-    private readonly ILogger<CaptureWorker> _logger;
 
     private static readonly TimeSpan ReinitDelay = TimeSpan.FromSeconds(1);
 
-    public CaptureWorker(IAppChannels channels, Config config, IPauseCapture pauseCapture, ICaptureController captureController, ILogger<CaptureWorker> logger)
+    public CaptureWorker(IAppChannels channels, Config config, IPauseCapture pauseCapture, ICaptureController captureController)
     {
         _channels = channels;
         _config = config;
         _pauseCapture = pauseCapture;
         _captureController = captureController;
-        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Capture thread starting (DXGI Desktop Duplication).");
-        _logger.LogInformation("Capture mode: {CaptureMode}", _config.CaptureMode);
-
         var processorWriter = _channels.CaptureToProcessor.Writer;
 
-        using var captureService = new DxgiCaptureService(_config, _logger);
+        using var captureService = new DxgiCaptureService(_config);
 
         // Outer loop: handles re-initialization after access-lost events.
         while (!stoppingToken.IsCancellationRequested)
@@ -44,7 +38,6 @@ public sealed class CaptureWorker : BackgroundService
             }
             catch (Exception ex) when (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogError(ex, "Failed to initialize Desktop Duplication. Retrying in {Delay}…", ReinitDelay);
                 await Task.Delay(ReinitDelay, stoppingToken).ConfigureAwait(false);
                 continue;
             }
@@ -88,7 +81,6 @@ public sealed class CaptureWorker : BackgroundService
                     }
                     catch (DxgiAccessLostException)
                     {
-                        _logger.LogWarning("DXGI access lost (desktop switch / UAC). Re-initializing…");
                         break; // break inner loop → re-init in outer loop
                     }
 
@@ -111,11 +103,8 @@ public sealed class CaptureWorker : BackgroundService
             }
             catch (Exception ex) when (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogError(ex, "Unexpected error in capture loop. Re-initializing in {Delay}…", ReinitDelay);
                 await Task.Delay(ReinitDelay, stoppingToken).ConfigureAwait(false);
             }
         }
-
-        _logger.LogInformation("Capture thread stopping.");
     }
 }

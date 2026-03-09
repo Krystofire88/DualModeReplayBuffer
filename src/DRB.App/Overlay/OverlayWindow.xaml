@@ -9,6 +9,7 @@
         ResizeMode="NoResize"
         WindowStartupLocation="Manual"
         Title="DualModeReplayBuffer Overlay"
+        Icon="../Assets/icon.ico"
         Loaded="Window_Loaded"
         PreviewKeyDown="Window_PreviewKeyDown"
         Left="0"

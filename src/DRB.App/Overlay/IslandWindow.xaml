@@ -142,6 +142,7 @@
                         Margin="4,0"
                         Content="🖼 Context"
                         Style="{StaticResource DarkButtonStyle}"
+                        Width="Auto" Padding="10,0"
                         ToolTip="Context Viewer"
                         Click="ContextViewerButton_Click"/>
                 

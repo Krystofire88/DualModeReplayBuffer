@@ -1,7 +1,8 @@
+using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using DRB.Core;
 
 namespace DRB.Storage;
@@ -15,14 +16,12 @@ public sealed class FocusRingBuffer
     private const int MaxSegments = 6;
 
     private readonly string _directory;
-    private readonly ILogger _logger;
     private readonly object _lock = new();
     private readonly Queue<string> _segments = new();
 
-    public FocusRingBuffer(string directory, ILogger logger)
+    public FocusRingBuffer(string directory)
     {
         _directory = directory ?? throw new ArgumentNullException(nameof(directory));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         Directory.CreateDirectory(_directory);
         RebuildFromDisk();
@@ -36,26 +35,15 @@ public sealed class FocusRingBuffer
         lock (_lock)
         {
             _segments.Enqueue(path);
-            _logger.LogDebug("Focus buffer: added '{Path}', " +
-                "count={Count}, max={Max}", path, _segments.Count, MaxSegments);
 
             while (_segments.Count > MaxSegments)
             {
                 var old = _segments.Dequeue();
-                _logger.LogInformation("Focus buffer evicting: '{Path}'", old);
                 if (File.Exists(old))
                 {
                     File.Delete(old);
-                    _logger.LogInformation("Focus buffer deleted file: '{Path}'", old);
-                }
-                else
-                {
-                    _logger.LogWarning("Focus buffer evict: file not found: '{Path}'", old);
                 }
             }
-
-            _logger.LogDebug("Focus buffer after eviction: count={Count}", 
-                _segments.Count);
         }
     }
 
@@ -133,11 +121,7 @@ public sealed class FocusRingBuffer
         {
             var old = _segments.Dequeue();
             if (File.Exists(old)) File.Delete(old);
-            _logger.LogDebug("Evicted focus segment on recovery: {Path}", old);
         }
-
-        if (recovered > 0)
-            _logger.LogInformation("Recovered {Count} segments from disk in {Dir}.", recovered, _directory);
     }
 
     // ──────────────────── Thumbnail Extraction ─────────────────────────
@@ -158,7 +142,6 @@ public sealed class FocusRingBuffer
         string ffmpeg = FindFfmpeg();
         if (ffmpeg == null)
         {
-            _logger.LogWarning("FFmpeg not found for thumbnail extraction");
             return null;
         }
 
@@ -176,7 +159,6 @@ public sealed class FocusRingBuffer
 
         if (!File.Exists(thumbPath))
         {
-            _logger.LogWarning("Thumbnail extraction failed for: {Path}", segmentPath);
             return null;
         }
 

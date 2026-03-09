@@ -4,7 +4,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using DRB.Core;
 using DRB.Storage;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -29,7 +29,6 @@ public partial class OverlayWindow : Window
     private readonly IPauseCapture _pauseCapture;
     private readonly IslandWindow _islandWindow;
     private readonly ThemeService _themeService;
-    private readonly ILogger _logger;
     private readonly FocusRingBuffer _focusRingBuffer;
     private readonly DRB.Storage.ContextIndex _contextIndex;
     private bool _isClosing;
@@ -46,15 +45,14 @@ public partial class OverlayWindow : Window
         _clipsBrowserWindow = window;
     }
 
-    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer, DRB.Storage.ContextIndex contextIndex)
+    public OverlayWindow(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, FocusRingBuffer focusRingBuffer, DRB.Storage.ContextIndex contextIndex)
     {
         _config = config;
         _pauseCapture = pauseCapture;
         _themeService = themeService;
-        _logger = logger;
         _focusRingBuffer = focusRingBuffer;
         _contextIndex = contextIndex;
-        _islandWindow = new IslandWindow(config, captureController, themeService, logger, focusRingBuffer, contextIndex);
+        _islandWindow = new IslandWindow(config, captureController, themeService, focusRingBuffer, contextIndex);
 
         _islandWindow.OnModeToggled += mode => OnModeToggled?.Invoke(mode);
         _islandWindow.OnCaptureRequested += () => OnCaptureRequested?.Invoke();
@@ -107,21 +105,45 @@ public partial class OverlayWindow : Window
         }
     }
 
+    private bool _isHandlingBackgroundClick;
+
     private void BackgroundOverlay_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        // Only close if click was on the background, not the island
-        // The island is a child window, so clicks on it won't reach this handler
-        // because the island window will handle them first
-        // Also check if context viewer is open
-        bool viewerOpen = Application.Current.Windows
-            .OfType<ContextViewerWindow>()
-            .Any(w => w.IsVisible);
-        if (!viewerOpen)
-            HideOverlay();
+        // Prevent reentrant calls during close operations
+        if (_isHandlingBackgroundClick) return;
+        _isHandlingBackgroundClick = true;
+        
+        try
+        {
+            // Only close if click was on the background, not the island
+            // The island is a child window, so clicks on it won't reach this handler
+            // because the island window will handle them first
+            // Also check if context viewer is open - need to check if window is fully loaded and visible
+            bool viewerOpen = false;
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is ContextViewerWindow cvw)
+                {
+                    // Check if window is actually visible and active
+                    if (cvw.IsLoaded && cvw.IsVisible && cvw.WindowState != WindowState.Minimized)
+                    {
+                        viewerOpen = true;
+                        break;
+                    }
+                }
+            }
+            if (!viewerOpen)
+                HideOverlay();
+        }
+        finally
+        {
+            _isHandlingBackgroundClick = false;
+        }
     }
 
     public void ShowOverlay()
     {
+        Serilog.Log.Information("ShowOverlay called. IsVisible={IsVisible}", IsVisible);
         _isClosing = false;
         _pauseCapture.Pause();
         if (!IsVisible)

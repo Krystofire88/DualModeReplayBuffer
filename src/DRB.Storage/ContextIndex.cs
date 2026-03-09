@@ -1,8 +1,8 @@
+using System;
 using System.IO;
 using DRB.Core;
 using DRB.Core.Models;
 using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Storage;
 
@@ -13,15 +13,11 @@ namespace DRB.Storage;
 public sealed class ContextIndex : IDisposable
 {
     private readonly SqliteConnection _connection;
-    private readonly ILogger _logger;
 
-    public ContextIndex(string dbPath, ILogger logger)
+    public ContextIndex(string dbPath)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _connection = new SqliteConnection($"Data Source={dbPath}");
         _connection.Open();
-
-        _logger.LogInformation("ContextIndex DB path: '{Path}'", dbPath);
 
         // WAL mode for concurrent access
         using var wal = _connection.CreateCommand();
@@ -64,7 +60,6 @@ public sealed class ContextIndex : IDisposable
             
             if (hasAppName == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding app_name column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN app_name TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
@@ -78,7 +73,6 @@ public sealed class ContextIndex : IDisposable
             
             if (hasAppPath == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding app_path column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN app_path TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
@@ -92,7 +86,6 @@ public sealed class ContextIndex : IDisposable
             
             if (hasWindowTitle == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding window_title column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN window_title TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
@@ -106,7 +99,6 @@ public sealed class ContextIndex : IDisposable
             
             if (hasFilePath == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding file_path column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN file_path TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
@@ -120,7 +112,6 @@ public sealed class ContextIndex : IDisposable
             
             if (hasUrl == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding url column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN url TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
@@ -134,15 +125,13 @@ public sealed class ContextIndex : IDisposable
             
             if (hasOcrText == 0)
             {
-                _logger.LogInformation("Migrating context_frames: adding ocr_text column");
                 using var addCol = _connection.CreateCommand();
                 addCol.CommandText = "ALTER TABLE context_frames ADD COLUMN ocr_text TEXT DEFAULT ''";
                 addCol.ExecuteNonQuery();
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logger.LogWarning(ex, "Migration failed - database may already have the columns");
         }
     }
 
@@ -184,7 +173,6 @@ public sealed class ContextIndex : IDisposable
     /// </summary>
     public List<ContextFrame> GetAllFrames()
     {
-        _logger.LogInformation("GetAllFrames: querying DB");
         using var cmd = _connection.CreateCommand();
         cmd.CommandText =
             "SELECT id, path, timestamp, phash, app_name, app_path, window_title, file_path, url, ocr_text FROM context_frames ORDER BY timestamp ASC";
@@ -195,7 +183,6 @@ public sealed class ContextIndex : IDisposable
         {
             results.Add(ReadFrame(reader));
         }
-        _logger.LogInformation("GetAllFrames: returned {N} rows", results.Count);
         return results;
     }
 
@@ -262,13 +249,8 @@ public sealed class ContextIndex : IDisposable
 
         if (toDelete.Count == 0)
         {
-            _logger.LogInformation("ReconcileWithDisk: all {N} DB entries have files on disk.",
-                CountFrames());
             return;
         }
-
-        _logger.LogInformation("ReconcileWithDisk: removing {N} stale DB entries " +
-            "with no file on disk.", toDelete.Count);
 
         using var del = _connection.CreateCommand();
         del.CommandText = "DELETE FROM context_frames WHERE id = $id";
@@ -278,9 +260,6 @@ public sealed class ContextIndex : IDisposable
             del.Parameters["$id"].Value = id;
             del.ExecuteNonQuery();
         }
-
-        _logger.LogInformation("ReconcileWithDisk: done. DB now has {N} entries.",
-            CountFrames());
     }
 
     private long CountFrames()
@@ -297,16 +276,12 @@ public sealed class ContextIndex : IDisposable
         count.CommandText = "SELECT COUNT(*) FROM context_frames";
         long total = (long)count.ExecuteScalar()!;
 
-        _logger.LogDebug("EnforceMaxFrames: total={Total}, max={Max}", total, maxFrames);
-
         if (total <= maxFrames)
         {
-            _logger.LogDebug("EnforceMaxFrames: under limit, no eviction needed.");
             return;
         }
 
         long toDelete = total - maxFrames;
-        _logger.LogInformation("EnforceMaxFrames: evicting {N} frames", toDelete);
 
         // Get paths of oldest frames to delete files
         using var select = _connection.CreateCommand();
@@ -330,15 +305,9 @@ public sealed class ContextIndex : IDisposable
         foreach (var path in paths)
         {
             bool exists = File.Exists(path);
-            _logger.LogInformation("Evict: path='{Path}' exists={Exists}", path, exists);
             if (exists)
                 File.Delete(path);
-            else
-                _logger.LogWarning("Evict: FILE NOT FOUND on disk: '{Path}'", path);
         }
-
-        _logger.LogInformation("EnforceMaxFrames: eviction complete, " +
-            "deleted {N} rows and files", paths.Count);
     }
 
     /// <summary>
@@ -349,7 +318,6 @@ public sealed class ContextIndex : IDisposable
         using var cmd = _connection.CreateCommand();
         cmd.CommandText = "DELETE FROM context_frames";
         cmd.ExecuteNonQuery();
-        _logger.LogInformation("ClearAll: cleared all context_frames from database.");
     }
 
     /// <summary>
@@ -362,9 +330,7 @@ public sealed class ContextIndex : IDisposable
             "UPDATE context_frames SET ocr_text=$text WHERE path=$path";
         cmd.Parameters.AddWithValue("$text", ocrText);
         cmd.Parameters.AddWithValue("$path", path);
-        int rows = cmd.ExecuteNonQuery();
-        if (rows == 0)
-            _logger.LogWarning("UpdateOcrText: no row found for '{P}'", path);
+        cmd.ExecuteNonQuery();
     }
 
     /// <summary>

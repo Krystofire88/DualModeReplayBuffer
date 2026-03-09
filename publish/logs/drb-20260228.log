@@ -1,0 +1,33 @@
+2026-02-28 16:30:37.115 +01:00 [INF] Application starting...
+2026-02-28 16:30:37.403 +01:00 [INF] TrayIconService starting...
+2026-02-28 16:30:37.623 +01:00 [ERR] Failed to create OverlayWindow
+System.Windows.Markup.XamlParseException: Provide value on 'System.Windows.Baml2006.TypeConverterMarkupExtension' threw an exception.
+ ---> System.IO.IOException: Cannot locate resource 'overlay/assets/icon.ico'.
+   at MS.Internal.AppModel.ResourcePart.GetStreamCore(FileMode mode, FileAccess access)
+   at System.IO.Packaging.PackagePart.GetStream(FileMode mode, FileAccess access)
+   at MS.Internal.IO.Packaging.PackagePartExtensions.GetSeekableStream(PackagePart packPart, FileMode mode, FileAccess access)
+   at System.IO.Packaging.PackWebResponse.CachedResponse.GetResponseStream()
+   at System.Windows.Media.Imaging.BitmapDecoder.SetupDecoderFromUriOrStream(Uri uri, Stream stream, BitmapCacheOption cacheOption, Guid& clsId, Boolean& isOriginalWritable, Stream& uriStream, UnmanagedMemoryStream& unmanagedMemoryStream, SafeFileHandle& safeFilehandle)
+   at System.Windows.Media.Imaging.BitmapDecoder.CreateFromUriOrStream(Uri baseUri, Uri uri, Stream stream, BitmapCreateOptions createOptions, BitmapCacheOption cacheOption, RequestCachePolicy uriCachePolicy, Boolean insertInDecoderCache)
+   at System.Windows.Media.Imaging.BitmapFrame.CreateFromUriOrStream(Uri baseUri, Uri uri, Stream stream, BitmapCreateOptions createOptions, BitmapCacheOption cacheOption, RequestCachePolicy uriCachePolicy)
+   at System.Windows.Media.ImageSourceConverter.ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
+   at MS.Internal.Xaml.Runtime.ClrObjectRuntime.CallProvideValue(MarkupExtension me, IServiceProvider serviceProvider)
+   --- End of inner exception stack trace ---
+   at System.Windows.Markup.XamlReader.RewrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
+   at System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
+   at System.Windows.Markup.WpfXamlLoader.LoadBaml(XamlReader xamlReader, Boolean skipJournaledProperties, Object rootObject, XamlAccessLevel accessLevel, Uri baseUri)
+   at System.Windows.Markup.XamlReader.LoadBaml(Stream stream, ParserContext parserContext, Object parent, Boolean closeStream)
+   at System.Windows.Application.LoadComponent(Object component, Uri resourceLocator)
+   at DRB.App.Overlay.OverlayWindow.InitializeComponent() in c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\Overlay\OverlayWindow.xaml:line 1
+   at DRB.App.Overlay.OverlayWindow..ctor(Config config, IPauseCapture pauseCapture, ICaptureController captureController, ThemeService themeService, FocusRingBuffer focusRingBuffer, ContextIndex contextIndex) in c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\Overlay\OverlayWindow.xaml.cs:line 63
+   at DRB.App.Overlay.OverlayService.<StartAsync>b__41_0() in c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\Overlay\OverlayService.cs:line 125
+2026-02-28 16:30:43.178 +01:00 [WRN] OpenOverlay called but _overlayHolder.Window is null
+2026-02-28 16:30:55.141 +01:00 [WRN] OpenOverlay called but _overlayHolder.Window is null
+2026-02-28 16:31:27.137 +01:00 [INF] Application shutting down
+2026-02-28 16:33:47.872 +01:00 [INF] Application starting...
+2026-02-28 16:33:48.141 +01:00 [INF] TrayIconService starting...
+2026-02-28 16:33:48.372 +01:00 [INF] OverlayWindow created and set in holder
+2026-02-28 16:33:52.869 +01:00 [INF] ShowOverlay called. IsVisible=false
+2026-02-28 16:33:53.182 +01:00 [INF] OpenOverlay called, showing overlay
+2026-02-28 16:34:09.366 +01:00 [INF] ShowOverlay called. IsVisible=false
+2026-02-28 16:34:31.459 +01:00 [INF] ShowOverlay called. IsVisible=false

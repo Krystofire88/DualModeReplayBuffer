@@ -8,6 +8,13 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyTitle>DualMode Replay Buffer</AssemblyTitle>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <Company>Krystofire</Company>
+    <Product>DualMode Replay Buffer</Product>
+    <Copyright>2026</Copyright>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <!-- Remove the implicit global usings that WinForms adds (they clash with WPF) -->
@@ -34,5 +41,9 @@
     <None Update="config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\icon.ico" />
   </ItemGroup>
 </Project>

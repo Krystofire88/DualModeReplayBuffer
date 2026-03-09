@@ -2,7 +2,6 @@ using DRB.Core;
 using DRB.Core.Messaging;
 using DRB.Core.Models;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Capture;
 
@@ -10,20 +9,16 @@ public sealed class Encoder : BackgroundService
 {
     private readonly IAppChannels _channels;
     private readonly Config _config;
-    private readonly ILogger<Encoder> _logger;
 
-    public Encoder(IAppChannels channels, Config config, ILogger<Encoder> logger)
+    public Encoder(IAppChannels channels, Config config)
     {
         _channels = channels;
         _config = config;
-        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Encoder thread starting (Media Foundation H.264).");
-
-        using var encoder = new HardwareVideoEncoder(_config, _logger);
+        using var encoder = new HardwareVideoEncoder(_config);
 
         // Forward completed segments to the storage channel.
         encoder.OnSegmentComplete += segment =>
@@ -40,7 +35,6 @@ public sealed class Encoder : BackgroundService
             // Stop processing if encoder has failed
             if (encoder.EncoderFailed)
             {
-                _logger.LogError("Encoder has failed unrecoverably. Stopping encoder worker.");
                 break;
             }
 
@@ -48,15 +42,12 @@ public sealed class Encoder : BackgroundService
             {
                 encoder.PushFrame(frame.Pixels, frame.TimestampTicks);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Error encoding frame.");
             }
         }
 
         // Flush the final segment on shutdown.
         encoder.Flush();
-
-        _logger.LogInformation("Encoder thread stopping.");
     }
 }

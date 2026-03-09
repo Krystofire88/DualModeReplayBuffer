@@ -108,7 +108,7 @@ namespace DRB.App.Overlay {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/DRB.App;component/overlay/contextviewerwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/DRB.App;V1.0.0;component/overlay/contextviewerwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Overlay\ContextViewerWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

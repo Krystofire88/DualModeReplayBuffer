@@ -9,7 +9,6 @@ using DRB.Core.Messaging;
 using DRB.Core.Models;
 using DRB.Storage;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;
@@ -39,25 +38,20 @@ public sealed class FrameProcessor : BackgroundService
 
     private readonly IAppChannels _channels;
     private readonly Config _config;
-    private readonly ILogger<FrameProcessor> _logger;
     private readonly ContextFrameProcessor _contextProcessor;
     private readonly ContextIndex _contextIndex;
     private DateTime _lastCaptureTime = DateTime.MinValue;
 
-    public FrameProcessor(IAppChannels channels, Config config, ILogger<FrameProcessor> logger, ContextFrameProcessor contextProcessor, ContextIndex contextIndex)
+    public FrameProcessor(IAppChannels channels, Config config, ContextFrameProcessor contextProcessor, ContextIndex contextIndex)
     {
         _channels = channels;
         _config = config;
-        _logger = logger;
         _contextProcessor = contextProcessor;
         _contextIndex = contextIndex;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("FrameProcessor thread starting.");
-        _logger.LogInformation("FrameProcessor capture mode: {CaptureMode}", _config.CaptureMode);
-
         await foreach (var frame in _channels.CaptureToProcessor.Reader.ReadAllAsync(stoppingToken))
         {
             if (_config.CaptureMode == CaptureMode.Context)
@@ -69,8 +63,6 @@ public sealed class FrameProcessor : BackgroundService
                 await ProcessFocusFrameAsync(frame, stoppingToken).ConfigureAwait(false);
             }
         }
-
-        _logger.LogInformation("FrameProcessor thread stopping.");
     }
 
     /// <summary>
@@ -201,36 +193,18 @@ public sealed class FrameProcessor : BackgroundService
 
             if (!string.IsNullOrEmpty(url))
             {
-                _logger.LogDebug(
-                    "ExtractBrowserUrl: source=UIAutomation url='{Url}'", url);
                 return url;
             }
-
-            _logger.LogDebug(
-                "ExtractBrowserUrl: UI Automation returned empty, " +
-                "falling back to title parsing");
         }
         catch (OperationCanceledException)
         {
-            _logger.LogDebug(
-                "ExtractBrowserUrl: UI Automation timed out, " +
-                "falling back to title parsing");
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogDebug(
-                "ExtractBrowserUrl: UI Automation failed ({Err}), " +
-                "falling back to title parsing", ex.Message);
         }
 
         // Step 4: Title-based fallback (always works, less precise)
         url = ExtractUrlFromTitle(windowTitle, appPath);
-        if (!string.IsNullOrEmpty(url))
-        {
-            _logger.LogDebug(
-                "ExtractBrowserUrl: source=TitleParse url='{Url}'", url);
-        }
-
         return url;
     }
 
@@ -454,24 +428,19 @@ public sealed class FrameProcessor : BackgroundService
         
         // Throttle to 1fps - wait if we've captured within the last second
         var timeSinceLastCapture = now - _lastCaptureTime;
-        _logger.LogDebug("Context throttle: timeSinceLastCapture={Time}ms, lastCapture={Last}", 
-            timeSinceLastCapture.TotalMilliseconds, _lastCaptureTime);
         
         if (timeSinceLastCapture < TimeSpan.FromSeconds(1))
         {
-            _logger.LogDebug("Context throttle: dropping frame, too soon");
             return; // Drop frame, wait for next second
         }
         
         if (!_contextProcessor.HasChanged(frame.Pixels, frame.Width, frame.Height))
         {
-            _logger.LogDebug("Context throttle: frame unchanged, dropping");
             // Frame is visually identical to the last stored one – discard.
             return;
         }
 
         _lastCaptureTime = now;
-        _logger.LogDebug("Context throttle: capturing frame, enough time passed and frame changed");
         var timestamp = now;
         string fileName = $"{timestamp:yyyyMMdd_HHmmss_fff}.jpg";
         string filePath = Path.Combine(AppPaths.ContextBufferFolder, fileName);
@@ -485,32 +454,25 @@ public sealed class FrameProcessor : BackgroundService
             using var image = SixLabors.ImageSharp.Image.LoadPixelData<Bgra32>(frame.Pixels, frame.Width, frame.Height);
             await image.SaveAsJpegAsync(filePath, new JpegEncoder { Quality = 85 }, ct)
                 .ConfigureAwait(false);
-
-            _logger.LogDebug("Context: saved snapshot {Path}.", filePath);
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, "Context: failed to save snapshot {Path}.", filePath);
             return;
         }
 
         // Capture foreground window info before saving
         var (appName, appPath, windowTitle, extractedFilePath, url) = await GetForegroundAppInfo();
-        _logger.LogDebug("Context: foreground app = {AppName}, path = {AppPath}, title = {WindowTitle}, file = {FilePath}, url = {Url}", 
-            appName, appPath, windowTitle, extractedFilePath, url);
         
         // Skip if process is in ignore list
         if (_config.IgnoredProcesses.Any(ignored =>
             string.Equals(ignored, appName, StringComparison.OrdinalIgnoreCase)))
         {
-            _logger.LogDebug("ContextFrame: skipping ignored process '{P}'", appName);
             return;
         }
         
         // Skip if window title is empty (background/system process)
         if (string.IsNullOrWhiteSpace(windowTitle))
         {
-            _logger.LogDebug("ContextFrame: skipping empty window title");
             return;
         }
 
@@ -525,7 +487,6 @@ public sealed class FrameProcessor : BackgroundService
             var ocrJob = new ContextOcrJob(filePath);
             await _channels.ProcessorToOcrContext.Writer.WriteAsync(ocrJob, ct)
                 .ConfigureAwait(false);
-            _logger.LogDebug("OcrWorker: enqueued '{P}'", filePath);
         }
     }
 }

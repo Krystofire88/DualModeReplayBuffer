@@ -4,7 +4,6 @@ using System.Threading.Channels;
 using DRB.Core.Messaging;
 using DRB.Storage;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Windows.Graphics.Imaging;
 using Windows.Media.Ocr;
 using Windows.System.UserProfile;
@@ -16,24 +15,20 @@ public sealed class OcrWorker : BackgroundService
 {
     private readonly IAppChannels _channels;
     private readonly ContextIndex _contextIndex;
-    private readonly ILogger<OcrWorker> _logger;
     
     // Windows.Media.Ocr engine — lazy init on worker thread
     private OcrEngine? _engine;
 
-    public OcrWorker(IAppChannels channels, ContextIndex contextIndex, ILogger<OcrWorker> logger)
+    public OcrWorker(IAppChannels channels, ContextIndex contextIndex)
     {
         _channels = channels;
         _contextIndex = contextIndex;
-        _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken ct)
     {
         try
         {
-            _logger.LogInformation("OcrWorker: starting.");
-
             // Init engine on this thread
             // Use the user's current display language, fall back to English
             var language = new Language(
@@ -42,18 +37,14 @@ public sealed class OcrWorker : BackgroundService
             if (!OcrEngine.IsLanguageSupported(language))
             {
                 language = new Language("en-US");
-                _logger.LogWarning("OcrWorker: preferred language not supported, falling back to en-US.");
             }
 
             _engine = OcrEngine.TryCreateFromLanguage(language);
             if (_engine == null)
             {
-                _logger.LogError("OcrWorker: could not create OCR engine. OCR disabled.");
                 // Don't crash - just return and let other workers continue
                 return;
             }
-
-            _logger.LogInformation("OcrWorker: engine ready, language={L}", language.LanguageTag);
 
             // Create a linked token source to combine both cancellation tokens
             using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
@@ -76,11 +67,9 @@ public sealed class OcrWorker : BackgroundService
         catch (OperationCanceledException)
         {
             // Expected during shutdown
-            _logger.LogInformation("OcrWorker: cancelled during shutdown.");
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, "OcrWorker: unexpected error, OCR disabled but capture continues.");
         }
     }
 
@@ -110,12 +99,7 @@ public sealed class OcrWorker : BackgroundService
                 // For now, we'll skip Focus Mode OCR as it requires a different approach
                 // to convert the JPEG data to SoftwareBitmap
                 
-                _logger.LogDebug("OcrWorker: received Focus Mode job (timestamp={T})", 
-                    job.Frame.TimestampTicks);
-                
                 // TODO: Implement Focus Mode OCR if needed
-                // This would require saving the frame to disk first or using a different
-                // bitmap conversion approach
             }
         }
         catch (OperationCanceledException)
@@ -134,14 +118,9 @@ public sealed class OcrWorker : BackgroundService
             if (!string.IsNullOrWhiteSpace(text))
             {
                 _contextIndex.UpdateOcrText(imagePath, text);
-                _logger.LogDebug("OcrWorker: indexed {N} chars for '{P}'",
-                    text.Length, Path.GetFileName(imagePath));
             }
         }
-        catch (Exception ex)
-        {
-            _logger.LogWarning(ex, "OcrWorker: failed on '{P}'", imagePath);
-        }
+        catch { }
 
         // Throttle — OCR is CPU intensive, don't thrash
         await Task.Delay(200, ct).ConfigureAwait(false);
@@ -168,9 +147,8 @@ public sealed class OcrWorker : BackgroundService
             // Join all lines into a single searchable string
             return string.Join(" ", result.Lines.Select(l => l.Text));
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogWarning(ex, "OcrWorker: failed to process image '{P}'", imagePath);
             return "";
         }
     }

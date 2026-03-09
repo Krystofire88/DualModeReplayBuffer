@@ -1,7 +1,6 @@
 using System.Runtime.InteropServices;
 using DRB.Core;
 using DRB.Core.Models;
-using Microsoft.Extensions.Logging;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
@@ -22,7 +21,6 @@ public sealed class DxgiCaptureService : IDisposable
     private const int DXGI_ERROR_WAIT_TIMEOUT = unchecked((int)0x887A0027);
 
     private readonly Config _config;
-    private readonly ILogger _logger;
 
     // D3D / DXGI resources – all nullable because they are (re-)created at runtime.
     private Device? _device;
@@ -42,10 +40,9 @@ public sealed class DxgiCaptureService : IDisposable
         (200, 800), (800, 200), (1500, 400), (600, 900), (100, 1200)
     };
 
-    public DxgiCaptureService(Config config, ILogger logger)
+    public DxgiCaptureService(Config config)
     {
         _config = config ?? throw new ArgumentNullException(nameof(config));
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     // ───────────────────────────── Initialisation ─────────────────────────────
@@ -57,8 +54,6 @@ public sealed class DxgiCaptureService : IDisposable
     public void Initialize()
     {
         ReleaseResources();
-
-        _logger.LogInformation("Initializing DXGI Desktop Duplication…");
 
         using var factory = new Factory1();
         Adapter1? adapter = null;
@@ -80,9 +75,6 @@ public sealed class DxgiCaptureService : IDisposable
         if (adapter is null || output is null)
             throw new InvalidOperationException("No DXGI adapter with an active output was found.");
 
-        _logger.LogInformation("Using adapter: {Adapter}, output: {Output}",
-            adapter.Description.Description, output.Description.DeviceName);
-
         // Create D3D11 device on the chosen adapter.
         _device = new Device(adapter, DeviceCreationFlags.BgraSupport);
 
@@ -100,7 +92,6 @@ public sealed class DxgiCaptureService : IDisposable
         // Detect desktop format from the duplication description.
         Format desktopFormat = _duplication.Description.ModeDescription.Format;
         _isHdr = desktopFormat == Format.R16G16B16A16_Float;
-        _logger.LogInformation("Desktop format: {Format}, HDR: {IsHdr}", desktopFormat, _isHdr);
 
         // Always create a BGRA8 staging texture for SDR output.
         var stagingDesc = new Texture2DDescription
@@ -135,11 +126,7 @@ public sealed class DxgiCaptureService : IDisposable
                 OptionFlags = ResourceOptionFlags.None
             };
             _hdrStagingTexture = new Texture2D(_device, hdrDesc);
-            _logger.LogInformation("HDR RowPitch: {RowPitch}, expected: {Expected}",
-                hdrDesc.Width * 8, hdrDesc.Width * 8);
         }
-
-        _logger.LogInformation("Desktop Duplication initialized – {W}×{H}.", _width, _height);
     }
 
     // ──────────────────────────── Frame Acquisition ───────────────────────────

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using DRB.App.Overlay;
@@ -6,14 +7,13 @@ using DRB.Core;
 using DRB.Core.Messaging;
 using DRB.Core.Models;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Application = System.Windows.Application;
 
 namespace DRB.App;
 
 public sealed class TrayIconService : IHostedService
 {
-    private readonly ILogger<TrayIconService> _logger;
     private readonly IHostApplicationLifetime _lifetime;
     private readonly IAppChannels _channels;
     private readonly IOverlayWindowHolder _overlayHolder;
@@ -22,13 +22,11 @@ public sealed class TrayIconService : IHostedService
     private NotifyIcon? _notifyIcon;
 
     public TrayIconService(
-        ILogger<TrayIconService> logger,
         IHostApplicationLifetime lifetime,
         IAppChannels channels,
         IOverlayWindowHolder overlayHolder,
         Config config)
     {
-        _logger = logger;
         _lifetime = lifetime;
         _channels = channels;
         _overlayHolder = overlayHolder;
@@ -37,21 +35,18 @@ public sealed class TrayIconService : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Initializing tray icon.");
-
+        Log.Information("TrayIconService starting...");
+        
         _overlayHolder.WhenReady(overlay =>
         {
             overlay.OnCaptureRequested += async () =>
             {
-                _logger.LogInformation("Clip capture requested.");
                 var request = new ClipRequest(DateTimeOffset.UtcNow, TimeSpan.FromSeconds(_config.BufferDurationSeconds));
                 await _channels.OverlayToStorage.Writer.WriteAsync(request).ConfigureAwait(false);
-                _logger.LogInformation("Save clip request enqueued from overlay.");
             };
             overlay.OnModeToggled += async _ =>
             {
                 await _config.SaveAsync().ConfigureAwait(false);
-                _logger.LogInformation("Capture mode toggled to {Mode}.", _config.CaptureMode);
                 if (_notifyIcon is not null)
                     _notifyIcon.Text = $"DualModeReplayBuffer ({_config.CaptureMode})";
             };
@@ -59,7 +54,7 @@ public sealed class TrayIconService : IHostedService
 
         _notifyIcon = new NotifyIcon
         {
-            Icon = System.Drawing.SystemIcons.Application,
+            Icon = new System.Drawing.Icon(Path.Combine(AppContext.BaseDirectory, "Assets", "icon.ico")),
             Visible = true,
             Text = "DualModeReplayBuffer"
         };
@@ -116,10 +111,7 @@ public sealed class TrayIconService : IHostedService
             {
                 System.Diagnostics.Process.Start("explorer.exe", clipsFolder);
             }
-            catch (Exception ex)
-            {
-                _logger.LogWarning("Failed to open clips folder: {Error}", ex.Message);
-            }
+            catch { }
         };
 
         // ── Separator ────────────────────────────────────────────────
@@ -166,7 +158,13 @@ public sealed class TrayIconService : IHostedService
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
+            if (_overlayHolder.Window == null)
+            {
+                Serilog.Log.Warning("OpenOverlay called but _overlayHolder.Window is null");
+                return;
+            }
             _overlayHolder.Window?.ShowOverlay();
+            Serilog.Log.Information("OpenOverlay called, showing overlay");
         });
     }
 
@@ -174,12 +172,10 @@ public sealed class TrayIconService : IHostedService
     {
         var request = new ClipRequest(DateTimeOffset.UtcNow, TimeSpan.FromSeconds(_config.BufferDurationSeconds));
         await _channels.OverlayToStorage.Writer.WriteAsync(request).ConfigureAwait(false);
-        _logger.LogInformation("Save clip request enqueued.");
     }
 
     private void Quit()
     {
-        _logger.LogInformation("Quit requested from tray.");
         Application.Current.Dispatcher.Invoke(() =>
         {
             Application.Current.Shutdown();

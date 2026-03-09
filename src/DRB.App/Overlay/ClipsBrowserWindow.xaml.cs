@@ -178,13 +178,6 @@ public partial class ClipsBrowserWindow : Window
             VideoPlayerBorder.Visibility = Visibility.Visible;
             OpenWithButton.Visibility = Visibility.Visible;
             
-            // Resize window to 80% of screen when playing video
-            var screenWidth = SystemParameters.PrimaryScreenWidth;
-            var screenHeight = SystemParameters.PrimaryScreenHeight;
-            Width = screenWidth * 0.8;
-            Height = screenHeight * 0.8;
-            WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            
             VideoPlayer.Source = new Uri(videoPath);
             VideoPlayer.Play();
             _isVideoPlaying = true;

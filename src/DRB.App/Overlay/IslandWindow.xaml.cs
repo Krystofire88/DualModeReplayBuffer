@@ -10,7 +10,6 @@ using System.Windows.Threading;
 using DRB.App.UI;
 using DRB.Core;
 using DRB.Storage;
-using Microsoft.Extensions.Logging;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
@@ -28,24 +27,23 @@ public partial class IslandWindow : Window
     private readonly Config _config;
     private readonly ICaptureController _captureController;
     private readonly ThemeService _themeService;
-    private readonly ILogger _logger;
     private readonly FocusRingBuffer _focusRingBuffer;
     private readonly DRB.Storage.ContextIndex _contextIndex;
     private readonly string _clipsPath;
     private int _scrubIndex = -1;
     private System.Windows.Threading.DispatcherTimer? _scrubRefreshTimer;
+    private bool _isContextViewerOpen;
 
     public event Action<DRB.Core.CaptureMode>? OnModeToggled;
     public event Action? OnCaptureRequested;
     public event Action<bool>? OnPowerToggled;
     public event Action<string>? OnVideoSaved;
 
-    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, ILogger logger, FocusRingBuffer focusRingBuffer, DRB.Storage.ContextIndex contextIndex)
+    public IslandWindow(Config config, ICaptureController captureController, ThemeService themeService, FocusRingBuffer focusRingBuffer, DRB.Storage.ContextIndex contextIndex)
     {
         _config = config;
         _captureController = captureController;
         _themeService = themeService;
-        _logger = logger;
         _focusRingBuffer = focusRingBuffer;
         _contextIndex = contextIndex;
         _clipsPath = !string.IsNullOrEmpty(_config.SaveFolder)
@@ -168,6 +166,8 @@ public partial class IslandWindow : Window
         {
             StyleButton(ContextViewerButton, buttonBg, textColor);
             ContextViewerButton.IsEnabled = true;
+            // Only add handler once to prevent duplicate handlers
+            ContextViewerButton.Click -= ContextViewerButton_Click;
             ContextViewerButton.Click += ContextViewerButton_Click;
         }
 
@@ -446,41 +446,59 @@ public partial class IslandWindow : Window
     private async Task CaptureClipAsync()
     {
         var segments = _focusRingBuffer.GetSegmentsCopy();
-        _logger.LogInformation("Capture requested: {N} segments available.", segments.Count);
 
         if (segments.Count == 0)
         {
-            _logger.LogWarning("Capture: no focus segments buffered yet.");
             return;
         }
 
-        var assemblerLogger = LoggerFactory.Create(builder => { }).CreateLogger<ClipAssembler>();
-        var assembler = new ClipAssembler(assemblerLogger, _clipsPath);
+        var assembler = new ClipAssembler(_clipsPath);
         string? path = await assembler.AssembleAsync(segments);
 
         if (path != null)
         {
-            _logger.LogInformation("Clip saved: '{Path}'", path);
             OnVideoSaved?.Invoke(path);
         }
     }
 
     private void SettingsButton_Click(object sender, RoutedEventArgs e)
     {
-        var settings = new SettingsWindow(_config, _themeService, holder: null, logger: _logger, overlayService: OverlayService.Instance);
+        var settings = new SettingsWindow(_config, _themeService);
         settings.Owner = this;
         settings.ShowDialog();
     }
 
     private void ContextViewerButton_Click(object sender, RoutedEventArgs e)
     {
+        // Prevent re-entrancy - don't open if already open
+        if (_isContextViewerOpen) return;
+        
+        // Also check if there's already a ContextViewerWindow open somewhere
+        foreach (System.Windows.Window w in System.Windows.Application.Current.Windows)
+        {
+            if (w is ContextViewerWindow)
+            {
+                // Already open - activate it and return
+                w.Activate();
+                return;
+            }
+        }
+        
         if (_contextIndex == null) return;
         
-        var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ContextViewerWindow>.Instance;
-        var viewer = new ContextViewerWindow(_contextIndex, logger);
-        // Modal dialog like Settings and Clips
-        viewer.Owner = this;
-        viewer.ShowDialog();
+        _isContextViewerOpen = true;
+        try
+        {
+            var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ContextViewerWindow>.Instance;
+            var viewer = new ContextViewerWindow(_contextIndex, logger);
+            // Modal dialog like Settings and Clips
+            viewer.Owner = this;
+            viewer.ShowDialog();
+        }
+        finally
+        {
+            _isContextViewerOpen = false;
+        }
     }
 
     // ──────────────────── Scrub Bar ──────────────────────────
@@ -499,14 +517,8 @@ public partial class IslandWindow : Window
         // Always get fresh segments (GetSegmentsCopy already filters incomplete files)
         var segments = _focusRingBuffer.GetSegmentsCopy().ToList();
 
-        _logger.LogInformation("ScrubBar: loaded {N} fresh segments", segments.Count);
-        foreach (var seg in segments)
-            _logger.LogDebug("ScrubBar segment: {P} ({B} bytes)", 
-                seg, new FileInfo(seg).Length);
-
         if (segments.Count == 0)
         {
-            _logger.LogWarning("ScrubBar: no complete segments available yet.");
             return;
         }
 
@@ -602,12 +614,10 @@ public partial class IslandWindow : Window
                 e.Handled = true;
                 // Save from clicked segment TO the end (most recent)
                 var segsToSave = segments.Skip(capturedI).ToList();
-                var assemblerLogger = LoggerFactory.Create(builder => { }).CreateLogger<ClipAssembler>();
-                var assembler = new ClipAssembler(assemblerLogger, _clipsPath);
+                var assembler = new ClipAssembler(_clipsPath);
                 string? path = await assembler.AssembleAsync(segsToSave);
                 if (path != null)
                 {
-                    _logger.LogInformation("Scrub clip saved: '{P}'", path);
                     // Show save confirmation popup
                     NotificationPopup.ShowOnCurrentApp(path);
                 }
@@ -655,9 +665,8 @@ public partial class IslandWindow : Window
                         };
                         grid.Children.Add(overlay);
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        _logger.LogWarning("Failed to load thumbnail: {E}", ex.Message);
                     }
                 });
             });

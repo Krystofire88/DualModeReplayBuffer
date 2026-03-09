@@ -10,13 +10,14 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("DRB.App")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Krystofire")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62071b6e95bda39c7a68ee9e6ce12008aa02cee0")]
-[assembly: System.Reflection.AssemblyProductAttribute("DRB.App")]
-[assembly: System.Reflection.AssemblyTitleAttribute("DRB.App")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("2026")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dff5364a7bcbe9290d1b714d05de5d8415161227")]
+[assembly: System.Reflection.AssemblyProductAttribute("DualMode Replay Buffer")]
+[assembly: System.Reflection.AssemblyTitleAttribute("DualMode Replay Buffer")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows10.0.19041.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows10.0.19041.0")]
 

@@ -2,7 +2,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using DRB.Core;
 using DRB.Core.Models;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Capture;
 
@@ -18,7 +17,6 @@ public sealed class HardwareVideoEncoder : IDisposable
     private readonly int _fps;
     private readonly int _segmentDurationSeconds;
     private readonly string _outputDirectory;
-    private readonly ILogger _logger;
 
     // MF COM pointers (IntPtr for vtable dispatch)
     private IntPtr _sinkWriter;
@@ -41,19 +39,18 @@ public sealed class HardwareVideoEncoder : IDisposable
     /// <summary>True if the encoder has encountered an unrecoverable error.</summary>
     public bool EncoderFailed => _encoderFailed;
 
-    public HardwareVideoEncoder(Config config, ILogger logger)
+    public HardwareVideoEncoder(Config config)
     {
         _width = config.EncodeWidth;
         _height = config.EncodeHeight;
         _fps = config.EncodeFps;
         _segmentDurationSeconds = config.SegmentDurationSeconds;
         _outputDirectory = AppPaths.FocusBufferFolder;
-        _logger = logger;
 
         Directory.CreateDirectory(_outputDirectory);
 
         MfStartup();
-        DetectAndLogEncoder();
+        DetectEncoder();
     }
 
     // ──────────────────────── Public API ──────────────────────────
@@ -112,10 +109,9 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     // ──────────────────── Encoder Detection ──────────────────────
 
-    private void DetectAndLogEncoder()
+    private void DetectEncoder()
     {
         string encoderName = DetectBestEncoder();
-        _logger.LogInformation("Selected H.264 encoder: {Encoder}", encoderName);
     }
 
     /// <summary>
@@ -237,14 +233,13 @@ public sealed class HardwareVideoEncoder : IDisposable
         }
         catch (Exception ex)
         {
-            _logger.LogCritical(ex, "Failed to create sink writer for segment: {Path}", _currentSegmentPath);
             _encoderFailed = true;
             _isWriting = false;
             _currentSegmentPath = null;
             return;
         }
 
-        _logger.LogDebug("Started new segment: {Path}", _currentSegmentPath);
+        _isWriting = true;
     }
 
     private void FinalizeSegment()
@@ -255,13 +250,8 @@ public sealed class HardwareVideoEncoder : IDisposable
             {
                 // IMFSinkWriter::DoFinalize = vtable slot 11
                 int hr = SWDoFinalize(_sinkWriter);
-                if (hr < 0)
-                    _logger.LogWarning("DoFinalize returned HRESULT: {Hr}", hr);
             }
-            catch (Exception ex)
-            {
-                _logger.LogWarning(ex, "Error finalizing sink writer.");
-            }
+            catch { }
             finally
             {
                 // Release COM object immediately to unlock the file
@@ -277,8 +267,6 @@ public sealed class HardwareVideoEncoder : IDisposable
             var duration = TimeSpan.FromSeconds((double)_frameCount / _fps);
             var segment = new VideoSegment(_currentSegmentPath, _segmentStartTime, duration);
 
-            _logger.LogDebug("Completed segment: {Path} ({Duration})", _currentSegmentPath, duration);
-
             OnSegmentComplete?.Invoke(segment);
             _currentSegmentPath = null;
         }
@@ -288,8 +276,6 @@ public sealed class HardwareVideoEncoder : IDisposable
 
     private void CreateSinkWriter(string outputPath)
     {
-        _logger.LogDebug("Creating sink writer for: {Path}", outputPath);
-
         // Create attributes for the sink writer.
         int hr = NativeMethods.MFCreateAttributes(out IMFAttributes attributes, 4);
         Marshal.ThrowExceptionForHR(hr);
@@ -304,7 +290,6 @@ public sealed class HardwareVideoEncoder : IDisposable
             pAttributes = Marshal.GetComInterfaceForObject(attributes, typeof(IMFAttributes));
 
             // Create the sink writer for the output file.
-            _logger.LogDebug("Calling MFCreateSinkWriterFromURL...");
             hr = NativeMethods.MFCreateSinkWriterFromURL(
                 outputPath,
                 IntPtr.Zero, // IMFByteStream - pass null
@@ -313,13 +298,11 @@ public sealed class HardwareVideoEncoder : IDisposable
             
             if (hr < 0)
             {
-                _logger.LogError("MFCreateSinkWriterFromURL failed with HRESULT: {Hr}", hr);
                 _encoderFailed = true;
                 Marshal.ThrowExceptionForHR(hr);
             }
             
             _sinkWriter = sinkWriter;
-            _logger.LogDebug("Sink writer created successfully.");
         }
         finally
         {
@@ -362,7 +345,6 @@ public sealed class HardwareVideoEncoder : IDisposable
             hr = SWSetInputMediaType(_sinkWriter, _videoStreamIndex, pInputType, IntPtr.Zero);
             if (hr < 0)
             {
-                _logger.LogError("SetInputMediaType failed with HRESULT: {Hr}", hr);
                 _encoderFailed = true;
                 Marshal.ThrowExceptionForHR(hr);
             }
@@ -378,7 +360,6 @@ public sealed class HardwareVideoEncoder : IDisposable
         hr = SWBeginWriting(_sinkWriter);
         if (hr < 0)
         {
-            _logger.LogError("BeginWriting failed with HRESULT: {Hr}", hr);
             _encoderFailed = true;
             Marshal.ThrowExceptionForHR(hr);
         }
@@ -481,9 +462,8 @@ public sealed class HardwareVideoEncoder : IDisposable
                 Marshal.Release(buffer);
             }
         }
-        catch (Exception ex)
+        catch
         {
-            _logger.LogError(ex, "WriteSample failed at frameCount={F}", _frameCount);
             _encoderFailed = true;
         }
     }

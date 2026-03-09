@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/ZMZHYwLD2g=",
+  "dgSpecHash": "UqrRBP8df2w=",
   "success": true,
   "projectFilePath": "c:\\Users\\kryst\\Cursor\\C#\\DualModeReplayBuffer\\src\\DRB.Storage\\DRB.Storage.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,10 @@
     "C:\\Users\\kryst\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.6\\sqlitepclraw.lib.e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\kryst\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.6\\sqlitepclraw.provider.e_sqlite3.2.1.6.nupkg.sha512",
     "C:\\Users\\kryst\\.nuget\\packages\\system.diagnostics.diagnosticsource\\10.0.3\\system.diagnostics.diagnosticsource.10.0.3.nupkg.sha512",
-    "C:\\Users\\kryst\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+    "C:\\Users\\kryst\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\kryst\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\9.0.4\\microsoft.netcore.app.runtime.win-x64.9.0.4.nupkg.sha512",
+    "C:\\Users\\kryst\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\9.0.4\\microsoft.windowsdesktop.app.runtime.win-x64.9.0.4.nupkg.sha512",
+    "C:\\Users\\kryst\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\9.0.4\\microsoft.aspnetcore.app.runtime.win-x64.9.0.4.nupkg.sha512"
   ],
   "logs": []
 }

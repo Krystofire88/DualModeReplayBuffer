@@ -9,9 +9,8 @@ using DRB.Core.Messaging;
 using DRB.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Events;
+
 using App = DRB.App.App;
 
 Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
@@ -19,22 +18,19 @@ Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
 
 try
 {
+    // Configure Serilog first
+    Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Information()
+        .WriteTo.File(
+            Path.Combine(AppContext.BaseDirectory, "logs", "drb-.log"),
+            rollingInterval: RollingInterval.Day,
+            retainedFileCountLimit: 7,
+            outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+        .CreateLogger();
+
+    Log.Information("Application starting...");
+
     var builder = Host.CreateDefaultBuilder(args);
-
-    builder.UseSerilog((context, services, configuration) =>
-    {
-        AppPaths.EnsureFoldersExist();
-
-        configuration
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()  // Add console output
-            .WriteTo.File(
-                path: Path.Combine(AppPaths.LogsFolder, "drb-.log"),
-                rollingInterval: RollingInterval.Day,
-                retainedFileCountLimit: 7);
-    });
 
     builder.ConfigureServices(services =>
     {
@@ -48,17 +44,14 @@ try
 
         // Storage
         services.AddSingleton<IClipStorage, SqliteClipStorage>();
-        services.AddSingleton<FocusRingBuffer>(sp =>
+        services.AddSingleton<FocusRingBuffer>(_ =>
         {
-            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FocusRingBuffer>();
             return new FocusRingBuffer(
-                AppPaths.FocusBufferFolder,
-                logger);
+                AppPaths.FocusBufferFolder);
         });
-        services.AddSingleton<ContextIndex>(sp =>
+        services.AddSingleton<ContextIndex>(_ =>
         {
-            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextIndex>();
-            return new ContextIndex(AppPaths.SqliteDbPath, logger);
+            return new ContextIndex(AppPaths.SqliteDbPath);
         });
 
         // Pause/capture control
@@ -72,10 +65,9 @@ try
         services.AddSingleton<ThemeService>();
 
         // Context frame processor (pHash change detection)
-        services.AddSingleton<ContextFrameProcessor>(sp =>
+        services.AddSingleton<ContextFrameProcessor>(_ =>
         {
-            var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<ContextFrameProcessor>();
-            return new ContextFrameProcessor(logger);
+            return new ContextFrameProcessor();
         });
 
         // Thread slots (6)
@@ -92,10 +84,9 @@ try
             var pause = sp.GetRequiredService<IPauseCapture>();
             var controller = sp.GetRequiredService<ICaptureController>();
             var theme = sp.GetRequiredService<ThemeService>();
-            var logger = sp.GetRequiredService<ILogger<OverlayService>>();
             var focusRing = sp.GetRequiredService<FocusRingBuffer>();
             var contextIndex = sp.GetRequiredService<ContextIndex>();
-            return new OverlayService(holder, config, pause, controller, theme, logger, focusRing, contextIndex);
+            return new OverlayService(holder, config, pause, controller, theme, focusRing, contextIndex);
         });
 
         // Tray icon
@@ -113,11 +104,12 @@ try
     app.Run();
 
     await host.StopAsync().ConfigureAwait(false);
+    Log.Information("Application shutting down");
+    Log.CloseAndFlush();
 }
 catch (Exception ex)
 {
-    // Write to a file since logger isn't up yet
-    File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "startup_crash.txt"),
-        $"{DateTime.Now}\n{ex}\n{ex.StackTrace}");
+    Log.Fatal(ex, "Application crashed");
+    Log.CloseAndFlush();
     throw;
 }

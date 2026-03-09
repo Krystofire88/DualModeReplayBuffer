@@ -1,9 +1,9 @@
+using System;
 using System.IO;
 using DRB.Core;
 using DRB.Core.Messaging;
 using DRB.Core.Models;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DRB.Storage;
 
@@ -12,20 +12,17 @@ public sealed class StorageManager : BackgroundService
     private readonly IAppChannels _channels;
     private readonly IClipStorage _clipStorage;
     private readonly FocusRingBuffer _ringBuffer;
-    private readonly ILogger<StorageManager> _logger;
     private readonly ContextIndex? _contextIndex;
 
     public StorageManager(
         IAppChannels channels,
         IClipStorage clipStorage,
         FocusRingBuffer ringBuffer,
-        ILogger<StorageManager> logger,
         ContextIndex? contextIndex = null)
     {
         _channels = channels;
         _clipStorage = clipStorage;
         _ringBuffer = ringBuffer;
-        _logger = logger;
         _contextIndex = contextIndex;
     }
 
@@ -40,11 +37,8 @@ public sealed class StorageManager : BackgroundService
             foreach (var f in Directory.GetFiles(focusBufferPath, "*.mp4"))
             {
                 try { File.Delete(f); }
-                catch (Exception ex) {
-                    _logger.LogWarning("Could not delete focus file '{F}': {E}", f, ex.Message);
-                }
+                catch { }
             }
-            _logger.LogInformation("Startup: cleared focus buffer folder.");
         }
         
         // Clear context buffer files
@@ -53,27 +47,18 @@ public sealed class StorageManager : BackgroundService
             foreach (var f in Directory.GetFiles(contextBufferPath, "*.jpg"))
             {
                 try { File.Delete(f); }
-                catch (Exception ex) {
-                    _logger.LogWarning("Could not delete context file '{F}': {E}", f, ex.Message);
-                }
+                catch { }
             }
-            _logger.LogInformation("Startup: cleared context buffer folder.");
         }
         
-        // Clear SQLite context_frames table
         _contextIndex?.ClearAll();
         
         // Clear in-memory ring buffer
         _ringBuffer.Clear();
-        _logger.LogInformation("Startup: cleared focus ring buffer.");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("StorageManager thread starting.");
-        _logger.LogInformation("Context buffer folder: '{Path}'", 
-            DRB.Core.AppPaths.ContextBufferFolder);
-
         await _clipStorage.InitializeAsync(stoppingToken).ConfigureAwait(false);
 
         // Clear buffers on startup
@@ -89,8 +74,6 @@ public sealed class StorageManager : BackgroundService
         var contextTask = ProcessContextFrames(stoppingToken);
 
         await Task.WhenAll(focusTask, contextTask).ConfigureAwait(false);
-
-        _logger.LogInformation("StorageManager thread stopping.");
     }
 
     /// <summary>
@@ -112,10 +95,7 @@ public sealed class StorageManager : BackgroundService
                 {
                     var start = new DateTime(frame.TimestampTicks, DateTimeKind.Utc);
                     // Add segment to the ring buffer for count-based eviction.
-                    _logger.LogDebug("Completed segment received: '{Path}', " +
-                        "calling FocusRingBuffer.AddSegment", segmentPath);
                     _ringBuffer.AddSegment(segmentPath);
-                    _logger.LogDebug("Received encoded segment marker: {Path}", segmentPath);
                 }
 
                 await _clipStorage.SaveEncodedFrameAsync(frame, stoppingToken)
@@ -153,10 +133,7 @@ public sealed class StorageManager : BackgroundService
 
             // Enforce 120 frame rolling window.
             int limit = 120;
-            _logger.LogDebug("EnforceMaxFrames limit={Limit}", limit);
             _contextIndex.EnforceMaxFrames(limit);
-
-            _logger.LogDebug("Context frame indexed: {Path}", frame.Path);
         }
     }
 

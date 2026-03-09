@@ -3,7 +3,7 @@ using System.Windows;
 using DRB.Core;
 using DRB.Storage;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using Application = System.Windows.Application;
 
 namespace DRB.App.Overlay;
@@ -67,7 +67,6 @@ public sealed class OverlayService : IHostedService, IDisposable
     private readonly Config _config;
     private readonly IPauseCapture _pauseCapture;
     private readonly ICaptureController _captureController;
-    private readonly ILogger<OverlayService> _logger;
     private readonly ThemeService _themeService;
     private readonly FocusRingBuffer _focusRingBuffer;
     private readonly ContextIndex _contextIndex;
@@ -91,7 +90,6 @@ public sealed class OverlayService : IHostedService, IDisposable
         IPauseCapture pauseCapture,
         ICaptureController captureController,
         ThemeService themeService,
-        ILogger<OverlayService> logger,
         FocusRingBuffer focusRingBuffer,
         ContextIndex contextIndex)
     {
@@ -100,7 +98,6 @@ public sealed class OverlayService : IHostedService, IDisposable
         _pauseCapture = pauseCapture;
         _captureController = captureController;
         _themeService = themeService;
-        _logger = logger;
         _focusRingBuffer = focusRingBuffer;
         _contextIndex = contextIndex;
         
@@ -119,30 +116,26 @@ public sealed class OverlayService : IHostedService, IDisposable
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("OverlayService.StartAsync beginning...");
-
         // Schedule window creation to happen after host has fully started
         // BeginInvoke does not block — it posts to the message queue
         Application.Current.Dispatcher.BeginInvoke(new Action(() =>
         {
             try
             {
-                _logger.LogInformation("UI thread: creating OverlayWindow...");
-                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _logger, _focusRingBuffer, _contextIndex);
+                _overlayWindow = new OverlayWindow(_config, _pauseCapture, _captureController, _themeService, _focusRingBuffer, _contextIndex);
                 _holder.Set(_overlayWindow);
-                _logger.LogInformation("OverlayWindow created.");
+                Serilog.Log.Information("OverlayWindow created and set in holder");
 
                 // Start the hotkey thread with the first successfully configured combo
                 StartHotkeyThread();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "UI thread overlay init failed.");
+                Serilog.Log.Error(ex, "Failed to create OverlayWindow");
             }
         }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
 
         await Task.CompletedTask;
-        _logger.LogInformation("OverlayService.StartAsync completed.");
     }
 
     private void StartHotkeyThread()
@@ -150,7 +143,6 @@ public sealed class OverlayService : IHostedService, IDisposable
         // Guard: only start once
         if (Interlocked.CompareExchange(ref _hotkeyThreadStarted, 1, 0) != 0)
         {
-            _logger.LogWarning("StartHotkeyThread called more than once — ignored.");
             return;
         }
         
@@ -161,7 +153,6 @@ public sealed class OverlayService : IHostedService, IDisposable
         foreach (var candidate in overlayCandidates)
         {
             var parsed = HotkeyParser.Parse(candidate);
-            _logger.LogInformation("Trying overlay hotkey: {Hotkey}, parsed: {Parsed}", candidate, parsed);
             if (parsed.HasValue)
             {
                 overlayParsed = parsed;
@@ -176,7 +167,6 @@ public sealed class OverlayService : IHostedService, IDisposable
         foreach (var candidate in captureCandidates)
         {
             var parsed = HotkeyParser.Parse(candidate);
-            _logger.LogInformation("Trying capture hotkey: {Hotkey}, parsed: {Parsed}", candidate, parsed);
             if (parsed.HasValue)
             {
                 captureParsed = parsed;
@@ -190,12 +180,8 @@ public sealed class OverlayService : IHostedService, IDisposable
             _msgHwnd = CreateWindowEx(0, "STATIC", "DRBHotkey", 0,
                 0, 0, 0, 0, HWND_MESSAGE, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
 
-            int err = Marshal.GetLastWin32Error();
-            _logger.LogInformation("Message window HWND: {H}, err={E}", _msgHwnd, err);
-
             if (_msgHwnd == IntPtr.Zero || _msgHwnd == new IntPtr(2))
             {
-                _logger.LogError("Failed to create message-only window!");
                 return;
             }
 
@@ -203,8 +189,6 @@ public sealed class OverlayService : IHostedService, IDisposable
             if (overlayParsed.HasValue)
             {
                 _overlayRegistered = RegisterHotKey(_msgHwnd, OverlayHotkeyId, overlayParsed.Value.Item1 | MOD_NOREPEAT, overlayParsed.Value.Item2);
-                err = Marshal.GetLastWin32Error();
-                _logger.LogInformation("RegisterOverlayHotKey: ok={Ok} err={Err}", _overlayRegistered, err);
                 if (_overlayRegistered)
                 {
                     _currentActiveHotkey = _config.OverlayHotkey ?? "";
@@ -215,8 +199,6 @@ public sealed class OverlayService : IHostedService, IDisposable
             if (captureParsed.HasValue)
             {
                 _captureRegistered = RegisterHotKey(_msgHwnd, CaptureHotkeyId, captureParsed.Value.Item1 | MOD_NOREPEAT, captureParsed.Value.Item2);
-                err = Marshal.GetLastWin32Error();
-                _logger.LogInformation("RegisterCaptureHotKey: ok={Ok} err={Err}", _captureRegistered, err);
             }
 
             // Message pump — blocks until window destroyed
@@ -225,7 +207,6 @@ public sealed class OverlayService : IHostedService, IDisposable
                 if (msg.message == WM_HOTKEY)
                 {
                     int hotkeyId = msg.wParam.ToInt32();
-                    _logger.LogInformation("WM_HOTKEY received! id={Id}", hotkeyId);
 
                     if (hotkeyId == OverlayHotkeyId)
                     {
@@ -249,8 +230,6 @@ public sealed class OverlayService : IHostedService, IDisposable
                 }
                 else if (msg.message == WM_APP_REREGISTER && _pendingHotkey != null)
                 {
-                    _logger.LogInformation("Pump received WM_APP_REREGISTER, _pendingHotkey='{H}'", _pendingHotkey);
-                    
                     // Handle re-registration request from UI thread
                     var parsed = HotkeyParser.Parse(_pendingHotkey);
                     bool ok = false;
@@ -261,9 +240,6 @@ public sealed class OverlayService : IHostedService, IDisposable
                         
                         ok = RegisterHotKey(_msgHwnd, OverlayHotkeyId,
                             parsed.Value.Modifiers | MOD_NOREPEAT, parsed.Value.Vk);
-                        int err2 = Marshal.GetLastWin32Error();
-                        _logger.LogInformation("Re-register '{H}': ok={Ok} err={Err}", 
-                            _pendingHotkey, ok, err2);
                         
                         if (!ok)
                         {
@@ -271,9 +247,8 @@ public sealed class OverlayService : IHostedService, IDisposable
                             var old = HotkeyParser.Parse(_currentActiveHotkey);
                             if (old.HasValue)
                             {
-                                bool restored = RegisterHotKey(_msgHwnd, OverlayHotkeyId,
+                                RegisterHotKey(_msgHwnd, OverlayHotkeyId,
                                     old.Value.Item1 | MOD_NOREPEAT, old.Value.Item2);
-                                _logger.LogInformation("Restored old hotkey: ok={Ok}", restored);
                             }
                         }
                         else
@@ -287,8 +262,6 @@ public sealed class OverlayService : IHostedService, IDisposable
                     _reregisterTcs = null;
                 }
             }
-
-            _logger.LogInformation("Hotkey message loop exited.");
         });
         _msgThread.IsBackground = true;
         _msgThread.SetApartmentState(ApartmentState.STA);
@@ -302,18 +275,14 @@ public sealed class OverlayService : IHostedService, IDisposable
     /// </summary>
     public Task<bool> TryReregisterOverlayHotkey(string newHotkey)
     {
-        _logger.LogInformation("TryReregisterOverlayHotkey called with '{H}', _msgHwnd={Hwnd}", newHotkey, _msgHwnd);
-        
         if (_msgHwnd == IntPtr.Zero)
         {
-            _logger.LogError("_msgHwnd is Zero — message window not initialized!");
             return Task.FromResult(false);
         }
 
         var parsed = HotkeyParser.Parse(newHotkey);
         if (!parsed.HasValue)
         {
-            _logger.LogWarning("Cannot re-register hotkey: failed to parse '{Hotkey}'", newHotkey);
             return Task.FromResult(false);
         }
 
@@ -322,9 +291,7 @@ public sealed class OverlayService : IHostedService, IDisposable
         _reregisterTcs = new TaskCompletionSource<bool>(
             TaskCreationOptions.RunContinuationsAsynchronously);
         
-        _logger.LogInformation("Posting WM_APP_REREGISTER for '{H}'", newHotkey);
         bool posted = PostMessage(_msgHwnd, WM_APP_REREGISTER, IntPtr.Zero, IntPtr.Zero);
-        _logger.LogInformation("PostMessage WM_APP_REREGISTER: posted={P}", posted);
         
         return _reregisterTcs.Task;
     }
@@ -366,8 +333,6 @@ public sealed class OverlayService : IHostedService, IDisposable
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation("OverlayService.StopAsync called.");
-
         // Clean up the message-only window
         if (_msgHwnd != IntPtr.Zero)
         {
@@ -386,7 +351,6 @@ public sealed class OverlayService : IHostedService, IDisposable
             // Destroy the window
             DestroyWindow(_msgHwnd);
             _msgHwnd = IntPtr.Zero;
-            _logger.LogInformation("Message-only window destroyed.");
         }
 
         // Wait for the thread to exit

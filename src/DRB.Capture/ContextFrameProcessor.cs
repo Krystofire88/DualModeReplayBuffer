@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Logging;
-
 namespace DRB.Capture;
 
 /// <summary>
@@ -16,13 +14,11 @@ public sealed class ContextFrameProcessor
     /// </summary>
     private const int ChangeThreshold = 5;
 
-    private readonly ILogger _logger;
     private ulong[]? _lastHash;
     private bool _hasLastHash;
 
-    public ContextFrameProcessor(ILogger logger)
+    public ContextFrameProcessor()
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -53,27 +49,17 @@ public sealed class ContextFrameProcessor
         {
             _lastHash = currentHash;
             _hasLastHash = true;
-            _logger.LogDebug("Context: first frame accepted (pHash={Hash:X16}{Hash2:X16}{Hash3:X16}{Hash4:X16}).",
-                currentHash[0], currentHash[1], currentHash[2], currentHash[3]);
             return true;
         }
 
         int distance = HammingDistance(_lastHash!, currentHash);
 
-        _logger.LogDebug("Context pHash: distance={Distance}, threshold={Threshold}", 
-            distance, ChangeThreshold);
-
         if (distance > ChangeThreshold)
         {
-            _logger.LogDebug(
-                "Context: frame changed (distance={Distance}).", distance);
             _lastHash = currentHash;
             return true;
         }
 
-        _logger.LogTrace(
-            "Context: frame unchanged (distance={Distance}), discarding.",
-            distance);
         return false;
     }
 
