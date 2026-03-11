@@ -537,42 +537,28 @@ public partial class ContextViewerWindow : Window
 
     private void OpenFullSize(ContextFrame frame)
     {
-        var win = new Window
-        {
-            WindowStyle = WindowStyle.None,
-            WindowState = WindowState.Maximized,
-            Background = Brushes.Black,
-        };
-        
         try
         {
-            var img = new Image
+            if (File.Exists(frame.Path))
             {
-                Source = LoadBitmap(frame.Path),
-                Stretch = Stretch.Uniform,
-            };
-            win.Content = img;
+                _logger.LogInformation("Opening full size image in custom viewer: {Path}", frame.Path);
+                var viewer = new ImageViewerWindow(frame.Path, frame, _logger);
+                viewer.Owner = this;
+                viewer.Show();
+            }
+            else
+            {
+                _logger.LogWarning("OpenFullSize: file not found: {Path}", frame.Path);
+                MessageBox.Show($"Image file not found:\n{frame.Path}", "Error", 
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
         }
         catch (Exception ex)
         {
-            _logger.LogWarning("OpenFullSize failed to load image: {Error}", ex.Message);
-            var text = new TextBlock
-            {
-                Text = "Failed to load image",
-                Foreground = Brushes.White,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
-            win.Content = text;
+            _logger.LogWarning("OpenFullSize failed to open image: {Error}", ex.Message);
+            MessageBox.Show($"Failed to open image:\n{ex.Message}", "Error", 
+                MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-        
-        win.KeyDown += (s, ev) =>
-        {
-            if (ev.Key == Key.Escape || ev.Key == Key.Enter)
-                win.Close();
-        };
-        win.MouseLeftButtonDown += (s, ev) => win.Close();
-        win.Show();
     }
 
     private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)

@@ -491,6 +491,9 @@ public partial class IslandWindow : Window
         {
             var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ContextViewerWindow>.Instance;
             var viewer = new ContextViewerWindow(_contextIndex, logger);
+            // Make it appear above the overlay
+            viewer.Topmost = true;
+            viewer.Activate();
             // Modal dialog like Settings and Clips
             viewer.Owner = this;
             viewer.ShowDialog();

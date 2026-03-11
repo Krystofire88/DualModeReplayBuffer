@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS10_0_19041_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS10_0_19041_0_OR_GREATER;WINDOWS10_0_18362_0_OR_GREATER;WINDOWS10_0_17763_0_OR_GREATER;WINDOWS8_0_OR_GREATER;WINDOWS7_0_OR_GREATER
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\App.xaml
-82048190550
+9-775897526
 
-20-1416780310
+21-662430566
 255846548644
-Overlay\ClipsBrowserWindow.xaml;Overlay\ContextViewerWindow.xaml;Overlay\DarkTheme.xaml;Overlay\IslandWindow.xaml;Overlay\LightTheme.xaml;Overlay\NotificationPopup.xaml;Overlay\OverlayWindow.xaml;Overlay\SettingsWindow.xaml;
+Overlay\ClipsBrowserWindow.xaml;Overlay\ContextViewerWindow.xaml;Overlay\DarkTheme.xaml;Overlay\ImageViewerWindow.xaml;Overlay\IslandWindow.xaml;Overlay\LightTheme.xaml;Overlay\NotificationPopup.xaml;Overlay\OverlayWindow.xaml;Overlay\SettingsWindow.xaml;
 
 False
 

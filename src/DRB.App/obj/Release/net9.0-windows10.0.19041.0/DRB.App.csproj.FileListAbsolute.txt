@@ -111,3 +111,5 @@ c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-win
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows10.0.19041.0\DRB.App.pdb
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows10.0.19041.0\DRB.App.genruntimeconfig.cache
 c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows10.0.19041.0\ref\DRB.App.dll
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows10.0.19041.0\Overlay\ImageViewerWindow.baml
+c:\Users\kryst\Cursor\C#\DualModeReplayBuffer\src\DRB.App\obj\Release\net9.0-windows10.0.19041.0\Overlay\ImageViewerWindow.g.cs
