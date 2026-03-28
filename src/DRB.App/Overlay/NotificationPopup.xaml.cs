@@ -102,16 +102,10 @@ public partial class NotificationPopup : Window
             
             var thumbnailPath = Path.Combine(tempDir, $"thumb_{Guid.NewGuid()}.jpg");
             
-            // Find FFmpeg in base directory
-            var ffmpegPath = Path.Combine(AppPaths.BaseDirectory, "ffmpeg.exe");
-            if (!File.Exists(ffmpegPath))
-            {
-                // Try Release folder
-                ffmpegPath = Path.Combine(AppPaths.BaseDirectory, "..", "Release", "ffmpeg.exe");
-                if (!File.Exists(ffmpegPath))
-                    return null;
-            }
-            
+            var ffmpegPath = FfmpegPaths.FindExecutable();
+            if (ffmpegPath != "ffmpeg" && !File.Exists(ffmpegPath))
+                return null;
+
             // Extract frame at 1 second (or 0.5 if video is short)
             var startTime = "00:00:01";
             

@@ -139,11 +139,7 @@ public sealed class FocusRingBuffer
         if (File.Exists(thumbPath))
             return thumbPath;
 
-        string ffmpeg = FindFfmpeg();
-        if (ffmpeg == null)
-        {
-            return null;
-        }
+        string ffmpeg = FfmpegPaths.FindExecutable();
 
         // Extract frame at 1 second into segment
         var psi = new ProcessStartInfo
@@ -163,21 +159,5 @@ public sealed class FocusRingBuffer
         }
 
         return thumbPath;
-    }
-
-    private static string? FindFfmpeg()
-    {
-        // 1. Next to exe (use AppPaths for consistency)
-        string exeDir = AppPaths.BaseDirectory;
-        string candidate = Path.Combine(exeDir, "ffmpeg.exe");
-        if (File.Exists(candidate)) return candidate;
-
-        // 2. tools/ subfolder
-        candidate = Path.Combine(exeDir, "tools", "ffmpeg.exe");
-        if (File.Exists(candidate)) return candidate;
-
-        // 3. PATH
-        candidate = "ffmpeg";
-        return candidate;
     }
 }
