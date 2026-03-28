@@ -1,7 +1,0 @@
-2026-03-11 21:19:58.185 +01:00 [INF] Application starting...
-2026-03-11 21:19:58.950 +01:00 [INF] TrayIconService starting...
-2026-03-11 21:19:59.255 +01:00 [INF] OverlayWindow created and set in holder
-2026-03-11 21:20:05.141 +01:00 [INF] ShowOverlay called. IsVisible=false
-2026-03-11 21:21:13.708 +01:00 [INF] ShowOverlay called. IsVisible=false
-2026-03-11 21:23:33.846 +01:00 [INF] ShowOverlay called. IsVisible=false
-2026-03-11 21:23:41.553 +01:00 [INF] Application shutting down

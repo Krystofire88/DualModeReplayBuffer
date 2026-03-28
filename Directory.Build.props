@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- Do not embed local clone paths or repo URLs in PDBs (portable, privacy-friendly builds). -->
+    <EnableSourceLink>false</EnableSourceLink>
+    <PublishRepositoryUrl>false</PublishRepositoryUrl>
+    <EmbedUntrackedSources>false</EmbedUntrackedSources>
+  </PropertyGroup>
+</Project>

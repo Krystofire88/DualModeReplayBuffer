@@ -1,0 +1,41 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+*.log
+
+# Publish / local release output
+publish/
+artifacts/
+
+# Visual Studio / VS Code
+.vs/
+*.user
+*.userosscache
+*.suo
+*.cache
+*.rsuser
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/
+project.lock.json
+project.fragment.lock.json
+
+# Test / coverage
+TestResults/
+[Tt]emp/
+*.coverage
+*.coveragexml
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# JetBrains
+.idea/
+*.sln.iml

@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/DRB.App/bin/Debug/net9.0-windows/DRB.App.dll",
+            "program": "${workspaceFolder}/src/DRB.App/bin/Debug/net9.0-windows10.0.19041.0/DRB.App.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/DRB.App",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
